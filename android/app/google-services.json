@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "681017234806",
+    "project_id": "adminapp-dc80f",
+    "storage_bucket": "adminapp-dc80f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681017234806:android:4404a21d5251f6fca25657",
+        "android_client_info": {
+          "package_name": "com.example.tapify_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681017234806-q8bjnt9k6qpacl269figdt7oeabue0o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6AO7Omtn6lRze0XTRGm_NmtMHF43cPf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681017234806-q8bjnt9k6qpacl269figdt7oeabue0o7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
