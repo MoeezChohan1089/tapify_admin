@@ -6,7 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 // import 'package:shopify_flutter/enums/src/sort_key_product.dart';
 // import 'package:shopify_flutter/models/src/product/product.dart';
 // import 'package:shopify_flutter/shopify/src/shopify_store.dart';
-import 'package:tapify/src/global_controllers/database_controller.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
 import '../../api_services/shopify_flutter/enums/enums.dart';
 import '../../api_services/shopify_flutter/models/models.dart';

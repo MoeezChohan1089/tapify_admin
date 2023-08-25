@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
 
 import 'author_v_2/author_v_2.dart';
 import 'comment/comment.dart';

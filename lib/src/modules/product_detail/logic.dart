@@ -1,21 +1,20 @@
 import 'dart:developer';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 // import 'package:shopify_flutter/models/src/checkout/line_item/line_item.dart';
 // import 'package:shopify_flutter/models/src/checkout/product_variant_checkout/product_variant_checkout.dart';
 // import 'package:shopify_flutter/models/src/product/option/option.dart';
 // import 'package:shopify_flutter/models/src/product/product.dart';
 // import 'package:shopify_flutter/models/src/shopify_user/address/address.dart';
 // import 'package:shopify_flutter/shopify/src/shopify_store.dart';
-import 'package:tapify/src/modules/cart/logic.dart';
-import 'package:tapify/src/modules/recently_viewed/state.dart';
+import 'package:tapify_admin/src/modules/cart/logic.dart';
+
 import '../../api_services/shopify_flutter/models/src/checkout/line_item/line_item.dart';
 import '../../api_services/shopify_flutter/models/src/product/option/option.dart';
 import '../../api_services/shopify_flutter/models/src/product/product.dart';
-import '../../custom_widgets/customPopupDialogue.dart';
 import '../../global_controllers/reviews/reviews_controller.dart';
 import '../../utils/global_instances.dart';
 import '../recently_viewed/logic.dart';
@@ -56,7 +55,8 @@ class ProductDetailLogic extends GetxController {
   getProductDetailAPICall(
       {required BuildContext context,
       required String productId,
-      required bool isCartProductId, bool isViewingDetails = false}) async {
+      required bool isCartProductId,
+      bool isViewingDetails = false}) async {
     listOfOptions = [];
     productQuantity.value = 1;
     selectedVariantIndex.value = 0;
@@ -81,10 +81,9 @@ class ProductDetailLogic extends GetxController {
       logger.i(productsList.value);
 
       productDetailLoader.value = false;
-      if(isViewingDetails){
+      if (isViewingDetails) {
         RecentlyViewedLogic.to.addToRecentlyViewed(product: product!);
       }
-
     } catch (e) {
       productDetailLoader.value = false;
       debugPrint("=== Error Fetching Product Details ==> $e ");
@@ -161,7 +160,8 @@ class ProductDetailLogic extends GetxController {
       {required int variantIndex, required int innerOptionIndex}) {
     var subOptions = listOfOptions[variantIndex]['sub_options'];
     for (int i = 0; i < subOptions.length; i++) {
-      subOptions[i]['is_selected'] = (i == innerOptionIndex); // Set the tapped option to true, others to false
+      subOptions[i]['is_selected'] = (i ==
+          innerOptionIndex); // Set the tapped option to true, others to false
     }
     returnSelectedAmount(innerOptionIndex);
     update();
@@ -280,5 +280,4 @@ class ProductDetailLogic extends GetxController {
     //   );
     // }
   }
-
 }

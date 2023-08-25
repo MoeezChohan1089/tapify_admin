@@ -3,38 +3,29 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 // import 'package:shopify_flutter/models/src/checkout/checkout.dart';
 // import 'package:shopify_flutter/models/src/checkout/line_item/line_item.dart';
 // import 'package:shopify_flutter/shopify/src/shopify_checkout.dart';
-import 'package:tapify/src/global_controllers/database_controller.dart';
-import 'package:tapify/src/modules/auth/logic.dart';
-import 'package:tapify/src/modules/cart/view.dart';
-import 'package:tapify/src/modules/product_detail/logic.dart';
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
+import 'package:tapify_admin/src/modules/cart/view.dart';
+import 'package:tapify_admin/src/modules/product_detail/logic.dart';
+import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../../api_services/shopify_flutter/models/models.dart';
-import '../../api_services/shopify_flutter/models/src/checkout/checkout.dart';
-import '../../api_services/shopify_flutter/models/src/checkout/line_item/line_item.dart';
-import '../../custom_widgets/customPopupDialogue.dart';
 import '../../custom_widgets/custom_product_bottom_sheet.dart';
 import '../../custom_widgets/custom_snackbar.dart';
-import '../../custom_widgets/loader_pulse.dart';
 import '../../custom_widgets/local_notification_service.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../global_controllers/currency_controller.dart';
 import '../../utils/global_instances.dart';
 import '../auth/view.dart';
-import '../bottom_nav_bar/view.dart';
 import '../home/logic.dart';
 import 'api_services.dart';
 import 'components/discountCodeDialogue.dart';
 import 'components/order_checkout_webview.dart';
 import 'components/out_of_stock_lineitems_dialog.dart';
-import 'components/product_added_to_cart_sheet.dart';
 import 'components/un_completed_cart_dialog.dart';
 import 'state.dart';
 
@@ -61,15 +52,16 @@ class CartLogic extends GetxController {
   final NotificationService _notificationService = NotificationService();
   RxInt currentItemIndex = (-1).obs;
 
-
-  String get getAccCreationSetting =>  AppConfig.to.appSettingsCustomerAccount["checkAccountCreation"];
+  String get getAccCreationSetting =>
+      AppConfig.to.appSettingsCustomerAccount["checkAccountCreation"];
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     ///----- implement API logic here
-    Future.delayed(const Duration(milliseconds: 2500),() {
+    Future.delayed(const Duration(milliseconds: 2500), () {
       getCartCheckoutInfo(checkingUnCompleteCart: true);
     });
   }
@@ -77,9 +69,10 @@ class CartLogic extends GetxController {
   ///------ Functions
 
   checkUnCompletedCart() {
-    if(currentCart != null && currentCart!.lineItems.isNotEmpty){
-      if(currentCart!.lineItems.isNotEmpty){
-        if(AppConfig.to.appSettingsCartAndCheckout["requiredAbandonendCart"] == true) {
+    if (currentCart != null && currentCart!.lineItems.isNotEmpty) {
+      if (currentCart!.lineItems.isNotEmpty) {
+        if (AppConfig.to.appSettingsCartAndCheckout["requiredAbandonendCart"] ==
+            true) {
           unCompletedCartItemDialog();
         }
       } else {
@@ -97,10 +90,11 @@ class CartLogic extends GetxController {
     // showToastMessage(message: "Discount code has been added to ");
   }
 
-  checkUnCompletedCartNotification(){
-    if(currentCart != null && currentCart!.lineItems.isNotEmpty){
-      if(currentCart!.lineItems.isNotEmpty){
-        if(AppConfig.to.appSettingsCartAndCheckout["requiredAbandonendCart"] == true) {
+  checkUnCompletedCartNotification() {
+    if (currentCart != null && currentCart!.lineItems.isNotEmpty) {
+      if (currentCart!.lineItems.isNotEmpty) {
+        if (AppConfig.to.appSettingsCartAndCheckout["requiredAbandonendCart"] ==
+            true) {
           Timer.periodic(Duration(hours: 1), (timer) {
             DateTime now = DateTime.now();
             DateTime scheduledTime = now.add(Duration(hours: 1));
@@ -109,10 +103,9 @@ class CartLogic extends GetxController {
                 id: cartLogic.currentCart!.lineItems.length,
                 title: 'Message Reminder',
                 body:
-                'Do not miss out on your cart items! Complete your purchase now and enjoy exclusive offers.',
+                    'Do not miss out on your cart items! Complete your purchase now and enjoy exclusive offers.',
                 time: scheduledTime,
-                payLoad: Get.to(() => CartPage())
-            );
+                payLoad: Get.to(() => CartPage()));
           });
         }
       } else {
@@ -122,7 +115,6 @@ class CartLogic extends GetxController {
       print('current cart is null');
     }
   }
-
 
   //---- Loading Animation
   loadAnimation() async {
@@ -134,7 +126,8 @@ class CartLogic extends GetxController {
   }
 
   //---- Get Cart/Checkout Info
-  getCartCheckoutInfo({bool applyingCode = false, bool checkingUnCompleteCart = false}) async {
+  getCartCheckoutInfo(
+      {bool applyingCode = false, bool checkingUnCompleteCart = false}) async {
     try {
       final currentCheckOutId = await getCheckOutId();
       // ShopifyCheckout shopifyCheckout = ShopifyCheckout.instance;
@@ -145,11 +138,10 @@ class CartLogic extends GetxController {
 
       update();
 
-      if(checkingUnCompleteCart) {
+      if (checkingUnCompleteCart) {
         checkUnCompletedCart();
         checkUnCompletedCartNotification();
       }
-
 
       //---- Discount Checker / Calculate Function
       discountChecker(isApplyingGiftOrDiscount: applyingCode);
@@ -191,7 +183,8 @@ class CartLogic extends GetxController {
   addOrderNote() async {
     isProcessing.value = true;
     final currentCheckOutId = await getCheckOutId();
-    await addOrderNoteToCheckout(currentCheckOutId, orderNoteTxtController.text);
+    await addOrderNoteToCheckout(
+        currentCheckOutId, orderNoteTxtController.text);
     isProcessing.value = false;
     orderNoteTxtController.clear();
     Get.back();
@@ -304,7 +297,8 @@ class CartLogic extends GetxController {
   }
 
   //---- Update Product Quantity In Cart
-  updateProductQuantity({required BuildContext context, required LineItem lineItem}) async {
+  updateProductQuantity(
+      {required BuildContext context, required LineItem lineItem}) async {
     try {
       // customLoaderWidget.hideLoader();
       // customLoaderWidget.showLoader(context);
@@ -349,7 +343,6 @@ class CartLogic extends GetxController {
       isProcessing.value = false;
       discountCodeTextController.clear();
       showToastMessage(message: "Discount code is invalid or has been expired");
-
     }
   }
 
@@ -370,9 +363,11 @@ class CartLogic extends GetxController {
       await getCartCheckoutInfo();
 
       //---- Remove from Local
-      showToastMessage(message: "Discount code ${discountCodesAdded[index]} has been removed from cart");
+      showToastMessage(
+          message:
+              "Discount code ${discountCodesAdded[index]} has been removed from cart");
       discountCodesAdded.removeAt(index);
-      if(discountCodesAdded.isEmpty){
+      if (discountCodesAdded.isEmpty) {
         log("list is empty now");
         LocalDatabase.to.box.remove("discountCodes");
         totalDiscountApplied = 0;
@@ -382,7 +377,6 @@ class CartLogic extends GetxController {
       }
       isProcessing.value = false;
       update();
-
 
       log("====> SUCCESS discount code removed $response  <=====");
     } catch (e) {
@@ -394,17 +388,13 @@ class CartLogic extends GetxController {
 
   //---- Check / Calculate Discount Amount
   discountChecker({bool isApplyingGiftOrDiscount = false}) {
-
-
     //--- Remove the Previous Applied Discount Codes
     totalDiscountApplied = 0;
-
 
     //---- Remove the Previous Applied GiftCards
     totalGiftCardAmountApplied = 0;
     // giftCardsAdded = [];
     // LocalDatabase.to.box.remove("giftCards");
-
 
     if (currentCart != null) {
       if (currentCart!.lineItems.isNotEmpty) {
@@ -428,11 +418,12 @@ class CartLogic extends GetxController {
       }
     }
 
-
     if (totalDiscountApplied != 0) {
       if (LocalDatabase.to.box.read("discountCodes") != null) {
         discountCodesAdded = LocalDatabase.to.box.read("discountCodes");
-        if (discountCodeTextController.text.isNotEmpty && !discountCodesAdded.contains(discountCodeTextController.text.toUpperCase())) {
+        if (discountCodeTextController.text.isNotEmpty &&
+            !discountCodesAdded
+                .contains(discountCodeTextController.text.toUpperCase())) {
           discountCodesAdded.add(discountCodeTextController.text.toUpperCase());
           LocalDatabase.to.box.write("discountCodes", discountCodesAdded);
         }
@@ -442,8 +433,10 @@ class CartLogic extends GetxController {
           LocalDatabase.to.box.write("discountCodes", discountCodesAdded);
         }
       }
-      if(isApplyingGiftOrDiscount) {
-        showToastMessage(message: "Discount code applied, you have saved $totalDiscountApplied");
+      if (isApplyingGiftOrDiscount) {
+        showToastMessage(
+            message:
+                "Discount code applied, you have saved $totalDiscountApplied");
       }
     } else {
       // if(isApplyingGiftOrDiscount) {
@@ -451,12 +444,10 @@ class CartLogic extends GetxController {
       // }
       LocalDatabase.to.box.remove("discountCodes");
     }
-    if(isApplyingGiftOrDiscount) {
+    if (isApplyingGiftOrDiscount) {
       // customLoaderWidget.hideLoader();
 
-
       isProcessing.value = false;
-
     }
 
     discountCodeTextController.clear();
@@ -483,7 +474,8 @@ class CartLogic extends GetxController {
       await Future.delayed(const Duration(milliseconds: 250));
       isProcessing.value = false;
       giftCardTextController.clear();
-      showToastMessage(message: "Gift Card is invalid or has been consumed already");
+      showToastMessage(
+          message: "Gift Card is invalid or has been consumed already");
     }
   }
 
@@ -508,7 +500,6 @@ class CartLogic extends GetxController {
     }
   }
 
-
   //----- check if out of stock before checkout
   Future<bool> checkIfItemsOutOfStock() async {
     isProcessing.value = true;
@@ -525,30 +516,28 @@ class CartLogic extends GetxController {
     ///------ till here you have get the updated cart
     ///---- now
     ///-------- check if any item is out of stock before placning the order
-    for(LineItem item in response.lineItems) {
-      if(item.variant!.availableForSale == false) {
+    for (LineItem item in response.lineItems) {
+      if (item.variant!.availableForSale == false) {
         outOfStockLineItems.add(item);
       }
     }
     update();
 
-    log("eturning log => ${ outOfStockLineItems.isEmpty ? false : true}");
-
+    log("eturning log => ${outOfStockLineItems.isEmpty ? false : true}");
 
     return outOfStockLineItems.isEmpty ? false : true;
   }
 
-
   //----- Route to Checkout Web
   checkoutToWeb({bool continueAsGuest = false}) async {
-
     checkOutFunction() async {
       final currentCheckOutId = await getCheckOutId();
-      if(CartLogic.to.getAccCreationSetting.contains("Disabled") || continueAsGuest == true){
+      if (CartLogic.to.getAccCreationSetting.contains("Disabled") ||
+          continueAsGuest == true) {
         Get.to(() => CheckoutWebView(
-          checkoutUrl: currentCart?.webUrl ?? "",
-          checkoutAsGuest: continueAsGuest,
-        ));
+              checkoutUrl: currentCart?.webUrl ?? "",
+              checkoutAsGuest: continueAsGuest,
+            ));
       } else {
         if (LocalDatabase.to.box.read("customerAccessToken") != null) {
           // final currentCheckOutId = await getCheckOutId();
@@ -556,7 +545,7 @@ class CartLogic extends GetxController {
           ///------ Associate the Cart to Current User
           try {
             final userAccessToken =
-            await LocalDatabase.to.box.read("customerAccessToken");
+                await LocalDatabase.to.box.read("customerAccessToken");
             log('==== current user id is ${LocalDatabase.to.box.read("customerAccessToken")} ====');
             await shopifyCheckout.checkoutCustomerAssociate(
                 currentCheckOutId, userAccessToken);
@@ -564,63 +553,65 @@ class CartLogic extends GetxController {
 
             ///------ Go to Checkout
             Get.to(() => CheckoutWebView(
-              checkoutUrl: currentCart?.webUrl ?? "",
-            ));
+                  checkoutUrl: currentCart?.webUrl ?? "",
+                ));
           } catch (e) {
             log("====> ERROR associating checkout to user $e <=====");
           }
-        }
-        else {
-          Get.to(() => AuthPage(
-            onSuccess: () async {
-              await shopifyCheckout.checkoutCustomerAssociate(currentCheckOutId,
-                  LocalDatabase.to.box.read("customerAccessToken"));
-              Get.off(() => CheckoutWebView(
-                checkoutUrl: currentCart?.webUrl ?? "",
-              ));
-            },
-          ),
+        } else {
+          Get.to(
+              () => AuthPage(
+                    onSuccess: () async {
+                      await shopifyCheckout.checkoutCustomerAssociate(
+                          currentCheckOutId,
+                          LocalDatabase.to.box.read("customerAccessToken"));
+                      Get.off(() => CheckoutWebView(
+                            checkoutUrl: currentCart?.webUrl ?? "",
+                          ));
+                    },
+                  ),
               transition: Transition.downToUp,
               fullscreenDialog: true,
-              duration:
-              const Duration(milliseconds: 250)
-          );
+              duration: const Duration(milliseconds: 250));
         }
       }
     }
 
-    if(await checkIfItemsOutOfStock()) {
+    if (await checkIfItemsOutOfStock()) {
       isProcessing.value = false;
       outOfStockCartItemsDialog(
           context: Get.context!,
           onContinue: () => checkOutFunction(),
-          outOfStockLineItems: outOfStockLineItems
-      );
+          outOfStockLineItems: outOfStockLineItems);
     } else {
       isProcessing.value = false;
       checkOutFunction();
     }
-
   }
 
-
   //----create Order For Super Admin------//
-  createOrderService({required String user_email, required String order_id, required String amount}) async {
+  createOrderService(
+      {required String user_email,
+      required String order_id,
+      required String amount}) async {
     try {
       Dio dio = Dio();
 
       final data = {
-        'shop': LocalDatabase.to.box.read('domainShop') ?? '${TapDay.shopNameUrl}',
+        'shop':
+            LocalDatabase.to.box.read('domainShop') ?? '${TapDay.shopNameUrl}',
         'user_email': user_email,
         'order_id': order_id,
         'amount': amount,
-        'type': Platform.isAndroid ? 'Android':'IOS'
+        'type': Platform.isAndroid ? 'Android' : 'IOS'
       };
 
-      print("barrer Token is: ===== ${LocalDatabase.to.box.read('staticUserAuthToken')}");
+      print(
+          "barrer Token is: ===== ${LocalDatabase.to.box.read('staticUserAuthToken')}");
 
       var headers = {
-        'Authorization': 'Bearer ${LocalDatabase.to.box.read('staticUserAuthToken')}'
+        'Authorization':
+            'Bearer ${LocalDatabase.to.box.read('staticUserAuthToken')}'
       };
 
       final response = await dio.post(
@@ -628,7 +619,6 @@ class CartLogic extends GetxController {
         data: data,
         options: Options(headers: headers),
       );
-
 
       Map<String, dynamic> responseData = response.data;
 
@@ -641,7 +631,6 @@ class CartLogic extends GetxController {
         log("==>> Create Order For Admin -> $responseData =====");
 
         return true;
-
       } else {
         // Request failed
         debugPrint("==>> Error In Order : Not 200 --> ${response.data} =====");
@@ -661,26 +650,29 @@ class CartLogic extends GetxController {
       //   ),
       // );
       return false;
-
     }
-
   }
 
   //------ Return Cart Total Amount
-  String returnCartSubTotal(){
+  String returnCartSubTotal() {
     return CurrencyController.to.getConvertedPrice(
-        priceAmount: ((cartLogic.currentCart!.totalPriceV2
-            .amount - getOutOfStockItemsAmount()) - cartLogic.totalGiftCardAmountApplied) < 0 ? 0 : ((cartLogic.currentCart!.totalPriceV2
-            .amount - getOutOfStockItemsAmount()) - cartLogic.totalGiftCardAmountApplied)
-    );
+        priceAmount: ((cartLogic.currentCart!.totalPriceV2.amount -
+                        getOutOfStockItemsAmount()) -
+                    cartLogic.totalGiftCardAmountApplied) <
+                0
+            ? 0
+            : ((cartLogic.currentCart!.totalPriceV2.amount -
+                    getOutOfStockItemsAmount()) -
+                cartLogic.totalGiftCardAmountApplied));
   }
 
   //----- Calculate Total Amount of All Out of Stock Items
-  getOutOfStockItemsAmount(){
+  getOutOfStockItemsAmount() {
     double amountCalculated = 0.0;
-    for(LineItem item in currentCart!.lineItems){
-      if(item.variant!.availableForSale == false){
-        amountCalculated = amountCalculated + (item.variant!.priceV2!.amount * item.quantity);
+    for (LineItem item in currentCart!.lineItems) {
+      if (item.variant!.availableForSale == false) {
+        amountCalculated =
+            amountCalculated + (item.variant!.priceV2!.amount * item.quantity);
       }
     }
     return amountCalculated;
@@ -698,12 +690,14 @@ class CartLogic extends GetxController {
   //   (quantityToBeAdded == quantityInCart) ? false :
   //   return checker;
   // }
-  bool checkFromCart(int availableQuantityOfVariant, int quantityToBeAdded, dynamic variantId) {
+  bool checkFromCart(int availableQuantityOfVariant, int quantityToBeAdded,
+      dynamic variantId) {
     if (currentCart == null || currentCart!.lineItems.isEmpty) {
       return true; // Cart is empty, so product can be added
     }
 
-    int indexOfProduct = currentCart!.lineItems.indexWhere((variant) => variant.variantId == variantId);
+    int indexOfProduct = currentCart!.lineItems
+        .indexWhere((variant) => variant.variantId == variantId);
 
     if (indexOfProduct == -1) {
       return true; // Product not found in cart, so it can be added
@@ -729,14 +723,12 @@ class CartLogic extends GetxController {
     return false; // Other conditions not met, product can't be added
   }
 
-
-
-
   ///------------------- NEW LOGIC FUNCTIONS ------------------///
   Future<dynamic> fetchCheckoutDetails() async {
     final checkoutId = await getCheckOutId();
 
-    String url = "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
+    String url =
+        "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
 
     final String query = """
     query {
@@ -880,7 +872,7 @@ class CartLogic extends GetxController {
 
     final Dio dio = Dio();
     dio.options.headers["X-Shopify-Storefront-Access-Token"] =
-    "${TapDay.storeFrontAccessToken}";
+        "${TapDay.storeFrontAccessToken}";
     dio.options.headers["Content-Type"] = "application/graphql";
 
     final response = await dio.post(url, data: query);

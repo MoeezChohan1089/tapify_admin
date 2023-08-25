@@ -1,13 +1,14 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:tapify/src/global_controllers/database_controller.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
 import '../../utils/tapday_api_srvices/api_services.dart';
 
 testFilterApi() async {
   Dio dio = Dio();
-  String apiUrl = "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
+  String apiUrl =
+      "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
 
   String graphqlQuery = r'''
   query Facets {
@@ -31,15 +32,11 @@ testFilterApi() async {
 ''';
 
   try {
-
-
-
     dio.options.headers["X-Shopify-Storefront-Access-Token"] =
-    "${TapDay.storeFrontAccessToken}";
+        "${TapDay.storeFrontAccessToken}";
     dio.options.headers["Content-Type"] = "application/graphql";
 
     final response = await dio.post(apiUrl, data: graphqlQuery);
-
 
     // Response response = await dio.post(
     //   apiUrl,
@@ -54,18 +51,9 @@ testFilterApi() async {
     } else {
       // Handle other status codes or errors
       log("===> Error in Status Code ${response.statusCode} <====");
-
     }
   } catch (error) {
     // Handle any Dio errors or exceptions
     log("===> Exception Caught $error <====");
-
   }
-
-
-
-
-
-
-
 }

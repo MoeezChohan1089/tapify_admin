@@ -4,4 +4,6 @@ import 'state.dart';
 
 class HomeLogic extends GetxController {
   final HomeState state = HomeState();
+
+  RxBool isProcessing = false.obs;
 }

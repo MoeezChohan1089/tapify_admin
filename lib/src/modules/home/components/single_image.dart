@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../../../custom_widgets/product_viewer_web.dart';
@@ -82,191 +82,191 @@ class SingleImageWidget extends StatelessWidget {
       return appConfig.innerLoader.value == true
           ? productShimmer()
           : Column(
-        children: [
-          (settings['isTitleHidden'] == false)
-              ? SizedBox(
-            width: double.maxFinite,
-            child: Padding(
-              padding: settings['margin'] == true
-                  ? EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal / 1.5,
-                  vertical: pageMarginVertical / 1.5)
-                  : EdgeInsets.symmetric(
-                  vertical: pageMarginVertical / 1.5,
-                  horizontal: pageMarginHorizontal / 1.5),
-              child: Text('${settings['title']}',
-                  textAlign: settings['titleAlignment'] == "left"
-                      ? TextAlign.left
-                      : settings['titleAlignment'] == "center"
-                      ? TextAlign.center
-                      : TextAlign.right,
-                  style: settings['titleSize'] == "small"
-                      ? context.text.titleSmall
-                      : settings['titleSize'] == "medium"
-                      ? context.text.titleMedium
-                      : context.text.titleLarge),
-            ),
-          )
-              : const SizedBox(),
+              children: [
+                (settings['isTitleHidden'] == false)
+                    ? SizedBox(
+                        width: double.maxFinite,
+                        child: Padding(
+                          padding: settings['margin'] == true
+                              ? EdgeInsets.symmetric(
+                                  horizontal: pageMarginHorizontal / 1.5,
+                                  vertical: pageMarginVertical / 1.5)
+                              : EdgeInsets.symmetric(
+                                  vertical: pageMarginVertical / 1.5,
+                                  horizontal: pageMarginHorizontal / 1.5),
+                          child: Text('${settings['title']}',
+                              textAlign: settings['titleAlignment'] == "left"
+                                  ? TextAlign.left
+                                  : settings['titleAlignment'] == "center"
+                                      ? TextAlign.center
+                                      : TextAlign.right,
+                              style: settings['titleSize'] == "small"
+                                  ? context.text.titleSmall
+                                  : settings['titleSize'] == "medium"
+                                      ? context.text.titleMedium
+                                      : context.text.titleLarge),
+                        ),
+                      )
+                    : const SizedBox(),
 
-          (settings["image"] != null &&
-              settings["metadata"]["data"].isEmpty)
-              ? singleImageVariant()
-              : customImageVariant(context),
+                (settings["image"] != null &&
+                        settings["metadata"]["data"].isEmpty)
+                    ? singleImageVariant()
+                    : customImageVariant(context),
 
-          // Column(
-          //   children: List.generate(
-          //      settings['metadata']['data'].isEmpty ? 1 : settings['metadata']['data'].length
-          //       , (index) {
-          //     ProductInfo? productInfo;
-          //        if(settings['metadata']['data'].isNotEmpty) {
-          //          final indexData = settings["metadata"]["data"][index];
-          //          ProductInfo? productInfo = appConfig.getProductById(
-          //            id: indexData["id"],
-          //            dataType: settings["metadata"]['dataType'],
-          //          );
-          //        }
-          //
-          //     return GestureDetector(
-          //       onTap: () {
-          //         if (settings['disableInteraction'] ==
-          //             false && settings['metadata']['data'].isNotEmpty) {
-          //           HomeLogic.to.productDetailNavigator(
-          //               context: context,
-          //               info: productInfo!,
-          //               dataType: settings["metadata"]['dataType']
-          //           );
-          //         }
-          //       },
-          //       child: Column(
-          //         children: [
-          //           Stack(
-          //             children: [
-          //              Padding(
-          //                 padding: settings['margin'] == true? EdgeInsets.symmetric(horizontal: pageMarginHorizontal/1.5,  vertical: settings['contentMargin'] == true ? pageMarginVertical:0):EdgeInsets.zero,
-          //                 child: Container(
-          //                 width: double.maxFinite,
-          //                   height: settings['displayType'] == "normal" ? 300: settings['displayType'] == "vertical"? 400: settings['displayType'] == "auto"? null:230,
-          //                   decoration: BoxDecoration(
-          //                     borderRadius: settings['margin'] == true? BorderRadius.circular(5.r):BorderRadius.circular(0),
-          //                    ),
-          //                   child: ClipRRect(
-          //                     borderRadius: settings['margin'] == true? BorderRadius.circular(3.r):BorderRadius.circular(0),
-          //                     child: CachedNetworkImage(
-          //                       imageUrl:
-          //                       settings['image'] ?? productInfo?.image,
-          //                       color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
-          //                       colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
-          //                       fit: BoxFit.cover,
-          //                       height: settings['displayType'] == "normal"? 300: settings['displayType'] == "vertical"? 600: settings['displayType'] == "auto"? null:230,
-          //                       width: double.infinity,
-          //                       progressIndicatorBuilder:
-          //                           (context, url, downloadProgress) =>
-          //                           productShimmer(),
-          //                       errorWidget: (context, url, error) =>
-          //                       const Icon(Icons.error),
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //               Positioned(
-          //                 left: 0,
-          //                 right: 0,
-          //                 top: 0,
-          //                 bottom: 0,
-          //                 child: settings['titlePosition'] == "center" ? Column(
-          //                   mainAxisAlignment: MainAxisAlignment.center,
-          //                   crossAxisAlignment: CrossAxisAlignment.center,
-          //                   children: [
-          //
-          //
-          //                     (settings["metadata"]['dataType'] ==
-          //                         "collection" ||
-          //                         settings["metadata"]['dataType'] == "web-url")
-          //                         ? const SizedBox.shrink(): Column(
-          //                       children: [
-          //                         12.heightBox,
-          //                         HomeProductsPrice(
-          //                           price: productInfo!.price,
-          //                           priceColor: AppColors.customWhiteTextColor,
-          //                         ),
-          //                       ],
-          //                     )
-          //                         ,
-          //                     HomeProductsTitle(
-          //                       title: productInfo!.title,
-          //                       textColor: AppColors.customWhiteTextColor,
-          //                     ),
-          //
-          //                     //------ Price
-          //                     // productInfo.price != 0.0 ?  Text.rich(
-          //                     //   TextSpan(
-          //                     //     children: <InlineSpan>[
-          //                     //       WidgetSpan(
-          //                     //         child: Padding(
-          //                     //           padding: const EdgeInsets.only(right: 10), // Add the desired space here
-          //                     //           child: Text(
-          //                     //             ' \$80',
-          //                     //             style: context.text.bodyLarge?.copyWith(
-          //                     //               color: AppColors.customGreyTextColor,
-          //                     //             ),
-          //                     //           ),
-          //                     //         ),
-          //                     //       ),
-          //                     //       WidgetSpan(
-          //                     //         child: Text(
-          //                     //           '\$100',
-          //                     //           style: context.text.bodyLarge?.copyWith(
-          //                     //             color: AppColors.customGreyTextColor,
-          //                     //             decoration: TextDecoration.lineThrough,
-          //                     //           ),
-          //                     //           // style: TextStyle(
-          //                     //           //   color: AppColors.customIconColor,
-          //                     //           //   fontFamily: "Sofia Pro Regular",
-          //                     //           //   decoration: TextDecoration.lineThrough,
-          //                     //           // ),
-          //                     //         ),
-          //                     //       ),
-          //                     //     ],
-          //                     //   ),
-          //                     // ) : const SizedBox.shrink(),
-          //                   ],
-          //                 ) : SizedBox(),)
-          //             ],
-          //           ),
-          //
-          //
-          //           (settings["metadata"]['dataType'] == "collection" ||
-          //               settings["metadata"]['dataType'] == "web-url")
-          //               ? (pageMarginVertical).heightBox
-          //               : (pageMarginVertical / 2).heightBox,
-          //           settings['titlePosition'] == "bottom" ? Column(
-          //             mainAxisAlignment: MainAxisAlignment.center,
-          //             crossAxisAlignment: CrossAxisAlignment.center,
-          //             children: [
-          //               (settings["metadata"]['dataType'] == "collection" ||
-          //                   settings["metadata"]['dataType'] == "web-url")
-          //                   ? const SizedBox.shrink()
-          //                   : Column(
-          //                 children: [
-          //                   12.heightBox,
-          //                   HomeProductsPrice(
-          //                     price: productInfo!.price,
-          //                   ),
-          //                 ],
-          //               ),
-          //               HomeProductsTitle(
-          //                 title: productInfo!.title,
-          //               ),
-          //             ],
-          //           ) : const SizedBox(),
-          //         ],
-          //       ),
-          //     );
-          //   }),
-          // ),
-        ],
-      );
+                // Column(
+                //   children: List.generate(
+                //      settings['metadata']['data'].isEmpty ? 1 : settings['metadata']['data'].length
+                //       , (index) {
+                //     ProductInfo? productInfo;
+                //        if(settings['metadata']['data'].isNotEmpty) {
+                //          final indexData = settings["metadata"]["data"][index];
+                //          ProductInfo? productInfo = appConfig.getProductById(
+                //            id: indexData["id"],
+                //            dataType: settings["metadata"]['dataType'],
+                //          );
+                //        }
+                //
+                //     return GestureDetector(
+                //       onTap: () {
+                //         if (settings['disableInteraction'] ==
+                //             false && settings['metadata']['data'].isNotEmpty) {
+                //           HomeLogic.to.productDetailNavigator(
+                //               context: context,
+                //               info: productInfo!,
+                //               dataType: settings["metadata"]['dataType']
+                //           );
+                //         }
+                //       },
+                //       child: Column(
+                //         children: [
+                //           Stack(
+                //             children: [
+                //              Padding(
+                //                 padding: settings['margin'] == true? EdgeInsets.symmetric(horizontal: pageMarginHorizontal/1.5,  vertical: settings['contentMargin'] == true ? pageMarginVertical:0):EdgeInsets.zero,
+                //                 child: Container(
+                //                 width: double.maxFinite,
+                //                   height: settings['displayType'] == "normal" ? 300: settings['displayType'] == "vertical"? 400: settings['displayType'] == "auto"? null:230,
+                //                   decoration: BoxDecoration(
+                //                     borderRadius: settings['margin'] == true? BorderRadius.circular(5.r):BorderRadius.circular(0),
+                //                    ),
+                //                   child: ClipRRect(
+                //                     borderRadius: settings['margin'] == true? BorderRadius.circular(3.r):BorderRadius.circular(0),
+                //                     child: CachedNetworkImage(
+                //                       imageUrl:
+                //                       settings['image'] ?? productInfo?.image,
+                //                       color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
+                //                       colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
+                //                       fit: BoxFit.cover,
+                //                       height: settings['displayType'] == "normal"? 300: settings['displayType'] == "vertical"? 600: settings['displayType'] == "auto"? null:230,
+                //                       width: double.infinity,
+                //                       progressIndicatorBuilder:
+                //                           (context, url, downloadProgress) =>
+                //                           productShimmer(),
+                //                       errorWidget: (context, url, error) =>
+                //                       const Icon(Icons.error),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //               Positioned(
+                //                 left: 0,
+                //                 right: 0,
+                //                 top: 0,
+                //                 bottom: 0,
+                //                 child: settings['titlePosition'] == "center" ? Column(
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   crossAxisAlignment: CrossAxisAlignment.center,
+                //                   children: [
+                //
+                //
+                //                     (settings["metadata"]['dataType'] ==
+                //                         "collection" ||
+                //                         settings["metadata"]['dataType'] == "web-url")
+                //                         ? const SizedBox.shrink(): Column(
+                //                       children: [
+                //                         12.heightBox,
+                //                         HomeProductsPrice(
+                //                           price: productInfo!.price,
+                //                           priceColor: AppColors.customWhiteTextColor,
+                //                         ),
+                //                       ],
+                //                     )
+                //                         ,
+                //                     HomeProductsTitle(
+                //                       title: productInfo!.title,
+                //                       textColor: AppColors.customWhiteTextColor,
+                //                     ),
+                //
+                //                     //------ Price
+                //                     // productInfo.price != 0.0 ?  Text.rich(
+                //                     //   TextSpan(
+                //                     //     children: <InlineSpan>[
+                //                     //       WidgetSpan(
+                //                     //         child: Padding(
+                //                     //           padding: const EdgeInsets.only(right: 10), // Add the desired space here
+                //                     //           child: Text(
+                //                     //             ' \$80',
+                //                     //             style: context.text.bodyLarge?.copyWith(
+                //                     //               color: AppColors.customGreyTextColor,
+                //                     //             ),
+                //                     //           ),
+                //                     //         ),
+                //                     //       ),
+                //                     //       WidgetSpan(
+                //                     //         child: Text(
+                //                     //           '\$100',
+                //                     //           style: context.text.bodyLarge?.copyWith(
+                //                     //             color: AppColors.customGreyTextColor,
+                //                     //             decoration: TextDecoration.lineThrough,
+                //                     //           ),
+                //                     //           // style: TextStyle(
+                //                     //           //   color: AppColors.customIconColor,
+                //                     //           //   fontFamily: "Sofia Pro Regular",
+                //                     //           //   decoration: TextDecoration.lineThrough,
+                //                     //           // ),
+                //                     //         ),
+                //                     //       ),
+                //                     //     ],
+                //                     //   ),
+                //                     // ) : const SizedBox.shrink(),
+                //                   ],
+                //                 ) : SizedBox(),)
+                //             ],
+                //           ),
+                //
+                //
+                //           (settings["metadata"]['dataType'] == "collection" ||
+                //               settings["metadata"]['dataType'] == "web-url")
+                //               ? (pageMarginVertical).heightBox
+                //               : (pageMarginVertical / 2).heightBox,
+                //           settings['titlePosition'] == "bottom" ? Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             crossAxisAlignment: CrossAxisAlignment.center,
+                //             children: [
+                //               (settings["metadata"]['dataType'] == "collection" ||
+                //                   settings["metadata"]['dataType'] == "web-url")
+                //                   ? const SizedBox.shrink()
+                //                   : Column(
+                //                 children: [
+                //                   12.heightBox,
+                //                   HomeProductsPrice(
+                //                     price: productInfo!.price,
+                //                   ),
+                //                 ],
+                //               ),
+                //               HomeProductsTitle(
+                //                 title: productInfo!.title,
+                //               ),
+                //             ],
+                //           ) : const SizedBox(),
+                //         ],
+                //       ),
+                //     );
+                //   }),
+                // ),
+              ],
+            );
     });
   }
 
@@ -277,34 +277,34 @@ class SingleImageWidget extends StatelessWidget {
             settings["web_url"] != null) {
           ///------ Open the Web
           Get.to(() => WebViewProduct(
-            productUrl: settings["web_url"],
-          ));
+                productUrl: settings["web_url"],
+              ));
         }
       },
       child: Padding(
         padding: settings['margin'] == true
             ? EdgeInsets.only(
-            left: pageMarginHorizontal / 1.5,
-            right: pageMarginHorizontal / 1.5,
-            bottom: settings['contentMargin'] == true
-                ? pageMarginVertical * 1.7
-                : pageMarginHorizontal / 1.5,
-            top: settings['contentMargin'] == true
-                ? pageMarginVertical * 2.1
-                : pageMarginHorizontal / 1.5)
+                left: pageMarginHorizontal / 1.5,
+                right: pageMarginHorizontal / 1.5,
+                bottom: settings['contentMargin'] == true
+                    ? pageMarginVertical * 1.7
+                    : pageMarginHorizontal / 1.5,
+                top: settings['contentMargin'] == true
+                    ? pageMarginVertical * 2.1
+                    : pageMarginHorizontal / 1.5)
             : settings['contentMargin'] == true
-            ? EdgeInsets.only(
-            top: pageMarginVertical * 1.5, bottom: pageMarginVertical)
-            : EdgeInsets.zero,
+                ? EdgeInsets.only(
+                    top: pageMarginVertical * 1.5, bottom: pageMarginVertical)
+                : EdgeInsets.zero,
         child: Container(
           width: double.maxFinite,
           height: settings['displayType'] == "normal"
               ? 300
               : settings['displayType'] == "vertical"
-              ? 400
-              : settings['displayType'] == "auto"
-              ? null
-              : 230,
+                  ? 400
+                  : settings['displayType'] == "auto"
+                      ? null
+                      : 230,
           decoration: BoxDecoration(
             borderRadius: settings['margin'] == true
                 ? BorderRadius.circular(5.r)
@@ -316,45 +316,45 @@ class SingleImageWidget extends StatelessWidget {
                 : BorderRadius.circular(0),
             child: settings['image'] != null
                 ? FadeInImage.memoryNetwork(
-              image: settings['image'],
-              // color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
-              // colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
-              fit: BoxFit.cover,
-              height: settings['displayType'] == "normal"
-                  ? 300
-                  : settings['displayType'] == "vertical"
-                  ? 600
-                  : settings['displayType'] == "auto"
-                  ? null
-                  : 230,
-              width: double.infinity,
-              imageErrorBuilder: (context, url, error) => Container(
-                color: Colors.grey.shade200,
-                // color: Colors.grey.shade200,
-                child: Center(
-                  child: SvgPicture.asset(
-                    Assets.icons.noImageIcon,
-                    height: 25.h,
-                  ),
-                ),
-              ),
+                    image: settings['image'],
+                    // color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
+                    // colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
+                    fit: BoxFit.cover,
+                    height: settings['displayType'] == "normal"
+                        ? 300
+                        : settings['displayType'] == "vertical"
+                            ? 600
+                            : settings['displayType'] == "auto"
+                                ? null
+                                : 230,
+                    width: double.infinity,
+                    imageErrorBuilder: (context, url, error) => Container(
+                      color: Colors.grey.shade200,
+                      // color: Colors.grey.shade200,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          Assets.icons.noImageIcon,
+                          height: 25.h,
+                        ),
+                      ),
+                    ),
 
-              // progressIndicatorBuilder:
-              //     (context, url, downloadProgress) =>
-              //     productShimmer(),
-              // errorWidget: (context, url, error) =>
-              // const Icon(Icons.error),
-              placeholder: kTransparentImage,
-            )
+                    // progressIndicatorBuilder:
+                    //     (context, url, downloadProgress) =>
+                    //     productShimmer(),
+                    // errorWidget: (context, url, error) =>
+                    // const Icon(Icons.error),
+                    placeholder: kTransparentImage,
+                  )
                 : Container(
-              color: Colors.grey.shade200,
-              child: Center(
-                child: SvgPicture.asset(
-                  Assets.icons.noImageIcon,
-                  height: 25.h,
-                ),
-              ),
-            ),
+                    color: Colors.grey.shade200,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        Assets.icons.noImageIcon,
+                        height: 25.h,
+                      ),
+                    ),
+                  ),
           ),
         ),
       ),
@@ -384,19 +384,19 @@ class SingleImageWidget extends StatelessWidget {
               Padding(
                 padding: settings['margin'] == true
                     ? EdgeInsets.only(
-                    left: pageMarginHorizontal / 1.5,
-                    right: pageMarginHorizontal / 1.5,
-                    bottom: settings['contentMargin'] == true
-                        ? pageMarginVertical
-                        : 0,
-                    top: settings['contentMargin'] == true
-                        ? pageMarginVertical
-                        : pageMarginHorizontal / 1.5)
+                        left: pageMarginHorizontal / 1.5,
+                        right: pageMarginHorizontal / 1.5,
+                        bottom: settings['contentMargin'] == true
+                            ? pageMarginVertical
+                            : 0,
+                        top: settings['contentMargin'] == true
+                            ? pageMarginVertical
+                            : pageMarginHorizontal / 1.5)
                     : settings['contentMargin'] == true
-                    ? EdgeInsets.only(
-                    top: pageMarginVertical + 15,
-                    bottom: pageMarginVertical - 5)
-                    : EdgeInsets.zero,
+                        ? EdgeInsets.only(
+                            top: pageMarginVertical + 15,
+                            bottom: pageMarginVertical - 5)
+                        : EdgeInsets.zero,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -405,10 +405,10 @@ class SingleImageWidget extends StatelessWidget {
                       height: settings['displayType'] == "normal"
                           ? 300
                           : settings['displayType'] == "vertical"
-                          ? 400
-                          : settings['displayType'] == "auto"
-                          ? null
-                          : 230,
+                              ? 400
+                              : settings['displayType'] == "auto"
+                                  ? null
+                                  : 230,
                       decoration: BoxDecoration(
                         borderRadius: settings['margin'] == true
                             ? BorderRadius.circular(5.r)
@@ -428,10 +428,10 @@ class SingleImageWidget extends StatelessWidget {
                                 height: settings['displayType'] == "normal"
                                     ? 300
                                     : settings['displayType'] == "vertical"
-                                    ? 600
-                                    : settings['displayType'] == "auto"
-                                    ? null
-                                    : 230,
+                                        ? 600
+                                        : settings['displayType'] == "auto"
+                                            ? null
+                                            : 230,
                                 width: double.infinity,
                               ),
                             ),
@@ -442,22 +442,22 @@ class SingleImageWidget extends StatelessWidget {
                               height: settings['displayType'] == "normal"
                                   ? 300
                                   : settings['displayType'] == "vertical"
-                                  ? 600
-                                  : settings['displayType'] == "auto"
-                                  ? null
-                                  : 230,
+                                      ? 600
+                                      : settings['displayType'] == "auto"
+                                          ? null
+                                          : 230,
                               width: double.infinity,
                               imageErrorBuilder: (context, url, error) =>
                                   Container(
-                                    color: Colors.grey.shade200,
-                                    // color: Colors.grey.shade200,
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        Assets.icons.noImageIcon,
-                                        height: 25.h,
-                                      ),
-                                    ),
+                                color: Colors.grey.shade200,
+                                // color: Colors.grey.shade200,
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    Assets.icons.noImageIcon,
+                                    height: 25.h,
                                   ),
+                                ),
+                              ),
                               // progressIndicatorBuilder:
                               //     (context, url, downloadProgress) =>
                               //     productShimmer(),
@@ -475,10 +475,10 @@ class SingleImageWidget extends StatelessWidget {
                         height: settings['displayType'] == "normal"
                             ? 300
                             : settings['displayType'] == "vertical"
-                            ? 400
-                            : settings['displayType'] == "auto"
-                            ? null
-                            : 230,
+                                ? 400
+                                : settings['displayType'] == "auto"
+                                    ? null
+                                    : 230,
                         // height: 400,
                         decoration: BoxDecoration(
                           color: settings['titlePosition'] == "center"
@@ -501,90 +501,90 @@ class SingleImageWidget extends StatelessWidget {
                   bottom: 0,
                   child: settings['titlePosition'] == "center"
                       ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      (settings["metadata"]['dataType'] == "collection" ||
-                          settings["metadata"]['dataType'] ==
-                              "web-url")
-                          ? const SizedBox.shrink()
-                          : Column(
-                        children: [
-                          12.heightBox,
-                          HomeProductsPrice(
-                            price: productInfo!.price,
-                            priceColor:
-                            AppColors.customWhiteTextColor,
-                          ),
-                        ],
-                      ),
-                      HomeProductsTitle(
-                        title: productInfo!.title,
-                        textColor: AppColors.customWhiteTextColor,
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            (settings["metadata"]['dataType'] == "collection" ||
+                                    settings["metadata"]['dataType'] ==
+                                        "web-url")
+                                ? const SizedBox.shrink()
+                                : Column(
+                                    children: [
+                                      12.heightBox,
+                                      HomeProductsPrice(
+                                        price: productInfo!.price,
+                                        priceColor:
+                                            AppColors.customWhiteTextColor,
+                                      ),
+                                    ],
+                                  ),
+                            HomeProductsTitle(
+                              title: productInfo!.title,
+                              textColor: AppColors.customWhiteTextColor,
+                            ),
 
-                      //------ Price
-                      // productInfo.price != 0.0 ?  Text.rich(
-                      //   TextSpan(
-                      //     children: <InlineSpan>[
-                      //       WidgetSpan(
-                      //         child: Padding(
-                      //           padding: const EdgeInsets.only(right: 10), // Add the desired space here
-                      //           child: Text(
-                      //             ' \$80',
-                      //             style: context.text.bodyLarge?.copyWith(
-                      //               color: AppColors.customGreyTextColor,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       WidgetSpan(
-                      //         child: Text(
-                      //           '\$100',
-                      //           style: context.text.bodyLarge?.copyWith(
-                      //             color: AppColors.customGreyTextColor,
-                      //             decoration: TextDecoration.lineThrough,
-                      //           ),
-                      //           // style: TextStyle(
-                      //           //   color: AppColors.customIconColor,
-                      //           //   fontFamily: "Sofia Pro Regular",
-                      //           //   decoration: TextDecoration.lineThrough,
-                      //           // ),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ) : const SizedBox.shrink(),
-                    ],
-                  )
+                            //------ Price
+                            // productInfo.price != 0.0 ?  Text.rich(
+                            //   TextSpan(
+                            //     children: <InlineSpan>[
+                            //       WidgetSpan(
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.only(right: 10), // Add the desired space here
+                            //           child: Text(
+                            //             ' \$80',
+                            //             style: context.text.bodyLarge?.copyWith(
+                            //               color: AppColors.customGreyTextColor,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       WidgetSpan(
+                            //         child: Text(
+                            //           '\$100',
+                            //           style: context.text.bodyLarge?.copyWith(
+                            //             color: AppColors.customGreyTextColor,
+                            //             decoration: TextDecoration.lineThrough,
+                            //           ),
+                            //           // style: TextStyle(
+                            //           //   color: AppColors.customIconColor,
+                            //           //   fontFamily: "Sofia Pro Regular",
+                            //           //   decoration: TextDecoration.lineThrough,
+                            //           // ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ) : const SizedBox.shrink(),
+                          ],
+                        )
                       : const SizedBox())
             ],
           ),
           (settings["metadata"]['dataType'] == "collection" ||
-              settings["metadata"]['dataType'] == "web-url")
+                  settings["metadata"]['dataType'] == "web-url")
               ? (pageMarginVertical).heightBox
               : (pageMarginVertical / 2).heightBox,
           settings['titlePosition'] == "bottom"
               ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              (settings["metadata"]['dataType'] == "collection" ||
-                  settings["metadata"]['dataType'] == "web-url")
-                  ? const SizedBox.shrink()
-                  : Column(
-                children: [
-                  12.heightBox,
-                  HomeProductsPrice(
-                    price: productInfo!.price,
-                  ),
-                ],
-              ),
-              HomeProductsTitle(
-                title: productInfo!.title,
-              ),
-            ],
-          )
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    (settings["metadata"]['dataType'] == "collection" ||
+                            settings["metadata"]['dataType'] == "web-url")
+                        ? const SizedBox.shrink()
+                        : Column(
+                            children: [
+                              12.heightBox,
+                              HomeProductsPrice(
+                                price: productInfo!.price,
+                              ),
+                            ],
+                          ),
+                    HomeProductsTitle(
+                      title: productInfo!.title,
+                    ),
+                  ],
+                )
               : const SizedBox(),
         ],
       ),

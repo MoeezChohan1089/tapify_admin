@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../global_controllers/app_config/config_controller.dart';
 import '../../../utils/constants/colors.dart';
@@ -19,7 +19,7 @@ class ProductPhotoGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController pageController =
-    PageController(initialPage: productDetailLogic.currentImageIndex.value);
+        PageController(initialPage: productDetailLogic.currentImageIndex.value);
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -50,7 +50,7 @@ class ProductPhotoGallery extends StatelessWidget {
                   value: event == null
                       ? 0
                       : event.cumulativeBytesLoaded /
-                      event.expectedTotalBytes!.toInt(),
+                          event.expectedTotalBytes!.toInt(),
                 ),
               ),
             ),
@@ -75,46 +75,46 @@ class ProductPhotoGallery extends StatelessWidget {
           product?.images.length == 1 ? 0.heightBox : 10.heightBox,
           product?.images.length != 1
               ? SafeArea(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                  product?.images.length ?? 0,
-                      (index) => Obx(() {
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10),
-                          child: AnimatedContainer(
-                            duration:
-                            const Duration(milliseconds: 250),
-                            height: 7.h,
-                            width: productDetailLogic
-                                .currentImageIndex.value ==
-                                index
-                                ? 25.h
-                                : 7.h,
-                            decoration: productDetailLogic
-                                .currentImageIndex.value ==
-                                index
-                                ? BoxDecoration(
-                                color: AppConfig
-                                    .to.primaryColor.value,
-                                borderRadius:
-                                BorderRadius.circular(50.r))
-                                : BoxDecoration(
-                                color: AppColors.appBordersColor,
-                                borderRadius:
-                                BorderRadius.circular(50.r)),
-                          ),
-                        ),
-                        4.widthBox
-                      ],
-                    );
-                  })),
-            ),
-          )
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                        product?.images.length ?? 0,
+                        (index) => Obx(() {
+                              return Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: AnimatedContainer(
+                                      duration:
+                                          const Duration(milliseconds: 250),
+                                      height: 7.h,
+                                      width: productDetailLogic
+                                                  .currentImageIndex.value ==
+                                              index
+                                          ? 25.h
+                                          : 7.h,
+                                      decoration: productDetailLogic
+                                                  .currentImageIndex.value ==
+                                              index
+                                          ? BoxDecoration(
+                                              color: AppConfig
+                                                  .to.primaryColor.value,
+                                              borderRadius:
+                                                  BorderRadius.circular(50.r))
+                                          : BoxDecoration(
+                                              color: AppColors.appBordersColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(50.r)),
+                                    ),
+                                  ),
+                                  4.widthBox
+                                ],
+                              );
+                            })),
+                  ),
+                )
               : const SizedBox.shrink(),
         ],
       ),

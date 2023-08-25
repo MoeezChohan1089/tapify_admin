@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/auth/logic.dart';
-import 'package:tapify/src/modules/auth/view_forgot_password.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/modules/auth/logic.dart';
+import 'package:tapify_admin/src/modules/auth/view_forgot_password.dart';
+import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
-import '../../custom_widgets/customTextField.dart';
 import '../../custom_widgets/custom_elevated_button.dart';
 import '../../custom_widgets/custom_text_field.dart';
 import '../../utils/constants/colors.dart';
 import '../cart/logic.dart';
-import '../home/view.dart';
-import 'components/custom_button.dart';
 import 'components/or_divider.dart';
-import 'components/otherAccount.dart';
 
 class SignInPage extends StatelessWidget {
-
   SignInPage({Key? key}) : super(key: key);
-
 
   final logic = Get.find<AuthLogic>();
 
@@ -67,21 +60,14 @@ class SignInPage extends StatelessWidget {
       // ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-            horizontal: pageMarginHorizontal,
-            vertical: pageMarginVertical
-        ),
+            horizontal: pageMarginHorizontal, vertical: pageMarginVertical),
         child: Obx(() {
           return Form(
             key: logic.signInFormKey,
             child: Column(
-
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
-
-
                 30.heightBox,
-
 
                 CustomTextField(
                   controller: logic.emailTextController,
@@ -90,8 +76,7 @@ class SignInPage extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Email is required';
-                    }
-                    else if (!GetUtils.isEmail(value)) {
+                    } else if (!GetUtils.isEmail(value)) {
                       return 'Enter valid email address';
                     }
                     return null;
@@ -100,7 +85,6 @@ class SignInPage extends StatelessWidget {
 
                 20.heightBox,
 
-
                 CustomTextField(
                   controller: logic.passwordTextController,
                   hint: "Password",
@@ -108,18 +92,16 @@ class SignInPage extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password is required';
-                    }
-                    else if (value
-                        .toString()
-                        .length < 8) {
+                    } else if (value.toString().length < 8) {
                       return 'Password must be 8 characters';
                     }
                     return null;
                   },
                   suffixIcon: IconButton(
                     icon: Icon(
-                      logic.obscureText2.value ? Icons.visibility_off : Icons
-                          .visibility,
+                      logic.obscureText2.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: AppColors.textFieldIconsColor,
                     ),
                     onPressed: () {
@@ -128,23 +110,20 @@ class SignInPage extends StatelessWidget {
                   ),
                 ),
 
-
                 30.heightBox,
 
-
                 GlobalElevatedButton(
-                  text: "sign in", onPressed: () {
-                      if(logic.signInFormKey.currentState!.validate()){
-                        AuthLogic.to.isProcessing.value = true;
-                        AuthLogic.to.signInUser(context: context);
-                      }
-                },
+                  text: "sign in",
+                  onPressed: () {
+                    if (logic.signInFormKey.currentState!.validate()) {
+                      AuthLogic.to.isProcessing.value = true;
+                      AuthLogic.to.signInUser(context: context);
+                    }
+                  },
                   isLoading: logic.isProcessing.value,
                 ),
 
-
                 15.heightBox,
-
 
                 GestureDetector(
                   onTap: () {
@@ -153,15 +132,17 @@ class SignInPage extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => ForgotPasswordPage()));
                   },
-                  child: Text("Forgot password?",
+                  child: Text(
+                    "Forgot password?",
                     style: context.text.bodyMedium,
                   ),
                 ),
 
-                (CartLogic.to.getAccCreationSetting.contains("Required") || logic.isCheckoutContinue.isFalse) ?  const SizedBox() : const OrDivider(),
+                (CartLogic.to.getAccCreationSetting.contains("Required") ||
+                        logic.isCheckoutContinue.isFalse)
+                    ? const SizedBox()
+                    : const OrDivider(),
                 // const ContinueWithSocial(),
-
-
               ],
             ),
           );

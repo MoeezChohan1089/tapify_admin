@@ -4,8 +4,9 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/custom_widgets/product_viewer_web.dart';
-import 'package:tapify/src/modules/home/models/product_info_model.dart';
+import 'package:tapify_admin/src/custom_widgets/product_viewer_web.dart';
+import 'package:tapify_admin/src/modules/home/models/product_info_model.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:video_player/video_player.dart';
 
 // import 'package:shopify_flutter/models/src/product/product.dart';
@@ -13,18 +14,10 @@ import 'package:video_player/video_player.dart';
 
 import '../../api_services/shopify_flutter/models/src/product/product.dart';
 import '../../custom_widgets/DateDuration.dart';
-import '../../global_controllers/database_controller.dart';
 import '../../utils/global_instances.dart';
 import '../category/view_category_products.dart';
-import '../product_detail/view.dart';
 import '../product_detail/view_product_detail.dart';
-import 'components/circle_product_list.dart';
-import 'components/custom_divider.dart';
-import 'components/marquee_text.dart';
-import 'components/search_bar.dart';
-import 'models/model_home_ui_settings.dart';
 import 'state.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   static HomeLogic get to => Get.find();
@@ -48,13 +41,12 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   var dateTime;
   var cdate;
   DateTime startSelectedDate = DateTime.now();
-  final GlobalKey<CarouselSliderState> carouselKey = GlobalKey<CarouselSliderState>();
+  final GlobalKey<CarouselSliderState> carouselKey =
+      GlobalKey<CarouselSliderState>();
   late VideoPlayerController controller;
   RxBool videoEnded = false.obs;
   RxBool isFirstTime = true.obs;
   RxBool isClicked = false.obs;
-
-
 
   final ScrollController circleProductScroll = ScrollController();
 
@@ -62,25 +54,30 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   RxString widgetShopifyCode = "".obs;
   RxString widgetCustomerCode = "".obs;
 
-  void resetCarosal(){
+  void resetCarosal() {
     currentImageIndex.value = 0;
   }
 
-  initializeValueOfVideo(settings){
+  initializeValueOfVideo(settings) {
     print("value of state of loop: ${settings['loop']}");
-    controller = VideoPlayerController.networkUrl(Uri.parse(settings['video'] ?? ""), )
+    controller = VideoPlayerController.networkUrl(
+      Uri.parse(settings['video'] ?? ""),
+    )
       ..addListener(() {
         // This condition checks if the video has reached its end
-        if (controller.value.position == controller.value.duration && settings['loop'] == false) {
-          if (!videoEnded.value) { // This check ensures setState is only called once at the video's end.
+        if (controller.value.position == controller.value.duration &&
+            settings['loop'] == false) {
+          if (!videoEnded.value) {
+            // This check ensures setState is only called once at the video's end.
             videoEnded.value = true;
             controller.pause();
           }
         } else if (controller.value.isPlaying) {
-          if (videoEnded.value) { // If video started playing again, update videoEnded
+          if (videoEnded.value) {
+            // If video started playing again, update videoEnded
             videoEnded.value = false;
           }
-        }else if (isFirstTime.value && controller.value.isPlaying) {
+        } else if (isFirstTime.value && controller.value.isPlaying) {
           isFirstTime.value = false;
         }
       })
@@ -91,9 +88,7 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
         }
         controller.videoPlayerOptions!.webOptions!.controls;
         // Auto play the video if required
-
       });
-
 
     if (settings['loop'] == true) {
       controller.setLooping(true);
@@ -105,7 +100,8 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   void togglePlayPause() {
     if (controller.value.isPlaying) {
       controller.pause();
-      isClicked.value = false;  // Considering it's an RxBool from GetX or similar
+      isClicked.value =
+          false; // Considering it's an RxBool from GetX or similar
     } else {
       controller.play();
       isClicked.value = true;
@@ -113,7 +109,6 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   }
 
   calculationFun(dynamic settings) {
-
     DateTime startDate = DateTime.parse(settings['startDate']);
     DateTime endDate = DateTime.parse(settings['endDate']);
 
@@ -126,18 +121,23 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     if (convertstartDate.isBefore(now)) {
       convertstartDate = tz.TZDateTime.from(DateTime.now(), pacificTimeZone);
     }
-    DateTime splitDate = DateTime(convertstartDate.year, convertstartDate.month, convertstartDate.day, convertstartDate.hour, convertstartDate.minute, convertstartDate.second);
-
+    DateTime splitDate = DateTime(
+        convertstartDate.year,
+        convertstartDate.month,
+        convertstartDate.day,
+        convertstartDate.hour,
+        convertstartDate.minute,
+        convertstartDate.second);
 
     Duration difference1 = endDate.difference(splitDate);
-
 
     int days = difference1.inDays;
     int hours = difference1.inHours.remainder(24);
     int minutes = difference1.inMinutes.remainder(60);
     int seconds = difference1.inSeconds.remainder(60);
 
-    countdownDuration1.value = Duration(days: days, hours: hours, minutes: minutes, seconds: seconds);
+    countdownDuration1.value =
+        Duration(days: days, hours: hours, minutes: minutes, seconds: seconds);
 
     reset1();
     startTimer1();
@@ -180,52 +180,39 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     // storeSeconds(duration1);
   }
 
-
-  resetTheScrolls(){
+  resetTheScrolls() {
     circleProductScroll.jumpTo(0);
   }
-
-
-
 
   ///---------- Product On Tap Navigator
   productDetailNavigator(
       {required BuildContext context,
-        required ProductInfo info,
-        required String dataType}) {
+      required ProductInfo info,
+      required String dataType}) {
     if (dataType == "product") {
       //------ If dataType is Product then Product Detail
       print("value of ID: ${info.id}");
-      Get.to(() => NewProductDetails(
-        productId: info.id.toString(),
-      ),);
-
+      Get.to(
+        () => NewProductDetails(
+          productId: info.id.toString(),
+        ),
+      );
     } else if (dataType == "collection") {
       //---------- if dataType is Collection then Products by Collection
-      Get.to(() => CategoryProducts(
-          collectionID: info.id,
-          categoryName: info.title));
-
-
-
-
+      Get.to(() =>
+          CategoryProducts(collectionID: info.id, categoryName: info.title));
     } else {
       //-------- if Web URL then open web
-      if(info.webUrl != "") {
+      if (info.webUrl != "") {
         Get.to(() => WebViewProduct(
-          productUrl: info.webUrl,
-        ));
+              productUrl: info.webUrl,
+            ));
       }
-
-
-
     }
   }
 
   ///------- product carousel
   RxInt currentCarouselIndex = 1.obs;
-
-
 
   ///--------- Products by Tags Logic
   RxInt selectedCollectionIndex = 0.obs;
@@ -235,7 +222,6 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
 
   getProducts({bool isChangingCategory = true}) async {
     log("====> Build Method of - Get Products Called <====");
-
 
     // if(isChangingCategory || productsByTagsList.value.isEmpty) {
     isLoading.value = true;
@@ -265,9 +251,7 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  void initializeAndPlayVideo(settings) {
-
-  }
+  void initializeAndPlayVideo(settings) {}
 
 // RxBool isLoading = true.obs;
 // RxBool innerLoader = false.obs;

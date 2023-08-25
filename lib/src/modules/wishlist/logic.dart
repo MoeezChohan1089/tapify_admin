@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/product_detail/logic.dart';
+import 'package:tapify_admin/src/modules/product_detail/logic.dart';
 // import 'package:shopify_flutter/models/src/product/product.dart';
 import 'package:vibration/vibration.dart';
 

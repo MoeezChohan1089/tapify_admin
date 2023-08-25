@@ -1,22 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../../custom_widgets/customTextField.dart';
 import '../../custom_widgets/custom_elevated_button.dart';
 import '../../custom_widgets/custom_text_field.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../utils/constants/assets.dart';
 import '../../utils/constants/margins_spacnings.dart';
-import 'components/custom_button.dart';
 import 'logic.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
@@ -36,12 +30,12 @@ class ForgotPasswordPage extends StatelessWidget {
               image: AppConfig.to.homeAppBarLogo.value,
               fit: BoxFit.cover,
               placeholder: kTransparentImage,
-              imageErrorBuilder: (context, url,
-                  error) => Container(
+              imageErrorBuilder: (context, url, error) => Container(
                 color: Colors.grey.shade200,
                 // color: Colors.grey.shade200,
                 child: Center(
-                  child: SvgPicture.asset(Assets.icons.noImageIcon,
+                  child: SvgPicture.asset(
+                    Assets.icons.noImageIcon,
                     height: 25.h,
                   ),
                 ),
@@ -73,11 +67,12 @@ class ForgotPasswordPage extends StatelessWidget {
               Get.back();
             },
             icon: const Icon(
-              Icons.close, color: AppColors.customBlackTextColor,)),
+              Icons.close,
+              color: AppColors.customBlackTextColor,
+            )),
       ),
       body: Column(
         children: [
-
           // 70.heightBox,
           // Row(
           //   children: [
@@ -128,27 +123,20 @@ class ForgotPasswordPage extends StatelessWidget {
           Form(
             key: logic.forgetPassFormKey,
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal
-              ),
+              padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-
-                  Text("Forget password?",
+                  Text(
+                    "Forget password?",
                     style: context.text.labelLarge?.copyWith(fontSize: 16.5.sp),
                   ),
                   5.heightBox,
                   Text("Enter your email that associated with your account",
                       style: context.text.bodyMedium?.copyWith(
-                          fontSize: 14.5.sp,
-                          color: AppColors.appHintColor
-                      )
-                  ),
+                          fontSize: 14.5.sp, color: AppColors.appHintColor)),
 
                   30.heightBox,
-
 
                   CustomTextField(
                     controller: logic.emailForgotController,
@@ -156,14 +144,12 @@ class ForgotPasswordPage extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Email is required';
-                      }
-                      else if (!GetUtils.isEmail(value)) {
+                      } else if (!GetUtils.isEmail(value)) {
                         return 'Enter valid email address';
                       }
                       return null;
                     },
                   ),
-
 
                   // CustomTextFieldC(
                   //   controller: logic.emailForgotController,
@@ -193,7 +179,6 @@ class ForgotPasswordPage extends StatelessWidget {
 
                   30.heightBox,
 
-
                   Obx(() {
                     return GlobalElevatedButton(
                       text: "Submit",
@@ -206,7 +191,6 @@ class ForgotPasswordPage extends StatelessWidget {
                       isLoading: AuthLogic.to.isProcessing.value,
                     );
                   }),
-
 
                   // Container(
                   //   width: context.deviceWidth,
@@ -250,8 +234,6 @@ class ForgotPasswordPage extends StatelessWidget {
                   //   // ),
                   //
                   // ),
-
-
                 ],
               ),
             ),

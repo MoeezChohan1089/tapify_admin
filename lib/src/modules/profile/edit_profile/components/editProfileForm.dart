@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:vibration/vibration.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
-import '../../../../custom_widgets/customTextField.dart';
 import '../../../../custom_widgets/custom_elevated_button.dart';
-import '../../../../custom_widgets/custom_snackbar.dart';
 import '../../../../custom_widgets/custom_text_field.dart';
 import '../../../../global_controllers/database_controller.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/margins_spacnings.dart';
-import '../../../auth/components/custom_button.dart';
-import '../../components/delete_account_dialog.dart';
 import '../../logic.dart';
 import '../logic.dart';
 
@@ -39,20 +32,20 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       logic.personalInformation.value = LocalDatabase.to.box.read('userInfo');
       if (logic.personalInformation.value.isNotEmpty) {
-        logic.editFirstController.text = logic.personalInformation.value[0]['firstname'];
-        logic.editLastController.text = logic.personalInformation.value[0]['lastname'];
-        logic.editEmailController.text = logic.personalInformation.value[0]['email'];
+        logic.editFirstController.text =
+            logic.personalInformation.value[0]['firstname'];
+        logic.editLastController.text =
+            logic.personalInformation.value[0]['lastname'];
+        logic.editEmailController.text =
+            logic.personalInformation.value[0]['email'];
       }
     });
     // logic.getDynamicHomeView();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-
       return Form(
         key: logic.formKeyValue,
         child: Padding(
@@ -68,9 +61,11 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                     child: CustomTextField(
                       controller: logic.editFirstController,
                       hint: "First Name",
-                      onChanged: (e){
-                        (logic.editFirstController.text != logic.personalInformation.value[0]['firstname'])?
-                        logic.isChange.value = true:logic.isChange.value = false;
+                      onChanged: (e) {
+                        (logic.editFirstController.text !=
+                                logic.personalInformation.value[0]['firstname'])
+                            ? logic.isChange.value = true
+                            : logic.isChange.value = false;
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -91,9 +86,11 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                         }
                         return null;
                       },
-                      onChanged: (e){
-                        (logic.editLastController.text != logic.personalInformation.value[0]['lastname'])?
-                        logic.isChange.value = true:logic.isChange.value = false;
+                      onChanged: (e) {
+                        (logic.editLastController.text !=
+                                logic.personalInformation.value[0]['lastname'])
+                            ? logic.isChange.value = true
+                            : logic.isChange.value = false;
                       },
                     ),
                   ),
@@ -104,9 +101,11 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 controller: logic.editEmailController,
                 hint: "Email",
                 keyBoardType: TextInputType.emailAddress,
-                onChanged: (e){
-                  logic.editEmailController.text != logic.personalInformation.value[0]['email']?
-                      logic.isChange.value = true:logic.isChange.value = false;
+                onChanged: (e) {
+                  logic.editEmailController.text !=
+                          logic.personalInformation.value[0]['email']
+                      ? logic.isChange.value = true
+                      : logic.isChange.value = false;
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -142,9 +141,11 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 controller: logic.editPassController,
                 hint: "Password",
                 isObscure: logic.obscureText1.value,
-                onChanged: (e){
-                  logic.editEmailController.text != logic.personalInformation.value[0]['email']?
-                  logic.isChange.value = true:logic.isChange.value = false;
+                onChanged: (e) {
+                  logic.editEmailController.text !=
+                          logic.personalInformation.value[0]['email']
+                      ? logic.isChange.value = true
+                      : logic.isChange.value = false;
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -154,8 +155,9 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 },
                 suffixIcon: IconButton(
                   icon: Icon(
-                    logic.obscureText1.value ? Icons.visibility_off : Icons
-                        .visibility,
+                    logic.obscureText1.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                     color: AppColors.textFieldIconsColor,
                   ),
                   onPressed: () {
@@ -168,9 +170,11 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 controller: logic.editConfirmController,
                 hint: "Confirm Password",
                 isObscure: logic.obscureText2.value,
-                onChanged: (e){
-                  logic.editEmailController.text != logic.personalInformation.value[0]['email']?
-                  logic.isChange.value = true:logic.isChange.value = false;
+                onChanged: (e) {
+                  logic.editEmailController.text !=
+                          logic.personalInformation.value[0]['email']
+                      ? logic.isChange.value = true
+                      : logic.isChange.value = false;
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -180,8 +184,9 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 },
                 suffixIcon: IconButton(
                   icon: Icon(
-                    logic.obscureText2.value ? Icons.visibility_off : Icons
-                        .visibility,
+                    logic.obscureText2.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                     color: AppColors.textFieldIconsColor,
                   ),
                   onPressed: () {
@@ -195,25 +200,29 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 width: double.maxFinite,
                 child: GlobalElevatedButton(
                   text: "Edit Profile",
-                    onPressed: () {
-                  if (logic.editFirstController.text != logic.personalInformation.value[0]['firstname'] ||
-                      logic.editLastController.text != logic.personalInformation.value[0]['lastname'] ||
-                      logic.editEmailController.text != logic.personalInformation.value[0]['email']) {
-                    HapticFeedback.lightImpact();
-                    print("name: ${logic.editFirstController.text} ==== ${logic.personalInformation.value[0]['firstname']}");
-                    print("name: ${logic.editLastController.text} ==== ${logic.personalInformation.value[0]['lastname']}");
-                    print("name: ${logic.editEmailController.text} == ${logic.personalInformation.value[0]['email']}");
-                    logic.updateNewProfile(context: context);
-                  } else {
-                    // Profile information is the same, show message
-                    // showToastMessage(message: "Your profile is the same. No changes were made.");
-                  }
-                },
+                  onPressed: () {
+                    if (logic.editFirstController.text !=
+                            logic.personalInformation.value[0]['firstname'] ||
+                        logic.editLastController.text !=
+                            logic.personalInformation.value[0]['lastname'] ||
+                        logic.editEmailController.text !=
+                            logic.personalInformation.value[0]['email']) {
+                      HapticFeedback.lightImpact();
+                      print(
+                          "name: ${logic.editFirstController.text} ==== ${logic.personalInformation.value[0]['firstname']}");
+                      print(
+                          "name: ${logic.editLastController.text} ==== ${logic.personalInformation.value[0]['lastname']}");
+                      print(
+                          "name: ${logic.editEmailController.text} == ${logic.personalInformation.value[0]['email']}");
+                      logic.updateNewProfile(context: context);
+                    } else {
+                      // Profile information is the same, show message
+                      // showToastMessage(message: "Your profile is the same. No changes were made.");
+                    }
+                  },
                   isLoading: logic.isProcessing.value,
-                  isDisable: logic.isChange.value?false:true,
+                  isDisable: logic.isChange.value ? false : true,
                 ),
-
-
 
                 // ElevatedButton(
                 //     onPressed: () async {
@@ -247,8 +256,6 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
                 //           color: Colors.white, height: 1.1),)),
               ),
 
-
-
               // Padding(
               //   padding: EdgeInsets.symmetric(
               //       horizontal: pageMarginHorizontal,
@@ -276,10 +283,6 @@ class _EditProfileFormScreenState extends State<EditProfileFormScreen> {
               //     ),
               //   ),
               // ),
-
-
-
-
 
               // Padding(
               //   padding: EdgeInsets.symmetric(

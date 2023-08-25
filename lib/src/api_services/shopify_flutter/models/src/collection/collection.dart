@@ -1,8 +1,9 @@
-import '../../models.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/product_variant/product_variant.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/products/products.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/product_variant/product_variant.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/products/products.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
+
+import '../../models.dart';
 
 part 'collection.freezed.dart';
 part 'collection.g.dart';

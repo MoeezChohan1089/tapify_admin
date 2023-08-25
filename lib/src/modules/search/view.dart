@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../utils/constants/assets.dart';

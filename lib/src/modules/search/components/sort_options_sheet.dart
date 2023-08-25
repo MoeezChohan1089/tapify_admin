@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/global_controllers/app_config/config_controller.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../api_services/shopify_flutter/enums/enums.dart';
 import '../../../custom_widgets/custom_elevated_button.dart';

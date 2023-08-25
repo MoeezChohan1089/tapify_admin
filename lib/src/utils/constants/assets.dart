@@ -73,6 +73,11 @@ class _IconAssets {
   final String noImageIcon = "assets/icons/no-image-icon.svg";
   final String cartIconClearAll = "assets/icons/Group 20247.svg";
   final String discountIcon = "assets/icons/discount.svg";
+  final String notificationIcon = "assets/icons/Group 22151.svg";
+  final String messageIcon = "assets/icons/Group 22149.svg";
+  final String profileIcon = "assets/icons/Group 22147.svg";
+  final String supportIcon = "assets/icons/Group 22145.svg";
+  final String arrowIcon = "assets/icons/arrow.svg";
   // final String profileIcon = "assets/icons/profile.svg";
 
   //--------- Dynamic Icons Selection

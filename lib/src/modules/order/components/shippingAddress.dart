@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../api_services/shopify_flutter/models/models.dart';
-import '../../../utils/constants/colors.dart';
 import '../logic.dart';
 
 class shippingAddressScreen extends StatefulWidget {
   final Order? orderDetailsShipping;
-  shippingAddressScreen({Key? key, this.orderDetailsShipping}) : super(key: key);
+  shippingAddressScreen({Key? key, this.orderDetailsShipping})
+      : super(key: key);
 
   @override
   State<shippingAddressScreen> createState() => _shippingAddressScreenState();
@@ -26,11 +26,17 @@ class _shippingAddressScreenState extends State<shippingAddressScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text("Shipping address",
-            style: context.text.labelMedium?.copyWith(fontSize: 14.5.sp),),
+          Text(
+            "Shipping address",
+            style: context.text.labelMedium?.copyWith(fontSize: 14.5.sp),
+          ),
           8.heightBox,
-          widget.orderDetailsShipping?.shippingAddress.address1 != null? Text("${widget.orderDetailsShipping?.shippingAddress.address1}",
-            style: context.text.bodyMedium?.copyWith(height: 1.2),):const SizedBox()
+          widget.orderDetailsShipping?.shippingAddress.address1 != null
+              ? Text(
+                  "${widget.orderDetailsShipping?.shippingAddress.address1}",
+                  style: context.text.bodyMedium?.copyWith(height: 1.2),
+                )
+              : const SizedBox()
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tapify/src/modules/order/logic.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../../utils/constants/colors.dart';
@@ -11,13 +10,15 @@ const kTileHeight = 50.0;
 class PackageDeliveryTrackingPage extends StatefulWidget {
   String? indexState;
 
-   PackageDeliveryTrackingPage({super.key, this.indexState});
+  PackageDeliveryTrackingPage({super.key, this.indexState});
 
   @override
-  State<PackageDeliveryTrackingPage> createState() => _PackageDeliveryTrackingPageState();
+  State<PackageDeliveryTrackingPage> createState() =>
+      _PackageDeliveryTrackingPageState();
 }
 
-class _PackageDeliveryTrackingPageState extends State<PackageDeliveryTrackingPage> {
+class _PackageDeliveryTrackingPageState
+    extends State<PackageDeliveryTrackingPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -25,7 +26,7 @@ class _PackageDeliveryTrackingPageState extends State<PackageDeliveryTrackingPag
       itemCount: 1,
       itemBuilder: (context, index) {
         final data = _data(index + 1, widget.indexState!);
-        return  _DeliveryProcesses(processes: data.deliveryProcesses);
+        return _DeliveryProcesses(processes: data.deliveryProcesses);
       },
     );
   }
@@ -59,17 +60,15 @@ class _DeliveryProcesses extends StatelessWidget {
           connectionDirection: ConnectionDirection.before,
           itemCount: processes.length,
           contentsBuilder: (_, index) {
-
             return Padding(
               padding: EdgeInsets.only(left: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    processes[index].name,
-                    style: context.text.titleMedium?.copyWith(fontSize: 14.sp)
-                  ),
+                  Text(processes[index].name,
+                      style:
+                          context.text.titleMedium?.copyWith(fontSize: 14.sp)),
                   35.heightBox,
                 ],
               ),
@@ -92,7 +91,9 @@ class _DeliveryProcesses extends StatelessWidget {
             }
           },
           connectorBuilder: (_, index, ___) => SolidLineConnector(
-            color: processes[index].isCompleted ? AppColors.customTimeLineColor : null,
+            color: processes[index].isCompleted
+                ? AppColors.customTimeLineColor
+                : null,
           ),
         ),
       ),
@@ -102,22 +103,24 @@ class _DeliveryProcesses extends StatelessWidget {
 
 _OrderInfo _data(int id, String index) {
   String? fulfillmentStatus = index;
-  return    _OrderInfo(
+  return _OrderInfo(
     id: id,
     date: DateTime.now(),
     driverInfo: _DriverInfo(
       name: 'Philipe',
       thumbnailUrl:
-      'https://i.pinimg.com/originals/08/45/81/084581e3155d339376bf1d0e17979dc6.jpg',
+          'https://i.pinimg.com/originals/08/45/81/084581e3155d339376bf1d0e17979dc6.jpg',
     ),
     deliveryProcesses: [
       _DeliveryProcess(
         'Order Placed',
-        isCompleted: fulfillmentStatus == 'UNFULFILLED' || fulfillmentStatus == 'FULFILLED',
+        isCompleted: fulfillmentStatus == 'UNFULFILLED' ||
+            fulfillmentStatus == 'FULFILLED',
       ),
       _DeliveryProcess(
         'In Progress',
-        isCompleted: fulfillmentStatus == 'UNFULFILLED' || fulfillmentStatus == 'FULFILLED',
+        isCompleted: fulfillmentStatus == 'UNFULFILLED' ||
+            fulfillmentStatus == 'FULFILLED',
       ),
       _DeliveryProcess(
         'Shipped',
@@ -154,10 +157,10 @@ class _DriverInfo {
 
 class _DeliveryProcess {
   const _DeliveryProcess(
-      this.name, {
-        this.messages = const [],
-        this.isCompleted = false,
-      });
+    this.name, {
+    this.messages = const [],
+    this.isCompleted = false,
+  });
 
   const _DeliveryProcess.complete()
       : this.name = 'Done',

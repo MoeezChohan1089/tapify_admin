@@ -3,10 +3,10 @@
 // import 'package:shopify_flutter/models/src/product/product_variant/product_variant.dart';
 // import 'package:shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/metafield/metafield.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/option/option.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/product_variant/product_variant.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/metafield/metafield.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/option/option.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/product_variant/product_variant.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/shopify_image/shopify_image.dart';
 
 import 'associated_collections/associated_collections.dart';
 
@@ -48,14 +48,14 @@ class Product with _$Product {
   double get compareAtPrice => productVariants.isEmpty
       ? 0
       : (productVariants.first.compareAtPrice == null
-      ? 0
-      : productVariants.first.compareAtPrice!.amount);
+          ? 0
+          : productVariants.first.compareAtPrice!.amount);
 
   String get compareAtPriceFormatted => productVariants.isEmpty
       ? ''
       : (productVariants.first.compareAtPrice == null
-      ? ''
-      : productVariants.first.compareAtPrice!.formattedPrice);
+          ? ''
+          : productVariants.first.compareAtPrice!.formattedPrice);
   String get image => images.isEmpty
       ? ''
       // ? 'https://trello-attachments.s3.amazonaws.com/5d64f19a7cd71013a9a418cf/640x480/1dfc14f78ab0dbb3de0e62ae7ebded0c/placeholder.jpg'
@@ -67,13 +67,13 @@ class Product with _$Product {
   /// Checks if the product is available for sale by checking its variants availability and quantity
   bool get isAvailableForSale {
     final temp =
-    productVariants.where((e) => e.title == 'Default Title').toList();
+        productVariants.where((e) => e.title == 'Default Title').toList();
     if (temp.isNotEmpty) {
       return temp.first.availableForSale && temp.first.quantityAvailable > 0;
     } else {
       bool isAvailable = false;
       final variants =
-      productVariants.where((e) => e.title != 'Default Title').toList();
+          productVariants.where((e) => e.title != 'Default Title').toList();
       for (int i = 0; i < variants.length; i++) {
         if (variants[i].availableForSale && variants[i].quantityAvailable > 0) {
           isAvailable = true;

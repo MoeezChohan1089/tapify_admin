@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
@@ -20,19 +21,22 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.customWhiteTextColor,
       appBar: AppBar(
-        toolbarHeight: 100,
-        title: SvgPicture.asset(Assets.icons.appLogoIcon),
-            centerTitle: true,
+        title: SizedBox(
+          height: 35.h,
+          // color: Colors.red,
+          child: Image.asset(Assets.images.sanaSafinazLogo),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.customWhiteTextColor,
         elevation: 0,
         leading: SizedBox(),
-        backgroundColor: AppColors.customWhiteTextColor,
-        scrolledUnderElevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            20.heightBox,
             CustomHeadingImage(),
-            10.heightBox,
+            20.heightBox,
             CustomButtons(),
           ],
         ),

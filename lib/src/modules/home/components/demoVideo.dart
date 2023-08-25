@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../custom_widgets/product_viewer_web.dart';
@@ -21,16 +21,13 @@ class SingleVideoView extends StatefulWidget {
 }
 
 class SingleVideoViewState extends State<SingleVideoView> {
-
   final logic = Get.put(HomeLogic());
-
 
   @override
   void initState() {
     super.initState();
     logic.initializeValueOfVideo(widget.settings);
   }
-
 
   @override
   void dispose() {
@@ -46,7 +43,8 @@ class SingleVideoViewState extends State<SingleVideoView> {
     }
 
     // When loop is false
-    if (widget.settings['autoPlay'] && !widget.settings['loop'] &&
+    if (widget.settings['autoPlay'] &&
+        !widget.settings['loop'] &&
         logic.videoEnded.value) {
       return _ControlsOverlay(
         controller: logic.controller,
@@ -78,13 +76,14 @@ class SingleVideoViewState extends State<SingleVideoView> {
     // When loop is true but autoplay is false, we show it only at the start
     if (widget.settings['loop'] && !widget.settings['autoPlay']) {
       // Either it's the first time the video is loaded or the video is paused
-     return _ControlsOverlay(
+      return _ControlsOverlay(
         controller: logic.controller,
         videoEnded: logic.videoEnded.value,
         isClicked: logic.isClicked.value,
         isFirstTime: logic.isFirstTime.value,
         onPlayPauseClicked: () {
-          logic.isClicked.value = !logic.isClicked.value; // Toggle the value of isClicked every time
+          logic.isClicked.value = !logic
+              .isClicked.value; // Toggle the value of isClicked every time
           if (logic.isFirstTime.value) {
             logic.isFirstTime.value = false;
           }
@@ -92,12 +91,8 @@ class SingleVideoViewState extends State<SingleVideoView> {
       );
     }
 
-
-
-
     return SizedBox.shrink();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,33 +105,38 @@ class SingleVideoViewState extends State<SingleVideoView> {
     //   logic.controller.pause();
     // }
     return SingleChildScrollView(
-      child:
-      Column(
+      child: Column(
         children: <Widget>[
-          widget.settings['isTitleHidden'] == false ? Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 6),
-            child: Container(
-              margin: widget.settings['titleAlignment'] != 'center'
-                  ? EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal / 1.5)
-                  : EdgeInsets.symmetric(horizontal: 0,),
-              width: double.maxFinite,
-              child: Text('${widget.settings["title"]}',
-                textAlign: widget.settings['titleAlignment'] == 'left'
-                    ? TextAlign.left
-                    : widget.settings['titleAlignment'] == 'center'
-                    ? TextAlign.center
-                    : TextAlign.right,
-                style: widget.settings['titleSize'] == 'small' ? context.text
-                    .titleSmall : widget.settings['titleSize'] == 'medium'
-                    ? context.text.titleMedium
-                    : context.text.titleLarge,
-              ),
-            ),
-          ) : SizedBox(),
+          widget.settings['isTitleHidden'] == false
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 6),
+                  child: Container(
+                    margin: widget.settings['titleAlignment'] != 'center'
+                        ? EdgeInsets.symmetric(
+                            horizontal: pageMarginHorizontal / 1.5)
+                        : EdgeInsets.symmetric(
+                            horizontal: 0,
+                          ),
+                    width: double.maxFinite,
+                    child: Text(
+                      '${widget.settings["title"]}',
+                      textAlign: widget.settings['titleAlignment'] == 'left'
+                          ? TextAlign.left
+                          : widget.settings['titleAlignment'] == 'center'
+                              ? TextAlign.center
+                              : TextAlign.right,
+                      style: widget.settings['titleSize'] == 'small'
+                          ? context.text.titleSmall
+                          : widget.settings['titleSize'] == 'medium'
+                              ? context.text.titleMedium
+                              : context.text.titleLarge,
+                    ),
+                  ),
+                )
+              : SizedBox(),
 
           (widget.settings["video"] != null &&
-              widget.settings["metadata"]["data"].isEmpty)
+                  widget.settings["metadata"]["data"].isEmpty)
               ? singleImageVariant()
               : customImageVariant(context),
 
@@ -207,25 +207,30 @@ class SingleVideoViewState extends State<SingleVideoView> {
         onTap: () {
           if (widget.settings["web_url"] != null) {
             ///------ Open the Web
-            Get.to(() =>
-                WebViewProduct(
+            Get.to(() => WebViewProduct(
                   productUrl: widget.settings["web_url"],
                 ));
           }
         },
         child: Padding(
-          padding: widget.settings["margin"] == true ? EdgeInsets.symmetric(
-              horizontal: pageMarginHorizontal / 1.5,
-              vertical: pageMarginVertical / 1.5) : EdgeInsets.all(0),
+          padding: widget.settings["margin"] == true
+              ? EdgeInsets.symmetric(
+                  horizontal: pageMarginHorizontal / 1.5,
+                  vertical: pageMarginVertical / 1.5)
+              : EdgeInsets.all(0),
           child: Container(
             // padding: const EdgeInsets.all(20),
 
-            height: widget.settings["displayType"] == "normal" ? 300.h : widget
-                .settings["displayType"] == "vertical" ? 400.h : widget
-                .settings["displayType"] == "auto" ? null : 230.h,
+            height: widget.settings["displayType"] == "normal"
+                ? 300.h
+                : widget.settings["displayType"] == "vertical"
+                    ? 400.h
+                    : widget.settings["displayType"] == "auto"
+                        ? null
+                        : 230.h,
             width: double.maxFinite,
             child: AspectRatio(
-              aspectRatio: logic.controller.value.aspectRatio /2,
+              aspectRatio: logic.controller.value.aspectRatio / 2,
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -280,21 +285,26 @@ class SingleVideoViewState extends State<SingleVideoView> {
           }
         },
         child: Padding(
-          padding: widget.settings["margin"] == true ? EdgeInsets.symmetric(
-              horizontal: pageMarginHorizontal / 1.5,
-              vertical: pageMarginVertical / 1.5) : EdgeInsets.all(0),
+          padding: widget.settings["margin"] == true
+              ? EdgeInsets.symmetric(
+                  horizontal: pageMarginHorizontal / 1.5,
+                  vertical: pageMarginVertical / 1.5)
+              : EdgeInsets.all(0),
           child: Container(
             // padding: const EdgeInsets.all(20),
-            height: widget.settings["displayType"] == "normal" ? 300.h : widget
-                .settings["displayType"] == "vertical" ? 400.h : widget
-                .settings["displayType"] == "auto" ? null : 230.h,
+            height: widget.settings["displayType"] == "normal"
+                ? 300.h
+                : widget.settings["displayType"] == "vertical"
+                    ? 400.h
+                    : widget.settings["displayType"] == "auto"
+                        ? null
+                        : 230.h,
             width: double.maxFinite,
             child: AspectRatio(
-              aspectRatio: logic.controller.value.aspectRatio/2,
+              aspectRatio: logic.controller.value.aspectRatio / 2,
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
-
                   VideoPlayer(logic.controller),
                   getPlayPauseButton(),
                   // ValueListenableBuilder(
@@ -327,7 +337,6 @@ class SingleVideoViewState extends State<SingleVideoView> {
     });
   }
 }
-
 
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({
@@ -373,31 +382,29 @@ class _ControlsOverlay extends StatelessWidget {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 50),
           reverseDuration: const Duration(milliseconds: 200),
-          child: (controller.value.isPlaying && !videoEnded &&
-              (!isFirstTime || isClicked))
+          child: (controller.value.isPlaying &&
+                  !videoEnded &&
+                  (!isFirstTime || isClicked))
               ? SizedBox.shrink()
               : Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.6),
-
-            ),
-            child: Center(
-              child:
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.appHintColor
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.appHintColor),
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 60.0,
+                        semanticLabel: 'Play',
+                      ),
+                    ),
+                  ),
                 ),
-                child: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 60.0,
-                  semanticLabel: 'Play',
-                ),
-              ),
-            ),
-          ),
         ),
         GestureDetector(
           onTap: () {
@@ -413,7 +420,6 @@ class _ControlsOverlay extends StatelessWidget {
     );
   }
 }
-
 
 // import 'dart:io';
 //

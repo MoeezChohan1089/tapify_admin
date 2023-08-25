@@ -9,9 +9,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tapify/src/modules/search/components/sort_options_sheet.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/modules/search/components/sort_options_sheet.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../api_services/shopify_flutter/models/models.dart';

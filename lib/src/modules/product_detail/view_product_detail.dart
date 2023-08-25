@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:tapify/src/utils/global_instances.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/global_instances.dart';
 
 import '../../api_services/shopify_flutter/models/src/checkout/line_item/line_item.dart';
 import '../../api_services/shopify_flutter/models/src/product/option/option.dart';

@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/cart/logic.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/modules/cart/logic.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../api_services/shopify_flutter/models/models.dart';

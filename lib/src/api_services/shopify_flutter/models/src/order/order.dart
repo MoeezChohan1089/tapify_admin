@@ -1,7 +1,6 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/order/successful_fulfillment/successful_fullfilment.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/price_v_2/price_v_2.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/order/successful_fulfillment/successful_fullfilment.dart';
+import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/price_v_2/price_v_2.dart';
 
 import 'line_items_order/line_items_order.dart';
 import 'shipping_address/shipping_address.dart';
@@ -38,34 +37,34 @@ class Order with _$Order {
   }) = _Order;
 
   static Order fromGraphJson(Map<String, dynamic> json) {
-
-  return Order(
-    id: json['node']['id'],
-    email: json['node']['email'],
-    currencyCode: json['node']['currencyCode'],
-    customerUrl: json['node']['customerUrl'],
-    lineItems: LineItemsOrder.fromGraphJson(json['node']['lineItems']),
-    name: json['node']['name'],
-    orderNumber: json['node']['orderNumber'] ?? 0,
-    phone: json['node']['phone'] ?? "",
-    processedAt: json['node']['processedAt'],
-    financialStatus: json['node']['financialStatus'],
-    fulfillmentStatus: json['node']['fulfillmentStatus'],
-    shippingAddress:
-    ShippingAddress.fromJson(json['node']['shippingAddress']),
-    billingAddress: json['node'].containsKey('billingAddress') ? ShippingAddress.fromJson(json['node']['billingAddress']) : null,
-    statusUrl: json['node']['statusUrl'],
-    subtotalPriceV2: PriceV2.fromJson(json['node']['subtotalPriceV2']),
-    totalPriceV2: PriceV2.fromJson(json['node']['totalPriceV2']),
-    totalRefundedV2: PriceV2.fromJson(json['node']['totalRefundedV2']),
-    totalShippingPriceV2:
-    PriceV2.fromJson(json['node']['totalShippingPriceV2']),
-    totalTaxV2: PriceV2.fromJson(json['node']['totalTaxV2']),
-    cursor: json['cursor'],
-    successfulFulfillments: _getSuccessfulFulfilments(
-        json['node']['successfulFulfillments'] ?? []),
-  );
-
+    return Order(
+      id: json['node']['id'],
+      email: json['node']['email'],
+      currencyCode: json['node']['currencyCode'],
+      customerUrl: json['node']['customerUrl'],
+      lineItems: LineItemsOrder.fromGraphJson(json['node']['lineItems']),
+      name: json['node']['name'],
+      orderNumber: json['node']['orderNumber'] ?? 0,
+      phone: json['node']['phone'] ?? "",
+      processedAt: json['node']['processedAt'],
+      financialStatus: json['node']['financialStatus'],
+      fulfillmentStatus: json['node']['fulfillmentStatus'],
+      shippingAddress:
+          ShippingAddress.fromJson(json['node']['shippingAddress']),
+      billingAddress: json['node'].containsKey('billingAddress')
+          ? ShippingAddress.fromJson(json['node']['billingAddress'])
+          : null,
+      statusUrl: json['node']['statusUrl'],
+      subtotalPriceV2: PriceV2.fromJson(json['node']['subtotalPriceV2']),
+      totalPriceV2: PriceV2.fromJson(json['node']['totalPriceV2']),
+      totalRefundedV2: PriceV2.fromJson(json['node']['totalRefundedV2']),
+      totalShippingPriceV2:
+          PriceV2.fromJson(json['node']['totalShippingPriceV2']),
+      totalTaxV2: PriceV2.fromJson(json['node']['totalTaxV2']),
+      cursor: json['cursor'],
+      successfulFulfillments: _getSuccessfulFulfilments(
+          json['node']['successfulFulfillments'] ?? []),
+    );
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);

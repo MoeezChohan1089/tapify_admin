@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tapify/src/global_controllers/database_controller.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../custom_widgets/custom_text_field.dart';
 import '../../../utils/constants/assets.dart';

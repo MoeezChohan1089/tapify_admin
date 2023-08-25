@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/global_controllers/app_config/config_controller.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:vibration/vibration.dart';
+import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../api_services/shopify_flutter/enums/enums.dart';
 import '../../../custom_widgets/custom_elevated_button.dart';
 import '../../../utils/constants/colors.dart';
-import '../../auth/components/custom_button.dart';
-import '../../product_detail/logic.dart';
 import '../logic.dart';
 
-void sortingBottomSheetCollection({required BuildContext context, required String idColl}) {
+void sortingBottomSheetCollection(
+    {required BuildContext context, required String idColl}) {
   // final searchLogic = SearchLogic.to;
   showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -25,8 +23,7 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
           return Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
+                    topRight: Radius.circular(5), topLeft: Radius.circular(5)),
                 color: Colors.white),
             child: SafeArea(
               child: Column(
@@ -34,33 +31,34 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
                   20.heightBox,
 
                   Row(
                     children: [
                       Expanded(child: SizedBox()),
                       Expanded(
-                          child:
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Sort by".toUpperCase(),
-                              style: context.text.titleMedium?.copyWith(
-                                color: AppColors.appTextColor,
-                                fontSize: 16.sp,
-                              ),
-                            ),
-                          )),
-
+                          child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Sort by".toUpperCase(),
+                          style: context.text.titleMedium?.copyWith(
+                            color: AppColors.appTextColor,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      )),
                       Expanded(
                         child: Container(
                           alignment: Alignment.topRight,
                           child: IconButton(
-                            onPressed: (){
+                            onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            icon: Icon(Icons.keyboard_arrow_down_outlined, color: AppColors.appTextColor, size: 30,),
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_outlined,
+                              color: AppColors.appTextColor,
+                              size: 30,
+                            ),
                           ),
                         ),
                       ),
@@ -75,8 +73,6 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
                   //
                   //   ],
                   // ),
-
-
 
                   20.heightBox,
 
@@ -118,26 +114,28 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
 
                   // const Spacer(),
 
-
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal, vertical: pageMarginVertical),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: pageMarginHorizontal,
+                        vertical: pageMarginVertical),
                     child: GlobalElevatedButton(
-                      text: "Apply", onPressed: () {
-
-
-
-                      //---- Call the Products
-                      if(CategoryLogic.to.showFilteredProducts.isTrue){
-                        CategoryLogic.to.fetchProductBasedOnFilters(
-                            context: context,
-                            isNewId: true,
-                            sortKey: CategoryLogic.to.sortKeyProduct
-                        );
-                      } else {
-                        CategoryLogic.to.productFetchService(context: context, id: idColl, isNewId: true, sortKey: CategoryLogic.to.sortKeyProduct);
-                      }
-                      Navigator.pop(context);
-                    },
+                      text: "Apply",
+                      onPressed: () {
+                        //---- Call the Products
+                        if (CategoryLogic.to.showFilteredProducts.isTrue) {
+                          CategoryLogic.to.fetchProductBasedOnFilters(
+                              context: context,
+                              isNewId: true,
+                              sortKey: CategoryLogic.to.sortKeyProduct);
+                        } else {
+                          CategoryLogic.to.productFetchService(
+                              context: context,
+                              id: idColl,
+                              isNewId: true,
+                              sortKey: CategoryLogic.to.sortKeyProduct);
+                        }
+                        Navigator.pop(context);
+                      },
                       isLoading: false,
                     ),
                   )
@@ -154,7 +152,6 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
                   //     },
                   //   ),
                   // ),
-
                 ],
               ),
             ),
@@ -174,12 +171,11 @@ class SortOptionWidget extends StatelessWidget {
   final SortKeyProductCollection sortKey;
   final String collectionID;
 
-  SortOptionWidget({
-    super.key,
-    required this.title,
-    required this.sortKey,
-    required this.collectionID
-  });
+  SortOptionWidget(
+      {super.key,
+      required this.title,
+      required this.sortKey,
+      required this.collectionID});
 
   // final searchLogic = SearchLogic.to;
 
@@ -190,7 +186,6 @@ class SortOptionWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-
               category.sortKeyProduct = sortKey;
 
               category.update();
@@ -200,11 +195,14 @@ class SortOptionWidget extends StatelessWidget {
                   horizontal: pageMarginHorizontal,
                   vertical: pageMarginVertical - 5.h),
               decoration: BoxDecoration(
-                color: category.sortKeyProduct == sortKey ? AppColors.textFieldBGColor: AppColors.customWhiteTextColor,
+                color: category.sortKeyProduct == sortKey
+                    ? AppColors.textFieldBGColor
+                    : AppColors.customWhiteTextColor,
                 border: const Border(
                     top:
-                    BorderSide(color: AppColors.textFieldBGColor, width: 1),
-                    bottom: BorderSide(color: AppColors.textFieldBGColor, width: 1)),
+                        BorderSide(color: AppColors.textFieldBGColor, width: 1),
+                    bottom: BorderSide(
+                        color: AppColors.textFieldBGColor, width: 1)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -212,12 +210,14 @@ class SortOptionWidget extends StatelessWidget {
                   Align(
                       alignment: Alignment.topLeft,
                       child: category.sortKeyProduct == sortKey
-                          ?  Icon(
-                        Icons.check,
-                        color: AppConfig.to.primaryColor.value,
-                        size: 20,
-                      )
-                          : const SizedBox(width: 20,)),
+                          ? Icon(
+                              Icons.check,
+                              color: AppConfig.to.primaryColor.value,
+                              size: 20,
+                            )
+                          : const SizedBox(
+                              width: 20,
+                            )),
                   18.widthBox,
                   Expanded(
                       flex: 2,

@@ -1,9 +1,10 @@
-import 'package:tapify/src/api_services/shopify_flutter/models/src/product/product.dart';
+// import 'package:tapify/src/api_services/shopify_flutter/models/src/product/product.dart';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../checkout/attribute/attribute.dart';
 import '../../checkout/product_variant_checkout/product_variant_checkout.dart';
 import '../../order/discount_allocations/discount_allocations.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'line_item.freezed.dart';
 part 'line_item.g.dart';

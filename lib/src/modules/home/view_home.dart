@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vibration/vibration.dart';
+import 'package:tapify_admin/src/modules/home/components/search_bar.dart';
+import 'package:tapify_admin/src/modules/home/logic.dart';
 
-import '../../custom_widgets/customPopupDialogue.dart';
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../global_controllers/notification_service.dart';
@@ -16,7 +14,6 @@ import '../../utils/constants/colors.dart';
 import '../../utils/global_instances.dart';
 import '../bottom_nav_bar/logic.dart';
 import '../product_detail/logic.dart';
-import 'components/category_list.dart';
 import 'components/circle_product_list.dart';
 import 'components/count_down_timer.dart';
 import 'components/custom_divider.dart';
@@ -24,17 +21,13 @@ import 'components/demoVideo.dart';
 import 'components/discount_widget.dart';
 import 'components/grid_view_by_category.dart';
 import 'components/grid_view_simple.dart';
-import 'components/products_slide_show.dart';
 import 'components/marquee_text.dart';
 import 'components/product_slider.dart';
 import 'components/products_carousel.dart';
 import 'components/products_gallery.dart';
-import 'components/search_bar.dart';
+import 'components/products_slide_show.dart';
 import 'components/single_image.dart';
-import 'components/single_video.dart';
 import 'components/title_text.dart';
-import 'logic.dart';
-import 'models/model_home_ui_settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -51,7 +44,6 @@ class _HomePageState extends State<HomePage>
 
   // final _advancedDrawerController = AdvancedDrawerController();
   PanelController controller = PanelController();
-
 
   // int sideDrawerType = 1;
   //---- 1 for fancy 2 for simple
@@ -89,7 +81,6 @@ class _HomePageState extends State<HomePage>
       }
     });
 
-
     ///---- old
     requestPermission();
     loadFCM();
@@ -107,7 +98,8 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return Scaffold(
       appBar: CustomAppBar(
-        isHome: true, title: 'tapify',
+        isHome: true,
+        title: 'tapify',
         showMenuIcon: true,
       ),
 
@@ -149,14 +141,12 @@ class _HomePageState extends State<HomePage>
           onLoading: () async {},
 
           ///----- Listview
-          child:
-          SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
               // padding: EdgeInsets.only(bottom: 50.h),
-              children:
-              List.generate(
+              children: List.generate(
                 AppConfig.to.homeWidgetsList.value.length,
-                    (index) =>
+                (index) =>
                     _buildWidget(AppConfig.to.homeWidgetsList.value[index]),
               ),
               // [
@@ -170,7 +160,6 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-
   Widget _buildWidget(Map<String, dynamic> widgetData) {
     final settings = widgetData["settings"];
     final widgetMap = {
@@ -179,40 +168,37 @@ class _HomePageState extends State<HomePage>
       'title': () => TitleText(settings: settings),
       'divider': () => CustomDivider(divider: settings),
       'timer': () => CountDownTimer(settings: settings),
-      'product': () =>
-      (settings["metadata"]["data"] as List).isEmpty
+      'product': () => (settings["metadata"]["data"] as List).isEmpty
           ? const SizedBox.shrink()
           : CircularProductList(settings: settings),
-      'gallery': () =>
-      (settings["metadata"]["data"] as List).isEmpty
+      'gallery': () => (settings["metadata"]["data"] as List).isEmpty
           ? const SizedBox.shrink()
           : ProductsGallery(settings: settings),
       'carousel': () {
         if ((settings["metadata"]["data"] as List).isNotEmpty) {
           HomeLogic.to.currentCarouselIndex.value =
-          settings["metadata"]["data"].length > 1 ? 1 : 0;
+              settings["metadata"]["data"].length > 1 ? 1 : 0;
         }
 
-        return (settings["metadata"]["data"] as List).isEmpty ? const SizedBox
-            .shrink() : ProductsCarousel(settings: settings);
+        return (settings["metadata"]["data"] as List).isEmpty
+            ? const SizedBox.shrink()
+            : ProductsCarousel(settings: settings);
       },
-
 
       'image': () {
         return ((settings["metadata"]["data"] as List).isEmpty &&
-            settings["image"] == null)
+                settings["image"] == null)
             ? const SizedBox.shrink()
             : SingleImageWidget(settings: settings);
       },
-      'slideShow': () =>
-      (settings["metadata"]["data"] as List).isEmpty
+      'slideShow': () => (settings["metadata"]["data"] as List).isEmpty
           ? const SizedBox.shrink()
           : ProductsSlideShow(settings: settings),
-      'video': () =>
-          GetBuilder<HomeLogic>(
-              builder: (logic) {
-                logic.initializeValueOfVideo(settings);
-            return SingleVideoView(settings: settings,);
+      'video': () => GetBuilder<HomeLogic>(builder: (logic) {
+            logic.initializeValueOfVideo(settings);
+            return SingleVideoView(
+              settings: settings,
+            );
           }),
       // 'video': () => SingleVideoView(settings: settings),
       'discount': () {
@@ -221,24 +207,22 @@ class _HomePageState extends State<HomePage>
 
         return DiscountWidget(settings: settings);
       },
-      'slider': () =>
-      (settings["metadata"]["data"] as List).isEmpty
+      'slider': () => (settings["metadata"]["data"] as List).isEmpty
           ? const SizedBox.shrink()
           : ProductSlider(settings: settings),
-      'grid': () =>
-      (settings["metadata"]["data"] as List).isEmpty
+      'grid': () => (settings["metadata"]["data"] as List).isEmpty
           ? const SizedBox.shrink()
           : ProductGridViewSimple(settings: settings),
       'productByTags': () {
         logic.catProdSettings = settings;
         logic.getProducts();
-        return (settings["metadata"]["data"] as List).isEmpty ? const SizedBox
-            .shrink() : ProductGridViewByCategory(settings: settings);
+        return (settings["metadata"]["data"] as List).isEmpty
+            ? const SizedBox.shrink()
+            : ProductGridViewByCategory(settings: settings);
       },
     };
     final widgetType = widgetData["type"];
     final widgetBuilder = widgetMap[widgetType] ?? () => Container();
     return widgetBuilder();
   }
-
 }

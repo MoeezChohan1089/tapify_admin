@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/utils/global_instances.dart';
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
+import 'package:tapify_admin/src/utils/global_instances.dart';
+import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../../api_services/shopify_flutter/shopify_flutter.dart';
 import '../../custom_widgets/custom_snackbar.dart';

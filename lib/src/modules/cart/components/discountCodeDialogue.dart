@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
+
 import '../../../custom_widgets/custom_snackbar.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/global_instances.dart';
@@ -8,14 +9,15 @@ import '../logic.dart';
 
 final cartLogic = CartLogic.to;
 
-alertShowDiscountDialogue({required BuildContext context}){
+alertShowDiscountDialogue({required BuildContext context}) {
   return showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
       return Dialog(
         backgroundColor: AppColors.customWhiteTextColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0), // Set your desired border radius here
+          borderRadius:
+              BorderRadius.circular(8.0), // Set your desired border radius here
         ),
         child: Container(
           decoration: BoxDecoration(
@@ -27,8 +29,9 @@ alertShowDiscountDialogue({required BuildContext context}){
             mainAxisSize: MainAxisSize.min,
             children: [
               10.heightBox,
-              Image.asset('assets/images/discount.png',
-               width: 100,
+              Image.asset(
+                'assets/images/discount.png',
+                width: 100,
               ),
               8.heightBox,
               TextField(
@@ -36,17 +39,20 @@ alertShowDiscountDialogue({required BuildContext context}){
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                   hintText: 'Enter discount code',
-                  hintStyle: context.text.titleMedium?.copyWith(fontSize: 14, color: AppColors.customGreyTextColor),
+                  hintStyle: context.text.titleMedium?.copyWith(
+                      fontSize: 14, color: AppColors.customGreyTextColor),
                   contentPadding: const EdgeInsets.only(top: 8.0),
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xffF2F2F2), // Replace with your desired color
+                      color:
+                          Color(0xffF2F2F2), // Replace with your desired color
                       width: 1.0, // Set the width of the line
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.black, // Replace with your desired color for the active state
+                      color: Colors
+                          .black, // Replace with your desired color for the active state
                       width: 1.0, // Set the width of the line
                     ),
                   ),
@@ -66,24 +72,26 @@ alertShowDiscountDialogue({required BuildContext context}){
                             Navigator.pop(dialogContext);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.white,
-
-                            elevation: 0,// Set the text color of the button
-                            padding: const EdgeInsets.all(8), // Set the padding around the button content
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0),
-                            ),
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.white,
+                              elevation: 0, // Set the text color of the button
+                              padding: const EdgeInsets.all(
+                                  8), // Set the padding around the button content
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                              ),
                               side: const BorderSide(
                                 width: 1.0,
                                 color: Colors.black,
-                              )
-                          ),
-                          child: Text("Cancel", style: context.text.bodyMedium!.copyWith(color: Colors.black, height: 1.1),)),
+                              )),
+                          child: Text(
+                            "Cancel",
+                            style: context.text.bodyMedium!
+                                .copyWith(color: Colors.black, height: 1.1),
+                          )),
                     ),
                   ),
                   10.widthBox,
-                 
                   Expanded(
                     child: SizedBox(
                       height: 32,
@@ -92,29 +100,35 @@ alertShowDiscountDialogue({required BuildContext context}){
                             // Vibration.vibrate(duration: 100);
                             HapticFeedback.lightImpact();
 
-                            if(cartLogic.discountCodeTextController.text.toString().replaceAll(" ", "").isNotEmpty){
+                            if (cartLogic.discountCodeTextController.text
+                                .toString()
+                                .replaceAll(" ", "")
+                                .isNotEmpty) {
                               customLoaderWidget.showLoader(context);
                               cartLogic.applyDiscountCode();
                               Navigator.pop(context);
                             } else {
-
-                              showToastMessage(message: "Please enter valid discount code");
+                              showToastMessage(
+                                  message: "Please enter valid discount code");
                             }
-
-
 
                             // ProductDetailLogic.to.addProductToCart();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             foregroundColor: Colors.white,
-                            elevation: 0,// Set the text color of the button
-                            padding: const EdgeInsets.all(8), // Set the padding around the button content
+                            elevation: 0, // Set the text color of the button
+                            padding: const EdgeInsets.all(
+                                8), // Set the padding around the button content
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(0),
                             ),
                           ),
-                          child: Text("Apply", style: context.text.bodyMedium!.copyWith(color: Colors.white, height: 1.1),)),
+                          child: Text(
+                            "Apply",
+                            style: context.text.bodyMedium!
+                                .copyWith(color: Colors.white, height: 1.1),
+                          )),
                     ),
                   ),
                 ],
@@ -128,14 +142,15 @@ alertShowDiscountDialogue({required BuildContext context}){
   );
 }
 
-alertShowGiftDialogue({required BuildContext context}){
+alertShowGiftDialogue({required BuildContext context}) {
   return showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
       return Dialog(
         backgroundColor: AppColors.customWhiteTextColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0), // Set your desired border radius here
+          borderRadius:
+              BorderRadius.circular(8.0), // Set your desired border radius here
         ),
         child: Container(
           decoration: BoxDecoration(
@@ -147,27 +162,30 @@ alertShowGiftDialogue({required BuildContext context}){
             mainAxisSize: MainAxisSize.min,
             children: [
               10.heightBox,
-              Image.asset('assets/images/gift.png',
+              Image.asset(
+                'assets/images/gift.png',
                 width: 100,
               ),
               8.heightBox,
               TextField(
                 controller: cartLogic.giftCardTextController,
                 cursorColor: Colors.black,
-
                 decoration: InputDecoration(
-                    hintText: 'Enter Gift Code',
-                    hintStyle: context.text.titleMedium?.copyWith(fontSize: 14, color: AppColors.customGreyTextColor),
-                    contentPadding: const EdgeInsets.only(top: 8.0),
+                  hintText: 'Enter Gift Code',
+                  hintStyle: context.text.titleMedium?.copyWith(
+                      fontSize: 14, color: AppColors.customGreyTextColor),
+                  contentPadding: const EdgeInsets.only(top: 8.0),
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xffF2F2F2), // Replace with your desired color
+                      color:
+                          Color(0xffF2F2F2), // Replace with your desired color
                       width: 1.0, // Set the width of the line
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.black, // Replace with your desired color for the active state
+                      color: Colors
+                          .black, // Replace with your desired color for the active state
                       width: 1.0, // Set the width of the line
                     ),
                   ),
@@ -185,26 +203,28 @@ alertShowGiftDialogue({required BuildContext context}){
                             // Vibration.vibrate(duration: 100);
                             HapticFeedback.lightImpact();
                             Navigator.pop(dialogContext);
-    },
-                            style: ElevatedButton.styleFrom(
+                          },
+                          style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.white,
-
-                              elevation: 0,// Set the text color of the button
-                              padding: const EdgeInsets.all(8), // Set the padding around the button content
+                              elevation: 0, // Set the text color of the button
+                              padding: const EdgeInsets.all(
+                                  8), // Set the padding around the button content
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(0),
                               ),
                               side: const BorderSide(
                                 width: 1.0,
                                 color: Colors.black,
-                              )
-                          ),
-                          child: Text("Cancel", style: context.text.bodyMedium!.copyWith(color: Colors.black, height: 1.1),)),
+                              )),
+                          child: Text(
+                            "Cancel",
+                            style: context.text.bodyMedium!
+                                .copyWith(color: Colors.black, height: 1.1),
+                          )),
                     ),
                   ),
                   10.widthBox,
-
                   Expanded(
                     child: SizedBox(
                       height: 32,
@@ -213,30 +233,35 @@ alertShowGiftDialogue({required BuildContext context}){
                             // Vibration.vibrate(duration: 100);
                             HapticFeedback.lightImpact();
 
-
-                            if(cartLogic.giftCardTextController.text.toString().replaceAll(" ", "").isNotEmpty){
-
+                            if (cartLogic.giftCardTextController.text
+                                .toString()
+                                .replaceAll(" ", "")
+                                .isNotEmpty) {
                               customLoaderWidget.showLoader(context);
                               cartLogic.applyGiftCard();
                               Navigator.pop(context);
-
                             } else {
-                              showToastMessage(message: "Please enter valid Gift Card");
+                              showToastMessage(
+                                  message: "Please enter valid Gift Card");
                             }
-
 
                             // ProductDetailLogic.to.addProductToCart();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             foregroundColor: Colors.white,
-                            elevation: 0,// Set the text color of the button
-                            padding: const EdgeInsets.all(8), // Set the padding around the button content
+                            elevation: 0, // Set the text color of the button
+                            padding: const EdgeInsets.all(
+                                8), // Set the padding around the button content
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(0),
                             ),
                           ),
-                          child: Text("Apply", style: context.text.bodyMedium!.copyWith(color: Colors.white, height: 1.1),)),
+                          child: Text(
+                            "Apply",
+                            style: context.text.bodyMedium!
+                                .copyWith(color: Colors.white, height: 1.1),
+                          )),
                     ),
                   ),
                 ],
