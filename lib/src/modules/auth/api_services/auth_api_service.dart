@@ -165,7 +165,7 @@ staticUserAPI({required String email, required String password}) async {
     log("new response is $responseData");
 
     if (response.statusCode == 200 &&
-        responseData["data"]["access_token"] != null) {
+        responseData["success"] == true) {
       log("==>> SIGN IN :: response data is here 2 -> $responseData =====${responseData['data']['access_token']}");
       LocalDatabase.to.box.write("sessionActive", true);
       LocalDatabase.to.box

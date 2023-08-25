@@ -130,4 +130,19 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/fonts/
+    - assets/icons/dynamic icons/
+
+  fonts:
+    - family: Sofia Pro Regular
+      fonts:
+        - asset: assets/fonts/Sofia Pro Regular.otf
+
+    - family: Sofia Pro Medium
+      fonts:
+        - asset: assets/fonts/Sofia Pro Medium.otf
+
+    - family: Sofia Pro Semi Bold
+      fonts:
+        - asset: assets/fonts/Sofia Pro Semi Bold.otf
 

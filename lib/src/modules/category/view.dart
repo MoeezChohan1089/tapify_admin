@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tapify_admin/src/modules/category/view_2.dart';
 import 'package:tapify_admin/src/modules/category/view_category_products.dart';
-import 'package:tapify_admin/src/modules/home/logic.dart';
-import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -16,7 +14,9 @@ import '../../custom_widgets/custom_app_bar.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../utils/constants/assets.dart';
 import '../../utils/constants/colors.dart';
+import '../../utils/constants/margins_spacnings.dart';
 import '../../utils/global_instances.dart';
+import '../home/logic.dart';
 import 'logic.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -143,76 +143,54 @@ class _CategoryPageState extends State<CategoryPage>
                             borderRadius: BorderRadius.circular(3.r),
                           ),
                           width: double.maxFinite,
-                          height: (categoryItem["customImage"] != null &&
-                                  categoryItem["isHiddenDefaultImage"] == false)
-                              ? 85
-                              : null,
-                          child: (categoryItem["customImage"] != null &&
-                                  categoryItem["isHiddenDefaultImage"] == false)
+                          height:
+                              (categoryItem["customImage"] != null) ? 85 : null,
+                          child: (categoryItem["customImage"] != null)
                               ? Hero(
                                   tag: "${categoryItem["customImage"]}",
                                   child: FadeInImage.memoryNetwork(
                                     placeholder: kTransparentImage,
                                     imageErrorBuilder: (context, url, error) =>
                                         Container(
-                                      color: Colors.grey.shade200,
-                                      child: Center(
-                                        child: SvgPicture.asset(
-                                          Assets.icons.noImageIcon,
-                                          height: 25.h,
-                                        ),
-                                      ),
-                                    ),
-                                    fit: BoxFit.cover,
-                                    // width: 110.w,
-                                    // height: 102.h,
-                                    image: categoryItem["customImage"],
-                                  ),
-                                )
-                              : Row(
-                                  children: [
-                                    (categoryItem["defaultImage"] != null ||
-                                            categoryItem["defaultImage"]
-                                                .toString()
-                                                .isNotEmpty)
-                                        ? Hero(
-                                            tag:
-                                                "${categoryItem["defaultImage"]}",
-                                            child: FadeInImage.memoryNetwork(
-                                              placeholder: kTransparentImage,
-                                              imageErrorBuilder:
-                                                  (context, url, error) =>
-                                                      Container(
-                                                color: Colors.grey.shade200,
-                                                child: Center(
-                                                  child: SvgPicture.asset(
-                                                    Assets.icons.noImageIcon,
-                                                    height: 25.h,
-                                                  ),
-                                                ),
-                                              ),
-                                              fit: BoxFit.cover,
-                                              width: 85.h,
-                                              height: 85.h,
-                                              image: categoryItem[
-                                                      "defaultImage"] ??
-                                                  "",
-                                            ),
-                                          )
-                                        : Container(
                                             color: Colors.grey.shade200,
                                             child: Center(
                                               child: SvgPicture.asset(
                                                 Assets.icons.noImageIcon,
                                                 height: 25.h,
                                               ),
+                                            )),
+                                    fit: BoxFit.cover,
+                                    image: categoryItem["customImage"],
+                                  ),
+                                )
+                              : Row(
+                                  children: [
+                                    Hero(
+                                      tag: "${categoryItem["defaultImage"]}",
+                                      child: FadeInImage.memoryNetwork(
+                                        placeholder: kTransparentImage,
+                                        imageErrorBuilder:
+                                            (context, url, error) => Container(
+                                          color: Colors.grey.shade200,
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              Assets.icons.noImageIcon,
+                                              height: 25.h,
                                             ),
                                           ),
+                                        ),
+                                        fit: BoxFit.cover,
+                                        image: categoryItem["defaultImage"],
+                                        width: 85.h,
+                                        height: 85.h,
+                                      ),
+                                    ),
+                                    40.widthBox,
                                     Expanded(
                                         child: Text(
                                             categoryItem["name"] ??
                                                 "Un-named Category",
-                                            textAlign: TextAlign.center,
+                                            // textAlign: TextAlign.center,
                                             style: context.text.bodyMedium
                                                 ?.copyWith(fontSize: 16.sp)))
                                   ],

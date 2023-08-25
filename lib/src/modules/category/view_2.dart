@@ -98,6 +98,7 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
           child: SingleChildScrollView(
             child: Column(
               children: [
+                12.heightBox,
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: pageMarginHorizontal,
@@ -115,25 +116,14 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                         borderRadius: BorderRadius.circular(3.r),
                       ),
                       width: double.maxFinite,
-                      height: (appConfig.collectionsWidgetsList
-                                          .value[widget.categoryIndex]
-                                      ["customImage"] !=
-                                  null &&
-                              // categoryItem["customImage"] != null &&
-                              appConfig.collectionsWidgetsList
-                                          .value[widget.categoryIndex]
-                                      ["isHiddenDefaultImage"] ==
-                                  false)
+                      height: appConfig.collectionsWidgetsList
+                                  .value[widget.categoryIndex]["customImage"] !=
+                              null
                           ? 85
                           : null,
                       child: (appConfig.collectionsWidgetsList
-                                          .value[widget.categoryIndex]
-                                      ["customImage"] !=
-                                  null &&
-                              appConfig.collectionsWidgetsList
-                                          .value[widget.categoryIndex]
-                                      ["isHiddenDefaultImage"] ==
-                                  false)
+                                  .value[widget.categoryIndex]["customImage"] !=
+                              null)
                           ? Hero(
                               tag:
                                   "${appConfig.collectionsWidgetsList.value[widget.categoryIndex]["customImage"]}",
@@ -150,65 +140,42 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                                   ),
                                 ),
                                 fit: BoxFit.cover,
-                                // width: 110.w,
-                                // height: 102.h,
                                 image: appConfig.collectionsWidgetsList
                                     .value[widget.categoryIndex]["customImage"],
                               ),
                             )
                           : Row(
                               children: [
-                                (appConfig.collectionsWidgetsList
-                                                    .value[widget.categoryIndex]
-                                                ["defaultImage"] !=
-                                            null ||
-                                        appConfig
-                                            .collectionsWidgetsList
-                                            .value[widget.categoryIndex]
-                                                ["defaultImage"]
-                                            .toString()
-                                            .isNotEmpty)
-                                    ? Hero(
-                                        tag:
-                                            "${appConfig.collectionsWidgetsList.value[widget.categoryIndex]["defaultImage"]}",
-                                        child: FadeInImage.memoryNetwork(
-                                          placeholder: kTransparentImage,
-                                          imageErrorBuilder:
-                                              (context, url, error) =>
-                                                  Container(
-                                            color: Colors.grey.shade200,
-                                            child: Center(
-                                              child: SvgPicture.asset(
-                                                Assets.icons.noImageIcon,
-                                                height: 25.h,
-                                              ),
-                                            ),
-                                          ),
-                                          fit: BoxFit.cover,
-                                          width: 85.h,
-                                          height: 85.h,
-                                          image: appConfig
-                                                  .collectionsWidgetsList
-                                                  .value[widget.categoryIndex]
-                                              ["defaultImage"],
-                                        ),
-                                      )
-                                    : Container(
-                                        color: Colors.grey.shade200,
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            Assets.icons.noImageIcon,
-                                            height: 25.h,
-                                          ),
+                                Hero(
+                                  tag:
+                                      "${appConfig.collectionsWidgetsList.value[widget.categoryIndex]["defaultImage"]}",
+                                  child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    imageErrorBuilder: (context, url, error) =>
+                                        Container(
+                                      color: Colors.grey.shade200,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          Assets.icons.noImageIcon,
+                                          height: 25.h,
                                         ),
                                       ),
+                                    ),
+                                    fit: BoxFit.cover,
+                                    width: 85.h,
+                                    height: 85.h,
+                                    image: appConfig.collectionsWidgetsList
+                                            .value[widget.categoryIndex]
+                                        ["defaultImage"],
+                                  ),
+                                ),
+                                40.widthBox,
                                 Expanded(
                                     child: Text(
                                         appConfig.collectionsWidgetsList
                                                     .value[widget.categoryIndex]
                                                 ["name"] ??
                                             "Un-named Category",
-                                        textAlign: TextAlign.center,
                                         style: context.text.bodyMedium
                                             ?.copyWith(fontSize: 16.sp)))
                               ],

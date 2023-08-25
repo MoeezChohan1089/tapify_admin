@@ -2,16 +2,19 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:tapify_admin/src/global_controllers/database_controller.dart';
-
+import 'package:get/get.dart';
 // import 'package:shopify_flutter/models/src/product/products/products.dart';
 // import 'package:shopify_flutter/shopify_flutter.dart';
 import '../../../api_services/shopify_flutter/models/models.dart';
+import '../../../global_controllers/database_controller.dart';
 import '../../../utils/global_instances.dart';
 import '../../../utils/tapday_api_srvices/api_services.dart';
+import '../../home/view.dart';
 import 'model_filters.dart';
 
-categoryApiService({required List<Collection> store}) async {
+
+
+categoryApiService({required List<Collection> store}) async{
   try {
     // final shopifyStore = ShopifyStore.instance;
     final categoryProducts = await shopifyStore.getAllCollections();
@@ -34,13 +37,12 @@ categoryApiService({required List<Collection> store}) async {
   }
 }
 
-Future<List<Filter>> getCollectionFilters(
-    {required String collectHandle}) async {
+Future<List<Filter>> getCollectionFilters({required String collectHandle}) async {
+
   print("handle received is $collectHandle");
 
   Dio dio = Dio();
-  String apiUrl =
-      "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
+  String apiUrl = "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
 
   String graphqlQuery = '''
   query Facets {
@@ -64,8 +66,11 @@ Future<List<Filter>> getCollectionFilters(
 ''';
 
   try {
+
+
+
     dio.options.headers["X-Shopify-Storefront-Access-Token"] =
-        "${TapDay.storeFrontAccessToken}";
+    "${TapDay.storeFrontAccessToken}";
     dio.options.headers["Content-Type"] = "application/graphql";
 
     final response = await dio.post(apiUrl, data: graphqlQuery);
@@ -76,9 +81,11 @@ Future<List<Filter>> getCollectionFilters(
       // Process the responseData as needed
       log("===> Here is the response $responseData <====");
 
+
+
+
       // Parse the filters from the response
-      final List<dynamic> filterData =
-          responseData['data']['collection']['products']['filters'];
+      final List<dynamic> filterData = responseData['data']['collection']['products']['filters'];
 
       log("length of filters under products is => ${filterData.length}");
 
@@ -104,8 +111,11 @@ Future<List<Filter>> getCollectionFilters(
 
       log("Total filters we got ${filters.length}");
 
+
       return filters;
-    } else {
+
+    }
+    else {
       // Handle other status codes or errors
       log("===> Error in Status Code ${response.statusCode} <====");
       return [];
@@ -114,5 +124,6 @@ Future<List<Filter>> getCollectionFilters(
     // Handle any Dio errors or exceptions
     log("===> Exception Caught $error <====");
     rethrow;
+
   }
 }

@@ -7,20 +7,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tapify_admin/src/modules/category/logic.dart';
-import 'package:tapify_admin/src/modules/home/logic.dart';
-import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../custom_widgets/custom_product_Card.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../utils/constants/assets.dart';
+import '../../utils/constants/colors.dart';
 import '../../utils/constants/margins_spacnings.dart';
 import '../../utils/global_instances.dart';
 import '../../utils/skeleton_loaders/shimmerLoader.dart';
+import '../home/logic.dart';
 import 'components/sortBottomSheet.dart';
 import 'components/view_filters.dart';
+import 'logic.dart';
 
 class CategoryProducts extends StatefulWidget {
   final String collectionID;
@@ -36,11 +36,10 @@ class CategoryProducts extends StatefulWidget {
 
 class _CategoryProductsState extends State<CategoryProducts>
     with TickerProviderStateMixin {
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
 
   bool showMoreButton = false;
   final categoryLogic = CategoryLogic.to;
-  final reset = Get.find<CategoryLogic>().resetValues();
   final logic1 = Get.put(HomeLogic());
   final RefreshController loadMoreController =
       RefreshController(initialRefresh: false);
@@ -51,42 +50,21 @@ class _CategoryProductsState extends State<CategoryProducts>
   @override
   void initState() {
     super.initState();
-
-    _scaleController =
-        AnimationController(value: 0.0, vsync: this, upperBound: 1.0);
-
-    loadMoreController.headerMode?.addListener(() {
-      if (loadMoreController.headerStatus == RefreshStatus.idle) {
-        _scaleController.value = 0.0;
-        // _anicontroller.reset();
-      } else if (loadMoreController.headerStatus == RefreshStatus.refreshing) {
-        // _anicontroller.repeat();
-      }
-    });
-    _scrollController.addListener(() {
-      const threshold = 200.0; // Adjust this threshold value as needed
-
-      if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - threshold) {
-        _loadMoreProducts();
-      }
-    });
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scaleController =
+          AnimationController(value: 0.0, vsync: this, upperBound: 1.0);
+      loadMoreController.headerMode?.addListener(() {
+        if (loadMoreController.headerStatus == RefreshStatus.idle) {
+          _scaleController.value = 0.0;
+          // _anicontroller.reset();
+        } else if (loadMoreController.headerStatus ==
+            RefreshStatus.refreshing) {}
+      });
+      Get.find<CategoryLogic>().resetValues();
       categoryLogic.resetFilters();
       categoryLogic.productFetchService(
           context: context, id: widget.collectionID, isNewId: true);
     });
-  }
-
-  void _loadMoreProducts() async {
-    if (categoryLogic.showFilteredProducts.isTrue) {
-      categoryLogic.fetchProductBasedOnFilters(context: context);
-    } else {
-      await categoryLogic.productFetchService(
-          context: context, id: widget.collectionID);
-    }
-    // You might need to handle updating the UI state here if required
   }
 
   @override
@@ -120,7 +98,7 @@ class _CategoryProductsState extends State<CategoryProducts>
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 border: Border(
                               // left: BorderSide(
                               //     color: AppColors.appBordersColor, width: .5),

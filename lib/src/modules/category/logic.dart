@@ -1,10 +1,9 @@
-
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 // import 'package:shopify_flutter/models/models.dart';
 // import 'package:shopify_flutter/shopify/shopify.dart';
 
@@ -27,9 +26,9 @@ class CategoryLogic extends GetxController {
   RxBool loadingValue = false.obs;
   Rx<bool> categoryProductLoader = false.obs;
   final RefreshController loadMoreController =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
   SortKeyProductCollection sortKeyProduct = SortKeyProductCollection.TITLE;
-  List<Map<String, dynamic>>  selectedFilters = [];
+  List<Map<String, dynamic>> selectedFilters = [];
   RxBool showFilteredProducts = false.obs;
   RxString currentCategoryId = "".obs;
   double priceRangeMin = 0.0;
@@ -71,7 +70,6 @@ class CategoryLogic extends GetxController {
     }
   }
 
-
   categoryProductService() async {
     // debugPrint("value of list1111> $categoryProductCollection");
     try {
@@ -84,7 +82,8 @@ class CategoryLogic extends GetxController {
         Future future = shopifyStore
             .getAllProductsFromCollectionById(categoryCollection[i].id)
             .then((categoryProducts) {
-          categoryProductCollection.addAll(categoryProducts); // Merge products to the list
+          categoryProductCollection
+              .addAll(categoryProducts); // Merge products to the list
           productLength.add(categoryProducts.length); // Add length to the list
 // Add length to the map with category id as key
 //           debugPrint(
@@ -111,9 +110,6 @@ class CategoryLogic extends GetxController {
       return false;
     }
   }
-
-
-
 
   // categoryProductService() async {
   //   debugPrint("value of list1111> $categoryProductCollection");
@@ -166,29 +162,39 @@ class CategoryLogic extends GetxController {
   //   }
   // }
 
-  fetchProductBasedOnFilters({required BuildContext context, bool isNewId = false, SortKeyProductCollection sortKey = SortKeyProductCollection.TITLE}) async {
+  fetchProductBasedOnFilters(
+      {required BuildContext context,
+      bool isNewId = false,
+      SortKeyProductCollection sortKey =
+          SortKeyProductCollection.TITLE}) async {
     // if(isNewId){
     productsFetch.value = [];
     // }
 
     update();
 
-
     // final previousProductValue = productsFetch.value.length;
-    productsFetch.value.isEmpty ? loadingValue.value = true : loadingValue.value = false;
+    productsFetch.value.isEmpty
+        ? loadingValue.value = true
+        : loadingValue.value = false;
     update();
     debugPrint("filter api function");
 
     try {
-      final categoryProducts = await shopifyStore.getFilteredXProductsAfterCursorWithinCollection(
+      final categoryProducts =
+          await shopifyStore.getFilteredXProductsAfterCursorWithinCollection(
         currentCategoryId.value,
         250,
         selectedFilters.length == 1 ? selectedFilters[0] : selectedFilters,
-        startCursor: showFilteredProducts.isTrue ? productsFetch.value.isEmpty ? null : productsFetch.value.last.cursor : null,
+        startCursor: showFilteredProducts.isTrue
+            ? productsFetch.value.isEmpty
+                ? null
+                : productsFetch.value.last.cursor
+            : null,
         sortKey: sortKey,
       );
       showFilteredProducts.value = true;
-      for(var element in categoryProducts ?? []) {
+      for (var element in categoryProducts ?? []) {
         productsFetch.value.add(element);
       }
       log("length of products is ${productsFetch.length}");
@@ -202,76 +208,61 @@ class CategoryLogic extends GetxController {
     }
   }
 
-
-
-
-
   resetFilters() {
     selectedFilters = [];
     showFilteredProducts = false.obs;
     update();
   }
 
-  productFetchService({required BuildContext context, required String id, bool isNewId = false, SortKeyProductCollection sortKey = SortKeyProductCollection.TITLE}) async {
+  productFetchService(
+      {required BuildContext context,
+      required String id,
+      bool isNewId = false,
+      SortKeyProductCollection sortKey =
+          SortKeyProductCollection.TITLE}) async {
     currentCategoryId.value = id;
-    if(isNewId){
+    if (isNewId) {
       productsFetch.value = [];
     }
-
     final previousProductValue = productsFetch.value.length;
-
-    productsFetch.value.isEmpty ? loadingValue.value = true : loadingValue.value = false;
-
+    productsFetch.value.isEmpty
+        ? loadingValue.value = true
+        : loadingValue.value = false;
     update();
-    // productsFetch.value.isEmpty?loadingValue.value = true:loadingValue.value = false;
-    // productsFetch.value.isNotEmpty ? loadingValue.value = true : loadingValue.value = false;
     debugPrint("in the product fetch function: ");
 
-    if(productsFetch.value.isEmpty) {
+    if (productsFetch.value.isEmpty) {
       print("===== empty products list ======");
     } else {
-      print("===== last cursor of product is ${productsFetch.value.last.cursor} ======");
+      print(
+          "===== last cursor of product is ${productsFetch.value.last.cursor} ======");
     }
-    // customLoader.showLoader(context);
     try {
-      // final shopifyStore = ShopifyStore.instance;
-      final categoryProducts = await shopifyStore.getXProductsAfterCursorWithinCollection(id, 10,
-          startCursor: productsFetch.value.isEmpty ? null : productsFetch.value.last.cursor,
-          sortKey: sortKey,
+      final categoryProducts =
+          await shopifyStore.getXProductsAfterCursorWithinCollection(
+        id,
+        10,
+        startCursor: productsFetch.value.isEmpty
+            ? null
+            : productsFetch.value.last.cursor,
+        sortKey: sortKey,
       );
 
-
-
       ///----- Call the Filters API here
-      if(productsFetch.isEmpty) {
-        print("handle to be fetched is ${categoryProducts![0].collectionList![0].handle}");
-        filtersAvailable =  await getCollectionFilters(
+      if (productsFetch.isEmpty) {
+        print(
+            "handle to be fetched is ${categoryProducts![0].collectionList![0].handle}");
+        filtersAvailable = await getCollectionFilters(
           collectHandle: categoryProducts[0].collectionList![0].handle!,
         );
       }
-
-      // productsFetch.addAll(categoryProducts!);
-      for(var element in categoryProducts ?? []) {
+      for (var element in categoryProducts ?? []) {
         productsFetch.value.add(element);
       }
-
-      // productsFetch.value.isEmpty ?
-      // loadingValue.value = false : loadingValue.value = true;
       loadingValue.value = false;
       isLoading.value = false;
-      // categoryProductLoader.value = false;
-
-      if(previousProductValue == productsFetch.value.length){
-        if(!_noMoreProductsShown){
-          // showToastMessage(message: "No more products");
-          // Get.showSnackbar(
-          //   const GetSnackBar(
-          //     isDismissible: true,
-          //     message: 'No more products',
-          //     duration: Duration(seconds: 2),
-          //     backgroundColor: Colors.black,
-          //   ),
-          // );
+      if (previousProductValue == productsFetch.value.length) {
+        if (!_noMoreProductsShown) {
           _noMoreProductsShown = true;
         }
       }
@@ -290,5 +281,4 @@ class CategoryLogic extends GetxController {
     showFilteredProducts.value = false;
     loadingValue.value = false;
   }
-
 }

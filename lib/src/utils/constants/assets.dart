@@ -78,6 +78,7 @@ class _IconAssets {
   final String profileIcon = "assets/icons/Group 22147.svg";
   final String supportIcon = "assets/icons/Group 22145.svg";
   final String arrowIcon = "assets/icons/arrow.svg";
+  final String layerIconLogo = "assets/icons/Layer1.svg";
   // final String profileIcon = "assets/icons/profile.svg";
 
   //--------- Dynamic Icons Selection

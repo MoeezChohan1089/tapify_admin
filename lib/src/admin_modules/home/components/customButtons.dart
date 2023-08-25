@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
@@ -58,6 +59,7 @@ class _CustomButtonsState extends State<CustomButtons> {
         CustomButtonBox(context, "Messages", "Chat with your customers about orders or something else", Assets.icons.messageIcon, AppColors.appTextColor),
         CustomButtonBox(context, "Profile", "Set up your profile and make the app truly yours.", Assets.icons.profileIcon, AppColors.appTextColor),
         CustomButtonBox(context, "Contact Support", "Tap into our customer support – we're just a click away, anytime you need.", Assets.icons.supportIcon, AppColors.appTextColor),
+
       ],
     );
   }
