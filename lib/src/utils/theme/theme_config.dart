@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'text_theme_config.dart';
+import 'package:tapify/src/utils/theme/text_theme_config.dart';
 
 
 class AppTheme {
@@ -20,6 +19,7 @@ class AppTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
       textTheme: AppTextStyle.appTextTheme,
+      primaryColor: Colors.black
 
     )
     ;

@@ -3,12 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/admin_modules/auth/view.dart';
 
-import 'src/module/auth/view.dart';
 import 'src/utils/theme/theme_config.dart';
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -16,7 +15,8 @@ void main() async{
 
 class MyApp extends StatefulWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   const MyApp({super.key});
 
   @override
@@ -29,18 +29,14 @@ class _MyAppState extends State<MyApp> {
   home_Page() async {
     await FirebaseAnalytics.instance.logEvent(
       name: "ADMIN_SCREEN",
-      parameters: {
-        "home" : "Admin Screen"
-      },
+      parameters: {"home": "Admin Screen"},
     );
   }
 
   Json_Page() async {
     await FirebaseAnalytics.instance.logEvent(
       name: "NOTIFICATION_PAGE",
-      parameters: {
-        "home" : "JSON Admin"
-      },
+      parameters: {"home": "JSON Admin"},
     );
   }
 

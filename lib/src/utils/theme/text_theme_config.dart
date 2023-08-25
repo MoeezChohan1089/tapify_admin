@@ -36,8 +36,8 @@ class AppTextStyle {
 
   static TextStyle get _baseTextStyle => const TextStyle(
     fontFamily: 'Sofia Pro Regular',
-    color: Colors.black,
-    letterSpacing: -0.5
+    color: AppColors.appTextColor,
+    letterSpacing: -0.1
   );
 
   ///--------- Headline Text Styles (Large Medium Small)  ----------///
