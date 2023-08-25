@@ -1,4 +1,6 @@
-import 'package:tapify/src/global_controllers/database_controller.dart';
+
+
+import '../database_controller.dart';
 
 String jsonResponse = '''
 {

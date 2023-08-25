@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:tapify/src/utils/constants/assets.dart';
 
 class CustomLoaderWidget {
   static CustomLoaderWidget? _customLoader;

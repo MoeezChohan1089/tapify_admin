@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tapify/src/global_controllers/reviews/reviews_controller.dart';
-import 'package:tapify/src/modules/category/logic.dart';
+import 'package:tapify_admin/src/global_controllers/reviews/reviews_controller.dart';
 import '../custom_widgets/custom_product_bottom_sheet.dart';
 import '../modules/auth/logic.dart';
 import '../modules/cart/logic.dart';
+import '../modules/category/logic.dart';
 import '../modules/recently_viewed/logic.dart';
 import '../modules/wishlist/logic.dart';
 import 'app_config/config_controller.dart';

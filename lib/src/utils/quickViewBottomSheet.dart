@@ -4,10 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/global_controllers/app_config/config_controller.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:tapify/src/utils/skeleton_loaders/shimmerLoader.dart';
 import 'package:vibration/vibration.dart';
 
 import '../api_services/shopify_flutter/models/models.dart';

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/utils/constants/assets.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
+import '../utils/constants/assets.dart';
+import '../utils/constants/colors.dart';
 import '../utils/constants/margins_spacnings.dart';
 import '../modules/profile/logic.dart';
 

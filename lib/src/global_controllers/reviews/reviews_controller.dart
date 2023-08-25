@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio_instance;
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../../utils/extensions.dart';
+import '../../utils/tapday_api_srvices/api_services.dart';
 import '../database_controller.dart';
 import 'model_reviews.dart';
 

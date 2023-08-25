@@ -6,12 +6,10 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/global_controllers/app_config/config_controller.dart';
-import 'package:tapify/src/global_controllers/database_controller.dart';
-import 'package:tapify/src/utils/constants/assets.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../global_controllers/app_config/config_controller.dart';
 import '../modules/auth/logic.dart';
 import '../modules/auth/view.dart';
 import '../modules/bottom_nav_bar/logic.dart';
@@ -23,6 +21,7 @@ import '../modules/profile/view.dart';
 import '../modules/recently_viewed/view.dart';
 import '../modules/search/view.dart';
 import '../modules/wishlist/view.dart';
+import '../utils/constants/assets.dart';
 import '../utils/constants/colors.dart';
 import '../utils/constants/margins_spacnings.dart';
 

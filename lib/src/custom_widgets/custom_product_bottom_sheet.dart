@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/api_services/shopify_flutter/models/src/checkout/line_item/line_item.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import '../api_services/shopify_flutter/models/models.dart';
 import '../api_services/shopify_flutter/models/src/product/option/option.dart';
 import '../api_services/shopify_flutter/models/src/product/product.dart';
 import '../global_controllers/app_config/config_controller.dart';

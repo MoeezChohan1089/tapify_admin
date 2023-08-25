@@ -5,15 +5,15 @@ import 'dart:ffi';
 import 'package:dio/dio.dart' as dio_instance;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/splash/logic.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../api_services/shopify_flutter/models/models.dart';
 import '../../modules/bottom_nav_bar/view.dart';
 import '../../modules/home/models/product_info_model.dart';
 import '../../modules/home/view_home.dart';
+import '../../modules/splash/logic.dart';
 import '../../utils/global_instances.dart';
+import '../../utils/tapday_api_srvices/api_services.dart';
 import '../currency_controller.dart';
 import '../database_controller.dart';
 import 'config_json.dart';

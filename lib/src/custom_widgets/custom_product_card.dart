@@ -4,11 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/product_detail/view.dart';
-import 'package:tapify/src/utils/constants/assets.dart';
-import 'package:tapify/src/utils/constants/colors.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:tapify/src/utils/skeleton_loaders/shimmerLoader.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../api_services/shopify_flutter/models/models.dart';
@@ -16,6 +12,8 @@ import '../global_controllers/app_config/config_controller.dart';
 import '../global_controllers/currency_controller.dart';
 import '../modules/product_detail/view_product_detail.dart';
 import '../modules/wishlist/logic.dart';
+import '../utils/constants/assets.dart';
+import '../utils/constants/colors.dart';
 import '../utils/quickViewBottomSheet.dart';
 import 'custom_product_bottom_sheet.dart';
 

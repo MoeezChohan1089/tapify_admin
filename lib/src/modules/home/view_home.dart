@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:tapify/src/modules/home/logic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tapify/src/modules/home/components/search_bar.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../custom_widgets/customPopupDialogue.dart';
@@ -16,6 +14,7 @@ import '../../global_controllers/app_config/config_controller.dart';
 import '../../global_controllers/notification_service.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/global_instances.dart';
+import '../bottom_nav_bar/logic.dart';
 import '../product_detail/logic.dart';
 import 'components/category_list.dart';
 import 'components/circle_product_list.dart';
@@ -30,11 +29,12 @@ import 'components/marquee_text.dart';
 import 'components/product_slider.dart';
 import 'components/products_carousel.dart';
 import 'components/products_gallery.dart';
+import 'components/search_bar.dart';
 import 'components/single_image.dart';
 import 'components/single_video.dart';
 import 'components/title_text.dart';
+import 'logic.dart';
 import 'models/model_home_ui_settings.dart';
-import '../bottom_nav_bar/logic.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

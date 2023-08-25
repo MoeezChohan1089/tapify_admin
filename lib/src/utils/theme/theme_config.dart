@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tapify/src/utils/theme/text_theme_config.dart';
+import 'package:tapify_admin/src/utils/theme/text_theme_config.dart';
 
 
 class AppTheme {

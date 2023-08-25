@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/modules/cart/logic.dart';
-import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-import 'package:tapify/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../global_controllers/app_config/config_controller.dart';
+import '../modules/cart/logic.dart';
 import '../utils/constants/assets.dart';
 import '../utils/constants/colors.dart';
+import '../utils/constants/margins_spacnings.dart';
 
 customDialogueBox(BuildContext context) {
   return showDialog(

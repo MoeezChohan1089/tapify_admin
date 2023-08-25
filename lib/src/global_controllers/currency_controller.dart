@@ -2,9 +2,8 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:tapify/src/utils/extensions.dart';
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
 
+import '../utils/tapday_api_srvices/api_services.dart';
 import 'app_config/config_controller.dart';
 
 class CurrencyController extends GetxController {

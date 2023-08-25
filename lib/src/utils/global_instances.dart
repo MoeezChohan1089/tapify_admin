@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-import 'package:tapify/src/utils/tapday_api_srvices/api_services.dart';
+import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../api_services/shopify_flutter/shopify/shopify.dart';
 import '../api_services/shopify_flutter/shopify_config.dart';
