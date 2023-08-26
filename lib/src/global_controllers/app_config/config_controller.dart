@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:dio/dio.dart' as dio_instance;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
-import '../../api_services/shopify_flutter/models/models.dart';
+import '../../admin_modules/home/logic.dart';
 import '../../modules/bottom_nav_bar/view.dart';
 import '../../modules/home/models/product_info_model.dart';
 import '../../modules/home/view_home.dart';
@@ -16,7 +14,6 @@ import '../../utils/global_instances.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 import '../currency_controller.dart';
 import '../database_controller.dart';
-import 'config_json.dart';
 
 class AppConfig extends GetxController {
   static AppConfig get to => Get.find();
@@ -34,7 +31,6 @@ class AppConfig extends GetxController {
   final Rx<List<dynamic>> homeWidgetsList = Rx<List<dynamic>>([]);
   final Rx<List<dynamic>> menuWidgetsList = Rx<List<dynamic>>([]);
   final Rx<List<dynamic>> quickActionWidgetList = Rx<List<dynamic>>([]);
-
 
   // var homeWidgetsList = [].obs;
   // var menuWidgetsList = [].obs;
@@ -94,7 +90,6 @@ class AppConfig extends GetxController {
   RxInt chatIconIndex = 0.obs;
   RxInt cartIconIndex = 1.obs;
 
-
   ///------- App Logos
   RxString homeAppBarLogo = ''.obs;
 
@@ -110,18 +105,19 @@ class AppConfig extends GetxController {
   Future<bool> jsonApiCall() async {
     try {
       dio_instance.Response response;
-      log("token is ${LocalDatabase.to.box.read("staticUserAuthToken")}");
+      // log("token is ${LocalDatabase.to.box.read("staticUserAuthToken")}");
       dio_instance.Dio dio = dio_instance.Dio();
       var headers = {
-        'Authorization': 'Bearer ${LocalDatabase.to.box.read("staticUserAuthToken")}'
+        'Authorization': 'Bearer 14|winrC8j07SvT2XNuWlj92UeXotxf1Bcjc3xL538J'
+        // 'Authorization': 'Bearer ${LocalDatabase.to.box.read("adminSignedInAccessToken")}'
       };
       response = await dio.get(
-          '${TapDay.adminStructureViewURL}',
+          "${TapDay.adminShopViewURL}?shop_id=${AdminHomeLogic.to.browsingShopId.value}",
           options: dio_instance.Options(headers: headers));
       log("=====> JSON API Response is => ${response.data} <=====");
 
       Map<String, dynamic> configData = response.data;
-      if(response.statusCode == 200 && configData['data'] != null) {
+      if (response.statusCode == 200 && configData['data'] != null) {
         jsonData = configData['data']['app_json'];
         return true;
       } else {
@@ -131,10 +127,7 @@ class AppConfig extends GetxController {
       log("====> Error in calling JSON API => $e <====");
       return false;
     }
-
   }
-
-
 
   getAppConfigAPICall({bool isRefreshing = false}) async {
     dio_instance.Response response;
@@ -143,19 +136,22 @@ class AppConfig extends GetxController {
       isLoadingSplashAnimation.value == true;
       dio_instance.Dio dio = dio_instance.Dio();
       var headers = {
-        'Authorization': 'Bearer ${LocalDatabase.to.box.read("staticUserAuthToken")}'
+        'Authorization':
+            'Bearer ${LocalDatabase.to.box.read("staticUserAuthToken")}'
       };
 
-      response = await dio.get(
-          '${TapDay.adminStructureViewURL}',
+      response = await dio.get('${TapDay.adminStructureViewURL}',
           options: dio_instance.Options(headers: headers));
       print("response code is ${response.statusCode}");
       print("response code is ${response.statusMessage}");
       print("response code is ${response.data}");
       await Future.delayed(const Duration(seconds: 2));
       isLoadingSplashAnimation.value == false;
-      LocalDatabase.to.box.read("sessionActive") == true ?  SplashLogic.to.homeWithBottomNav ?  Get.off(() => BottomNavBarPage()) : Get.off(() => HomePage()) :  Get.off(BottomNavBarPage());
-
+      LocalDatabase.to.box.read("sessionActive") == true
+          ? SplashLogic.to.homeWithBottomNav
+              ? Get.off(() => BottomNavBarPage())
+              : Get.off(() => HomePage())
+          : Get.off(BottomNavBarPage());
     } catch (e) {
       if (e is dio_instance.DioException) {
         isLoadingSplashAnimation.value == false;
@@ -172,7 +168,6 @@ class AppConfig extends GetxController {
     ///---- Decode the JSON
     Map<String, dynamic> configData = response.data;
     jsonData = configData['data']['app_json'];
-
 
     ///------------------------------
     await setAppSettings(jsonData["settings"]);
@@ -197,7 +192,6 @@ class AppConfig extends GetxController {
     innerLoader.value = false;
   }
 
-
   setupConfigData({bool isRefreshing = false}) async {
     await setAppSettings(jsonData["settings"]);
     CurrencyController.to.setMultiCurrency();
@@ -205,9 +199,8 @@ class AppConfig extends GetxController {
 
     // domain dynamaic variable
     // print("fsffsfsfsfsfsffsfs: ${jsonData['user']['shops'][0]['domain']}");
-    LocalDatabase.to.box.write('domainShop', jsonData['user']['shops'][0]['domain']);
-
-
+    LocalDatabase.to.box
+        .write('domainShop', jsonData['user']['shops'][0]['domain']);
 
     homeWidgetsList.value = jsonData['widgets']["widget"];
     menuWidgetsList.value = jsonData['widgets']["menuItems"];
@@ -231,13 +224,12 @@ class AppConfig extends GetxController {
     innerLoader.value = false;
   }
 
-
   checkCachedData() {
     if (LocalDatabase.to.box.read("cachedProducts") != null) {
       log("Yes, products exist in cached");
       List<dynamic> retrievedData = LocalDatabase.to.box.read("cachedProducts");
       List<ProductInfo> convertedData =
-      retrievedData.map((data) => ProductInfo.fromJSON(data)).toList();
+          retrievedData.map((data) => ProductInfo.fromJSON(data)).toList();
       homeProducts.value = convertedData;
       isLoading.value = false;
       log("Successfully retrieved cached products: ${homeProducts.value.length}");
@@ -317,7 +309,6 @@ class AppConfig extends GetxController {
               String title = item['title'] ?? '';
               String imageName = item['path'] ?? '';
 
-
               ProductInfo productInfo = ProductInfo(
                 id: id,
                 title: title,
@@ -367,11 +358,13 @@ class AppConfig extends GetxController {
     quickViewTextColor.value =
         jsonData["color"]["colorSettings"]["textColor"].toString().toColor();
     quickViewBGColor.value = jsonData["color"]["colorSettings"]
-    ["backgorundColor"]
+            ["backgorundColor"]
         .toString()
         .toColor();
-    appbarBGColor.value = jsonData["color"]["colorSettings"]["topbarColor"].toString().toColor();
-    iconCollectionColor.value = jsonData["color"]["colorSettings"]["iconColor"].toString().toColor();
+    appbarBGColor.value =
+        jsonData["color"]["colorSettings"]["topbarColor"].toString().toColor();
+    iconCollectionColor.value =
+        jsonData["color"]["colorSettings"]["iconColor"].toString().toColor();
 
     ///---- Assign Icons
     menuIconIndex.value = jsonData["color"]["colorSettings"]["menuIcon"];
@@ -390,8 +383,8 @@ class AppConfig extends GetxController {
       // homeProducts.value = response ?? [];
 
       final List<ProductInfo> productInfo = response
-          ?.map((product) => ProductInfo.fromProduct(product))
-          .toList() ??
+              ?.map((product) => ProductInfo.fromProduct(product))
+              .toList() ??
           [];
 
       homeProducts.value = productInfo;
@@ -420,13 +413,13 @@ class AppConfig extends GetxController {
 
     try {
       final response =
-      await shopifyStore.getCollectionsByIds(collectionIDsList);
+          await shopifyStore.getCollectionsByIds(collectionIDsList);
 
       log("====> Response from Collection Call is $response <=====");
 
       final List<ProductInfo> collectionsInfo = response
-          ?.map((collection) => ProductInfo.fromCollection(collection))
-          .toList() ??
+              ?.map((collection) => ProductInfo.fromCollection(collection))
+              .toList() ??
           [];
 
       collectionProducts.value = collectionsInfo;
@@ -450,10 +443,10 @@ class AppConfig extends GetxController {
       switch (dataType) {
         case "product":
           return homeProducts.value.firstWhere(
-                  (product) => product.id == "gid://shopify/Product/$id");
+              (product) => product.id == "gid://shopify/Product/$id");
         case "collection":
           return collectionProducts.value.firstWhere(
-                  (product) => product.id == "gid://shopify/Collection/$id");
+              (product) => product.id == "gid://shopify/Collection/$id");
         default:
           return homeWebURLs.value.firstWhere((product) => product.id == id);
       }
@@ -467,16 +460,16 @@ class AppConfig extends GetxController {
     appSettingsStoreSettings = settingsJSON["appSettings"]["storeSetting"];
     appSettingsCustomerAccount = settingsJSON["appSettings"]["customerAccount"];
     appSettingsProductDetailPages =
-    settingsJSON["appSettings"]["productDetailPages"];
+        settingsJSON["appSettings"]["productDetailPages"];
     appSettingsCartAndCheckout = settingsJSON["appSettings"]["cartAndCheckout"];
 
     //----- Customization
     customizationCardGiftPopUp = settingsJSON["customization"]["cardGiftPopup"];
     customizationDiscountCodePopUp =
-    settingsJSON["customization"]["discountCodePopup"];
+        settingsJSON["customization"]["discountCodePopup"];
     customizationFavoritePopUp = settingsJSON["customization"]["favoritePopup"];
     customizationForgetPasswordPopUp =
-    settingsJSON["customization"]["forgatPasswordPopup"];
+        settingsJSON["customization"]["forgatPasswordPopup"];
     customizationProductImage = settingsJSON["customization"]["productImage"];
     customizationFilters = settingsJSON["customization"]["filters"];
     customizationMetaField = settingsJSON["customization"]["metafield"];
@@ -485,6 +478,6 @@ class AppConfig extends GetxController {
     appListingBranding = settingsJSON["appListing"]["branding"];
     appListingListing = settingsJSON["appListing"]["listing"];
     appListingBusinessInformation =
-    settingsJSON["appListing"]["bussnessInformation"];
+        settingsJSON["appListing"]["bussnessInformation"];
   }
 }

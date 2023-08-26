@@ -100,7 +100,7 @@ class DiscountWidget extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         FadeInImage.memoryNetwork(
-                          image: settings['image'],
+                          image: settings['image'] ?? "",
                           fit: BoxFit.cover,
                           height: settings["displayType"] == "auto"
                               ? null

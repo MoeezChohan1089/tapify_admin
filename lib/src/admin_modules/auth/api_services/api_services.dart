@@ -6,20 +6,19 @@ import 'package:flutter/material.dart';
 import '../../../global_controllers/database_controller.dart';
 import '../../../utils/tapday_api_srvices/api_services.dart';
 
-staticUserAPI({required String email, required String password}) async {
+adminUserLogInService({required String email, required String password}) async {
   try {
     Dio dio = Dio();
     final data = {
       'email': email,
       'password': password,
     };
-    final response = await dio.post(TapDay.adminLoginURL1, data: data);
+    final response = await dio.post(TapDay.adminLoginURL, data: data);
     Map<String, dynamic> responseData = response.data;
     log("new response is $responseData");
 
-    if (response.statusCode == 200 &&
-        responseData["data"]["access_token"] != null) {
-      log("==>> SIGN IN :: response data is here 2 -> $responseData =====${responseData['data']['access_token']}");
+    if (response.statusCode == 200) {
+      log("==>> SIGN IN :: response data -> $responseData =====${responseData['data']['access_token']}");
       LocalDatabase.to.box.write("sessionActive", true);
       // LocalDatabase.to.box
       //     .write("storeAdminToken", responseData["data"]["access_token"]);

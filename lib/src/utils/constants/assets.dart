@@ -79,7 +79,6 @@ class _IconAssets {
   final String supportIcon = "assets/icons/Group 22145.svg";
   final String arrowIcon = "assets/icons/arrow.svg";
   final String layerIconLogo = "assets/icons/Layer1.svg";
-  // final String profileIcon = "assets/icons/profile.svg";
 
   //--------- Dynamic Icons Selection
   //---- Cart
@@ -91,16 +90,15 @@ class _IconAssets {
     "assets/icons/dynamic icons/Cart 5.svg",
     "assets/icons/dynamic icons/Cart 6.svg",
     "assets/icons/dynamic icons/Cart 7.svg",
-
   ];
 
   //---- Chat
   final List<String> chatIcons = [
-     "assets/icons/dynamic icons/Chat 1.svg",
-     "assets/icons/dynamic icons/Chat 2.svg",
-     "assets/icons/dynamic icons/Chat 3.svg",
-     "assets/icons/dynamic icons/Chat 4.svg",
-     "assets/icons/dynamic icons/Chat 5.svg",
+    "assets/icons/dynamic icons/Chat 1.svg",
+    "assets/icons/dynamic icons/Chat 2.svg",
+    "assets/icons/dynamic icons/Chat 3.svg",
+    "assets/icons/dynamic icons/Chat 4.svg",
+    "assets/icons/dynamic icons/Chat 5.svg",
   ];
 
   //---- Menu
@@ -112,8 +110,4 @@ class _IconAssets {
     "assets/icons/dynamic icons/Menu 5.svg",
     "assets/icons/dynamic icons/Menu 6.svg",
   ];
-
-
-
-
 }

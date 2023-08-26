@@ -9,7 +9,6 @@ import 'package:tapify_admin/src/modules/home/logic.dart';
 
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../global_controllers/app_config/config_controller.dart';
-import '../../global_controllers/notification_service.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/global_instances.dart';
 import '../bottom_nav_bar/logic.dart';
@@ -66,25 +65,18 @@ class _HomePageState extends State<HomePage>
 
     //--------------
     // TODO: implement initState
-    // _anicontroller = AnimationController(
-    //     vsync: this, duration: Duration(milliseconds: 2000));
     _scaleController =
         AnimationController(value: 0.0, vsync: this, upperBound: 1.0);
-    // _footerController = AnimationController(
-    //     vsync: this, duration: Duration(milliseconds: 2000));
     _refreshController.headerMode?.addListener(() {
       if (_refreshController.headerStatus == RefreshStatus.idle) {
         _scaleController.value = 0.0;
-        // _anicontroller.reset();
-      } else if (_refreshController.headerStatus == RefreshStatus.refreshing) {
-        // _anicontroller.repeat();
-      }
+      } else if (_refreshController.headerStatus == RefreshStatus.refreshing) {}
     });
 
     ///---- old
-    requestPermission();
-    loadFCM();
-    listenFCM();
+    // requestPermission();
+    // loadFCM();
+    // listenFCM();
   }
 
   @override

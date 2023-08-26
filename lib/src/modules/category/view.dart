@@ -171,16 +171,19 @@ class _CategoryPageState extends State<CategoryPage>
                                         placeholder: kTransparentImage,
                                         imageErrorBuilder:
                                             (context, url, error) => Container(
+                                              height: 85.h,
+                                              width: 85.h,
                                           color: Colors.grey.shade200,
                                           child: Center(
                                             child: SvgPicture.asset(
                                               Assets.icons.noImageIcon,
                                               height: 25.h,
+                                              width: 25.h,
                                             ),
                                           ),
                                         ),
                                         fit: BoxFit.cover,
-                                        image: categoryItem["defaultImage"],
+                                        image: categoryItem["defaultImage"] ?? "",
                                         width: 85.h,
                                         height: 85.h,
                                       ),

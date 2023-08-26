@@ -98,7 +98,7 @@ class _CategoryProductsState extends State<CategoryProducts>
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 border: Border(
                               // left: BorderSide(
                               //     color: AppColors.appBordersColor, width: .5),

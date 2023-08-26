@@ -1,21 +1,20 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify_admin/src/admin_modules/auth/view.dart';
-import 'package:tapify_admin/src/global_controllers/notification_service.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'src/custom_widgets/local_notification_service.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tapify_admin/src/admin_modules/splash/view.dart';
+
 import 'src/global_controllers/dependency_injection.dart';
 import 'src/utils/theme/theme_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
+  await GetStorage.init();
   await DependencyInjection.init();
+
   ///----- notification functions
   // Get.put(NotificationService());
   // notificationInitializeMain();
@@ -63,8 +62,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // home_Page();
-    // Json_Page();
     super.initState();
   }
 
@@ -79,7 +76,7 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             // navigatorObservers: <NavigatorObserver>[MyApp.observer],
             theme: AppTheme.light(),
-            home: SignInPage(),
+            home: AdminSplashPage(),
             builder: (context, child) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
