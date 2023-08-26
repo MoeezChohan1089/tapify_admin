@@ -9,6 +9,7 @@ import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 // import '../api_services/shopify_flutter/shopify_flutter.dart';
 // import '../global_controllers/database_controller.dart';
 // import '../utils/global_instances.dart';
+import '../../admin_modules/home/logic.dart';
 import '../../api_services/shopify_flutter/shopify_flutter.dart';
 import '../../custom_widgets/custom_snackbar.dart';
 import '../../global_controllers/database_controller.dart';
@@ -86,11 +87,11 @@ class OrderLogic extends GetxController {
       "rating": rating
     };
 
-    final response = await dio.post('${TapDay.judgeMeReviewURL}',
+    final response = await dio.post(TapDay.judgeMeReviewURL,
         queryParameters: {
           // 'per_page': 1000,
-          'api_token': '${TapDay.apiTokenJudgeMe}',
-          'shop_domain': '${LocalDatabase.to.box.read('domainShop')}'
+          'api_token': TapDay.apiTokenJudgeMe,
+          'shop_domain': AdminHomeLogic.to.browsingShopDomain.value
         },
         data: data);
     // print("value of actin: ${response.statusCode}");

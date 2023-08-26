@@ -1,7 +1,9 @@
 import 'dart:developer';
-import 'package:get/get.dart';
-import 'package:dio/dio.dart' as dio_instance;
 
+import 'package:dio/dio.dart' as dio_instance;
+import 'package:get/get.dart';
+
+import '../../admin_modules/home/logic.dart';
 import '../../utils/extensions.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 import '../database_controller.dart';
@@ -29,11 +31,11 @@ class ReviewsListController extends GetxController {
     try {
       dio_instance.Response response;
       response = await dio.get(
-        '${TapDay.judgeMeReviewURL}',
+        TapDay.judgeMeReviewURL,
         queryParameters: {
           'per_page': 1000,
-          'api_token': '${TapDay.apiTokenJudgeMe}',
-          'shop_domain': '${LocalDatabase.to.box.read('domainShop')}'
+          'api_token': TapDay.apiTokenJudgeMe,
+          'shop_domain': AdminHomeLogic.to.browsingShopDomain.value
         },
       );
       // log("Response of Reviews List API is ==> ${response.data}");
@@ -69,7 +71,6 @@ class ReviewsListController extends GetxController {
     return requestedProductReviews;
   }
 
-
   ///---- check if current user has reviewed this item
   double checkUserReview(var productId, var orderNoOffical) {
     double reviewValue = 0.0;
@@ -80,15 +81,18 @@ class ReviewsListController extends GetxController {
     }
 
     for (Reviews reviewJson in modelReviewsList.reviews ?? []) {
-      if (reviewJson.productExternalId == null || reviewJson.reviewer?.email == null) {
+      if (reviewJson.productExternalId == null ||
+          reviewJson.reviewer?.email == null) {
         continue;
       }
 
-      if(reviewJson.title!.contains("/order")){
+      if (reviewJson.title!.contains("/order")) {
         var splitvalue = reviewJson.title!.split('/order');
         print("split order no1: ${splitvalue[1].runtimeType}");
         print("split order no: ${orderNoOffical.runtimeType}");
-        if (int.parse(splitvalue[1]) == orderNoOffical && reviewJson.productExternalId == int.parse(productId) && reviewJson.reviewer!.email == userinfoList[0]["email"]) {
+        if (int.parse(splitvalue[1]) == orderNoOffical &&
+            reviewJson.productExternalId == int.parse(productId) &&
+            reviewJson.reviewer!.email == userinfoList[0]["email"]) {
           // filteredReviews.add(reviewJson.toJson());
           // totalRating += reviewJson.rating;
           reviewValue = convertToDouble(reviewJson.rating);
@@ -98,5 +102,4 @@ class ReviewsListController extends GetxController {
     }
     return reviewValue;
   }
-
 }

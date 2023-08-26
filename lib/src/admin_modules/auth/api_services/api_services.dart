@@ -13,17 +13,16 @@ adminUserLogInService({required String email, required String password}) async {
       'email': email,
       'password': password,
     };
-    final response = await dio.post(TapDay.adminLoginURL, data: data);
+    final response = await dio.post(TapDay.loginURL, data: data);
     Map<String, dynamic> responseData = response.data;
     log("new response is $responseData");
 
     if (response.statusCode == 200) {
-      log("==>> SIGN IN :: response data -> $responseData =====${responseData['data']['access_token']}");
-      LocalDatabase.to.box.write("sessionActive", true);
-      // LocalDatabase.to.box
-      //     .write("storeAdminToken", responseData["data"]["access_token"]);
+      log("==>> SIGN IN :: response data -> $responseData =====${responseData['data']['token']}");
       LocalDatabase.to.box
-          .write("staticAdminAuthToken", responseData["data"]["token"]);
+          .write("adminSignedInToken", responseData["data"]["token"]);
+      // LocalDatabase.to.box
+      //     .write("adminSignedInShopToken", responseData["data"]["sh"]["access_token"]);
       return true;
     } else {
       debugPrint("==>> SIGN IN ERROR2 : Not 200 --> ${response.data} =====");

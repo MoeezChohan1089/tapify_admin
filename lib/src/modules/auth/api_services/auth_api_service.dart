@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
+import '../../../admin_modules/home/logic.dart';
 import '../../../custom_widgets/custom_snackbar.dart';
 import '../../../utils/global_instances.dart';
 // import 'package:shopify_flutter/shopify_flutter.dart';
@@ -80,8 +81,7 @@ createClientService(
     Dio dio = Dio();
 
     final data = {
-      'shop':
-          LocalDatabase.to.box.read('domainShop') ?? '${TapDay.shopNameUrl}',
+      'shop': AdminHomeLogic.to.browsingShopDomain.value,
       'first_name': firstName,
       'last_name': lastName,
       'display_name': '$firstName $lastName',
@@ -97,7 +97,7 @@ createClientService(
     };
 
     final response = await dio.post(
-      '${TapDay.adminCreateClientURL}',
+      '${TapDay.createClientURL}',
       data: data,
       options: Options(headers: headers),
     );
@@ -160,12 +160,11 @@ staticUserAPI({required String email, required String password}) async {
       'email': email,
       'password': password,
     };
-    final response = await dio.post('${TapDay.adminLoginURL}', data: data);
+    final response = await dio.post('${TapDay.loginURL}', data: data);
     Map<String, dynamic> responseData = response.data;
     log("new response is $responseData");
 
-    if (response.statusCode == 200 &&
-        responseData["success"] == true) {
+    if (response.statusCode == 200 && responseData["success"] == true) {
       log("==>> SIGN IN :: response data is here 2 -> $responseData =====${responseData['data']['access_token']}");
       LocalDatabase.to.box.write("sessionActive", true);
       LocalDatabase.to.box

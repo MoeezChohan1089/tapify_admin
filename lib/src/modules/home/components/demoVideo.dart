@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../custom_widgets/product_viewer_web.dart';
 import '../../../global_controllers/app_config/config_controller.dart';
+import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/margins_spacnings.dart';
 import '../logic.dart';
 import '../models/product_info_model.dart';
@@ -21,13 +21,16 @@ class SingleVideoView extends StatefulWidget {
 }
 
 class SingleVideoViewState extends State<SingleVideoView> {
+
   final logic = Get.put(HomeLogic());
+
 
   @override
   void initState() {
     super.initState();
     logic.initializeValueOfVideo(widget.settings);
   }
+
 
   @override
   void dispose() {
@@ -43,8 +46,7 @@ class SingleVideoViewState extends State<SingleVideoView> {
     }
 
     // When loop is false
-    if (widget.settings['autoPlay'] &&
-        !widget.settings['loop'] &&
+    if (widget.settings['autoPlay'] && !widget.settings['loop'] &&
         logic.videoEnded.value) {
       return _ControlsOverlay(
         controller: logic.controller,
@@ -82,8 +84,7 @@ class SingleVideoViewState extends State<SingleVideoView> {
         isClicked: logic.isClicked.value,
         isFirstTime: logic.isFirstTime.value,
         onPlayPauseClicked: () {
-          logic.isClicked.value = !logic
-              .isClicked.value; // Toggle the value of isClicked every time
+          logic.isClicked.value = !logic.isClicked.value; // Toggle the value of isClicked every time
           if (logic.isFirstTime.value) {
             logic.isFirstTime.value = false;
           }
@@ -91,8 +92,12 @@ class SingleVideoViewState extends State<SingleVideoView> {
       );
     }
 
+
+
+
     return SizedBox.shrink();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,38 +110,33 @@ class SingleVideoViewState extends State<SingleVideoView> {
     //   logic.controller.pause();
     // }
     return SingleChildScrollView(
-      child: Column(
+      child:
+      Column(
         children: <Widget>[
-          widget.settings['isTitleHidden'] == false
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 6),
-                  child: Container(
-                    margin: widget.settings['titleAlignment'] != 'center'
-                        ? EdgeInsets.symmetric(
-                            horizontal: pageMarginHorizontal / 1.5)
-                        : EdgeInsets.symmetric(
-                            horizontal: 0,
-                          ),
-                    width: double.maxFinite,
-                    child: Text(
-                      '${widget.settings["title"]}',
-                      textAlign: widget.settings['titleAlignment'] == 'left'
-                          ? TextAlign.left
-                          : widget.settings['titleAlignment'] == 'center'
-                              ? TextAlign.center
-                              : TextAlign.right,
-                      style: widget.settings['titleSize'] == 'small'
-                          ? context.text.titleSmall
-                          : widget.settings['titleSize'] == 'medium'
-                              ? context.text.titleMedium
-                              : context.text.titleLarge,
-                    ),
-                  ),
-                )
-              : SizedBox(),
+          widget.settings['isTitleHidden'] == false ? Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 6),
+            child: Container(
+              margin: widget.settings['titleAlignment'] != 'center'
+                  ? EdgeInsets.symmetric(
+                  horizontal: pageMarginHorizontal / 1.5)
+                  : EdgeInsets.symmetric(horizontal: 0,),
+              width: double.maxFinite,
+              child: Text('${widget.settings["title"]}',
+                textAlign: widget.settings['titleAlignment'] == 'left'
+                    ? TextAlign.left
+                    : widget.settings['titleAlignment'] == 'center'
+                    ? TextAlign.center
+                    : TextAlign.right,
+                style: widget.settings['titleSize'] == 'small' ? context.text
+                    .titleSmall : widget.settings['titleSize'] == 'medium'
+                    ? context.text.titleMedium
+                    : context.text.titleLarge,
+              ),
+            ),
+          ) : SizedBox(),
 
           (widget.settings["video"] != null &&
-                  widget.settings["metadata"]["data"].isEmpty)
+              widget.settings["metadata"]["data"].isEmpty)
               ? singleImageVariant()
               : customImageVariant(context),
 
@@ -206,65 +206,66 @@ class SingleVideoViewState extends State<SingleVideoView> {
       return GestureDetector(
         onTap: () {
           if (widget.settings["web_url"] != null) {
-            ///------ Open the Web
             Get.to(() => WebViewProduct(
-                  productUrl: widget.settings["web_url"],
-                ));
+              productUrl: widget.settings["web_url"],
+            ));
           }
         },
         child: Padding(
           padding: widget.settings["margin"] == true
               ? EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal / 1.5,
-                  vertical: pageMarginVertical / 1.5)
+              horizontal: pageMarginHorizontal / 1.5,
+              vertical: pageMarginVertical / 1.5)
               : EdgeInsets.all(0),
-          child: Container(
-            // padding: const EdgeInsets.all(20),
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
 
-            height: widget.settings["displayType"] == "normal"
-                ? 300.h
-                : widget.settings["displayType"] == "vertical"
+              SizedBox( // Define your width
+                height: widget.settings["displayType"] == "normal"
+                    ? 300.h
+                    : widget.settings["displayType"] == "vertical"
                     ? 400.h
                     : widget.settings["displayType"] == "auto"
-                        ? null
-                        : 230.h,
-            width: double.maxFinite,
-            child: AspectRatio(
-              aspectRatio: logic.controller.value.aspectRatio / 2,
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  VideoPlayer(logic.controller),
-                  getPlayPauseButton(),
-                  // ValueListenableBuilder(
-                  //   valueListenable: _logic.controller,
-                  //   builder: (context, VideoPlayerValue value, child) {
-                  //     if (!value.isPlaying && !value.isBuffering) {
-                  //       return GestureDetector(
-                  //         onTap: () {
-                  //           if (!_logic.controller.value.isPlaying) {
-                  //             _logic.controller.play();
-                  //           } else {
-                  //             _logic.controller.pause();
-                  //           }
-                  //         },
-                  //         child: Icon(Icons.play_arrow, size: 64.0, color: Colors.white),
-                  //       );
-                  //     } else {
-                  //       return SizedBox.shrink(); // Returns an empty widget if the video is playing or buffering
-                  //     }
-                  //   },
-                  // ),
-                  // _ControlsOverlay(logic.controller: _logic.controller),
-                  // VideoProgressIndicator(_logic.controller, allowScrubbing: true),
-                ],
+                    ? Get.height
+                    : 230.h, // Define your height
+
+                // height: 300,
+
+                // height: Get.height,
+                width: Get.width,
+                child: ClipRect(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: Get.height * 2 * logic.controller.value.aspectRatio,
+                      height: widget.settings["displayType"] == "normal"
+                          ? Get.height * 4
+                          : widget.settings["displayType"] == "vertical"
+                          ? Get.height * 4
+                          : widget.settings["displayType"] == "auto"
+                          ? Get.height * 4
+                          : Get.height * 4,
+                      child: VideoPlayer(logic.controller),
+                    ),
+                  ),
+                ),
               ),
-            ),
+
+              // Container(
+              //     color: Colors.green,
+              //     child: VideoPlayer(logic.controller)),
+
+              // Container layer (on top of the video)
+
+              getPlayPauseButton(),
+            ],
           ),
         ),
       );
     });
   }
+
 
   final appConfig = AppConfig.to;
 
@@ -284,59 +285,62 @@ class SingleVideoViewState extends State<SingleVideoView> {
                 dataType: widget.settings["metadata"]['dataType']);
           }
         },
-        child: Padding(
+        child:  Padding(
           padding: widget.settings["margin"] == true
               ? EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal / 1.5,
-                  vertical: pageMarginVertical / 1.5)
+              horizontal: pageMarginHorizontal / 1.5,
+              vertical: pageMarginVertical / 1.5)
               : EdgeInsets.all(0),
-          child: Container(
-            // padding: const EdgeInsets.all(20),
-            height: widget.settings["displayType"] == "normal"
-                ? 300.h
-                : widget.settings["displayType"] == "vertical"
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+
+              SizedBox( // Define your width
+                height: widget.settings["displayType"] == "normal"
+                    ? 300.h
+                    : widget.settings["displayType"] == "vertical"
                     ? 400.h
                     : widget.settings["displayType"] == "auto"
-                        ? null
-                        : 230.h,
-            width: double.maxFinite,
-            child: AspectRatio(
-              aspectRatio: logic.controller.value.aspectRatio / 2,
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  VideoPlayer(logic.controller),
-                  getPlayPauseButton(),
-                  // ValueListenableBuilder(
-                  //   valueListenable: _logic.controller,
-                  //   builder: (context, VideoPlayerValue value, child) {
-                  //     if (!value.isPlaying && !value.isBuffering) {
-                  //       return GestureDetector(
-                  //         onTap: () {
-                  //           if (!_logic.controller.value.isPlaying) {
-                  //             _logic.controller.play();
-                  //           } else {
-                  //             _logic.controller.pause();
-                  //           }
-                  //         },
-                  //         child: Icon(Icons.play_arrow, size: 64.0, color: Colors.white),
-                  //       );
-                  //     } else {
-                  //       return SizedBox.shrink(); // Returns an empty widget if the video is playing or buffering
-                  //     }
-                  //   },
-                  // ),
-                  // _ControlsOverlay(logic.controller: _logic.controller),
-                  // VideoProgressIndicator(_logic.controller, allowScrubbing: true),
-                ],
+                    ? Get.height
+                    : 230.h, // Define your height
+
+                // height: 300,
+
+                // height: Get.height,
+                width: Get.width,
+                child: ClipRect(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: Get.height * 2 * logic.controller.value.aspectRatio,
+                      height: widget.settings["displayType"] == "normal"
+                          ? Get.height * 4
+                          : widget.settings["displayType"] == "vertical"
+                          ? Get.height * 4
+                          : widget.settings["displayType"] == "auto"
+                          ? Get.height * 4
+                          : Get.height * 4,
+                      child: VideoPlayer(logic.controller),
+                    ),
+                  ),
+                ),
               ),
-            ),
+
+              // Container(
+              //     color: Colors.green,
+              //     child: VideoPlayer(logic.controller)),
+
+              // Container layer (on top of the video)
+
+              getPlayPauseButton(),
+            ],
           ),
         ),
       );
     });
   }
 }
+
 
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({
@@ -382,29 +386,31 @@ class _ControlsOverlay extends StatelessWidget {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 50),
           reverseDuration: const Duration(milliseconds: 200),
-          child: (controller.value.isPlaying &&
-                  !videoEnded &&
-                  (!isFirstTime || isClicked))
+          child: (controller.value.isPlaying && !videoEnded &&
+              (!isFirstTime || isClicked))
               ? SizedBox.shrink()
               : Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.6),
-                  ),
-                  child: Center(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.appHintColor),
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 60.0,
-                        semanticLabel: 'Play',
-                      ),
-                    ),
-                  ),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.6),
+
+            ),
+            child: Center(
+              child:
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.appHintColor
                 ),
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.white,
+                  size: 60.0,
+                  semanticLabel: 'Play',
+                ),
+              ),
+            ),
+          ),
         ),
         GestureDetector(
           onTap: () {
@@ -420,209 +426,3 @@ class _ControlsOverlay extends StatelessWidget {
     );
   }
 }
-
-// import 'dart:io';
-//
-// import 'package:chewie/chewie.dart';
-// import 'package:flutter/material.dart';
-// // ignore: depend_on_referenced_packages
-// import 'package:video_player/video_player.dart';
-//
-// class ChewieDemo extends StatefulWidget {
-//   const ChewieDemo({
-//     Key? key,
-//     this.title = 'Chewie Demo',
-//   }) : super(key: key);
-//
-//   final String title;
-//
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _ChewieDemoState();
-//   }
-// }
-//
-// class _ChewieDemoState extends State<ChewieDemo> {
-//   TargetPlatform? _platform;
-//   late VideoPlayerController _videoPlayerController1;
-//   late VideoPlayerController _videoPlayerController2;
-//   ChewieController? _chewieController;
-//   int? bufferDelay;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     initializePlayer();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _videoPlayerController1.dispose();
-//     _videoPlayerController2.dispose();
-//     _chewieController?.dispose();
-//     super.dispose();
-//   }
-//
-//   List<String> srcs = [
-//     // "https://tapday.s3.ap-south-1.amazonaws.com/upload/images/media/xFybljQHiVfNlcvVqqocJxrtK4tgMPMYh2sbe3oo.mp4"
-//     "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4"
-//   ];
-//
-//   Future<void> initializePlayer() async {
-//     _videoPlayerController1 =
-//         VideoPlayerController.networkUrl(Uri.parse(srcs[currPlayIndex]));
-//     _videoPlayerController2 =
-//         VideoPlayerController.networkUrl(Uri.parse(srcs[currPlayIndex]));
-//     await Future.wait([
-//       _videoPlayerController1.initialize(),
-//       _videoPlayerController2.initialize()
-//     ]);
-//     _createChewieController();
-//     setState(() {});
-//   }
-//
-//   void _createChewieController() {
-//     // final subtitles = [
-//     //     Subtitle(
-//     //       index: 0,
-//     //       start: Duration.zero,
-//     //       end: const Duration(seconds: 10),
-//     //       text: 'Hello from subtitles',
-//     //     ),
-//     //     Subtitle(
-//     //       index: 0,
-//     //       start: const Duration(seconds: 10),
-//     //       end: const Duration(seconds: 20),
-//     //       text: 'Whats up? :)',
-//     //     ),
-//     //   ];
-//
-//
-//     _chewieController = ChewieController(
-//       videoPlayerController: _videoPlayerController1,
-//       autoPlay: true,
-//       looping: true,
-//       showControls: false,
-//       fullScreenByDefault: true,
-//        progressIndicatorDelay:
-//       bufferDelay != null ? Duration(milliseconds: bufferDelay!) : null,
-//       // additionalOptions: (context) {
-//       //   return <OptionItem>[
-//       //     OptionItem(
-//       //       onTap: toggleVideo,
-//       //       iconData: Icons.live_tv_sharp,
-//       //       title: 'Toggle Video Src',
-//       //     ),
-//       //   ];
-//       // },
-//
-//
-//       // Try playing around with some of these other options:
-//
-//       // showControls: false,
-//       // materialProgressColors: ChewieProgressColors(
-//       //   playedColor: Colors.red,
-//       //   handleColor: Colors.blue,
-//       //   backgroundColor: Colors.grey,
-//       //   bufferedColor: Colors.lightGreen,
-//       // ),
-//       // placeholder: Container(
-//       //   color: Colors.grey,
-//       // ),
-//       // autoInitialize: true,
-//     );
-//   }
-//
-//   int currPlayIndex = 0;
-//
-//   Future<void> toggleVideo() async {
-//     await _videoPlayerController1.pause();
-//     currPlayIndex += 1;
-//     if (currPlayIndex >= srcs.length) {
-//       currPlayIndex = 0;
-//     }
-//     await initializePlayer();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: <Widget>[
-//         Center(
-//           child: _chewieController != null &&
-//               _chewieController!
-//                   .videoPlayerController.value.isInitialized
-//               ? AspectRatio(
-//                 aspectRatio: _chewieController!.videoPlayerController.value.aspectRatio,
-//                 child: FittedBox(
-//                       fit: BoxFit.cover,
-//                       child: Chewie(
-//                         controller: _chewieController!,
-//                       ),
-//                     ),
-//               )
-//               : Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               CircularProgressIndicator(),
-//               SizedBox(height: 20),
-//               Text('Loading'),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-// // class DelaySlider extends StatefulWidget {
-// //   const DelaySlider({Key? key, required this.delay, required this.onSave})
-// //       : super(key: key);
-// //
-// //   final int? delay;
-// //   final void Function(int?) onSave;
-// //   @override
-// //   State<DelaySlider> createState() => _DelaySliderState();
-// // }
-// //
-// // class _DelaySliderState extends State<DelaySlider> {
-// //   int? delay;
-// //   bool saved = false;
-// //
-// //   @override
-// //   void initState() {
-// //     super.initState();
-// //     delay = widget.delay;
-// //   }
-// //
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     const int max = 1000;
-// //     return
-// //       ListTile(
-// //       title: Text(
-// //         "Progress indicator delay ${delay != null ? "${delay.toString()} MS" : ""}",
-// //       ),
-// //       // subtitle: Slider(
-// //       //   value: delay != null ? (delay! / max) : 0,
-// //       //   onChanged: (value) async {
-// //       //     delay = (value * max).toInt();
-// //       //     setState(() {
-// //       //       saved = false;
-// //       //     });
-// //       //   },
-// //       // ),
-// //       // trailing: IconButton(
-// //       //   icon: const Icon(Icons.save),
-// //       //   onPressed: saved
-// //       //       ? null
-// //       //       : () {
-// //       //     widget.onSave(delay);
-// //       //     setState(() {
-// //       //       saved = true;
-// //       //     });
-// //       //   },
-// //       // ),
-// //     );
-// //   }
-// // }

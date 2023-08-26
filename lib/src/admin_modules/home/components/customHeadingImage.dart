@@ -56,31 +56,39 @@ class _CustomHeadingImageState extends State<CustomHeadingImage> {
           width: double.maxFinite,
           height: 56.h,
           padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
-          child: ElevatedButton(
-            onPressed: () async {
-              logic.browsingShopId.value = 1;
-              final imageUrl = await fetchRandomImage();
-              Get.to(() => SplashPage(imageUrl: imageUrl));
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+          child: Obx(() {
+            return ElevatedButton(
+              onPressed: () async {
+                logic.isProcessing.value = true;
+                logic.browsingShopId.value = 1;
+                logic.browsingShop.value = "FillinxSolutions";
+                logic.browsingShopDomain.value =
+                    "fillinxsolutions.myshopify.com";
+                final imageUrl =
+                    await fetchRandomImage(logic.browsingShop.value);
+                Get.to(() => SplashPage(imageUrl: imageUrl));
+                logic.isProcessing.value = false;
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
               ),
-            ),
-            child: logic.isProcessing.value
-                ? const SpinKitThreeBounce(
-                    color: AppColors.customWhiteTextColor,
-                    size: 23.0,
-                  )
-                : Text(
-                    "Tap To Explore",
-                    style: context.text.bodyLarge
-                        ?.copyWith(color: AppColors.customWhiteTextColor),
-                  ),
-          ),
+              child: logic.isProcessing.value
+                  ? const SpinKitThreeBounce(
+                      color: AppColors.customWhiteTextColor,
+                      size: 23.0,
+                    )
+                  : Text(
+                      "Tap To Explore",
+                      style: context.text.bodyLarge
+                          ?.copyWith(color: AppColors.customWhiteTextColor),
+                    ),
+            );
+          }),
         ),
       ],
     );

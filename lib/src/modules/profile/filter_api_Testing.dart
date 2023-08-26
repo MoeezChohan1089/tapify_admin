@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
+import '../../admin_modules/home/logic.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 
 testFilterApi() async {
   Dio dio = Dio();
   String apiUrl =
-      "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
+      "https://${AdminHomeLogic.to.browsingShopDomain.value}/api/graphql";
 
   String graphqlQuery = r'''
   query Facets {

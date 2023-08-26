@@ -52,7 +52,7 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
       if (onSuccessNavigator != null) {
         onSuccessNavigator!();
       } else {
-        Get.offAll(() => BottomNavBarPage());
+        Get.off(() => BottomNavBarPage());
       }
     } else {
       isProcessing.value = false;
@@ -101,7 +101,7 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
       if (onSuccessNavigator != null) {
         onSuccessNavigator!();
       } else {
-        Get.offAll(() => BottomNavBarPage());
+        Get.off(() => BottomNavBarPage());
       }
     } else {
       isProcessing.value = false;

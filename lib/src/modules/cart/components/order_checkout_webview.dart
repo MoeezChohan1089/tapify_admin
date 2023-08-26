@@ -4,7 +4,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../bottom_nav_bar/view.dart';
 import '../../order/logic.dart';
 import '../../order/view.dart';
 import '../logic.dart';
@@ -69,14 +71,18 @@ class _CheckoutWebViewState extends State<CheckoutWebView> {
           onNavigationRequest: (NavigationRequest request) async {
             if (request.url.endsWith('/thank_you')) {
               CartLogic.to.resetCart();
-              Future.delayed(const Duration(seconds: 6),(){
+              Future.delayed( Duration(seconds: LocalDatabase.to.box.read('customerAccessToken') != null ? 6:12),(){
                 // Navigator.pop(context);
 
                 if(widget.checkoutAsGuest){
                   Navigator.pop(context);
                 } else {
-                  Get.off(()=>  OrderPage(navigateToNext: true,));
-                  ordersListLogic.getOrdersService();
+                 if(LocalDatabase.to.box.read('customerAccessToken') != null){
+                   Get.off(()=>  OrderPage(navigateToNext: true,));
+                   ordersListLogic.getOrdersService();
+                 }else{
+                   Get.off(()=>  BottomNavBarPage());
+                 }
                 }
 
 

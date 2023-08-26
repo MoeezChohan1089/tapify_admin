@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
-import '../../modules/home/view_home.dart';
 import '../auth/view.dart';
+import '../home/view.dart';
 import 'state.dart';
 
 class AdminSplashLogic extends GetxController {
@@ -21,12 +21,12 @@ class AdminSplashLogic extends GetxController {
 
   myNewNavigator() async {
     currentState.value = "continue";
+
     //--- check internet
     if (await checkInternetAccess()) {
       await Future.delayed(const Duration(milliseconds: 1500));
-      if (LocalDatabase.to.box.read("adminSignedIn") != null &&
-          LocalDatabase.to.box.read("adminSignedIn") == true) {
-        Get.off(() => const HomePage());
+      if (LocalDatabase.to.box.read("adminSignedInToken") != null) {
+        Get.off(() => AdminHomePage());
       } else {
         Get.off(() => AdminSignInPage());
       }

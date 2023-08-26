@@ -6,10 +6,7 @@ import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../admin_modules/home/logic.dart';
-import '../../modules/bottom_nav_bar/view.dart';
 import '../../modules/home/models/product_info_model.dart';
-import '../../modules/home/view_home.dart';
-import '../../modules/splash/logic.dart';
 import '../../utils/global_instances.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 import '../currency_controller.dart';
@@ -105,11 +102,11 @@ class AppConfig extends GetxController {
   Future<bool> jsonApiCall() async {
     try {
       dio_instance.Response response;
-      // log("token is ${LocalDatabase.to.box.read("staticUserAuthToken")}");
       dio_instance.Dio dio = dio_instance.Dio();
       var headers = {
-        'Authorization': 'Bearer 14|winrC8j07SvT2XNuWlj92UeXotxf1Bcjc3xL538J'
-        // 'Authorization': 'Bearer ${LocalDatabase.to.box.read("adminSignedInAccessToken")}'
+        // 'Authorization': 'Bearer 14|winrC8j07SvT2XNuWlj92UeXotxf1Bcjc3xL538J'
+        'Authorization':
+            'Bearer ${LocalDatabase.to.box.read("adminSignedInToken")}'
       };
       response = await dio.get(
           "${TapDay.adminShopViewURL}?shop_id=${AdminHomeLogic.to.browsingShopId.value}",
@@ -129,68 +126,68 @@ class AppConfig extends GetxController {
     }
   }
 
-  getAppConfigAPICall({bool isRefreshing = false}) async {
-    dio_instance.Response response;
-    log("token is ${LocalDatabase.to.box.read("staticUserAuthToken")}");
-    try {
-      isLoadingSplashAnimation.value == true;
-      dio_instance.Dio dio = dio_instance.Dio();
-      var headers = {
-        'Authorization':
-            'Bearer ${LocalDatabase.to.box.read("staticUserAuthToken")}'
-      };
-
-      response = await dio.get('${TapDay.adminStructureViewURL}',
-          options: dio_instance.Options(headers: headers));
-      print("response code is ${response.statusCode}");
-      print("response code is ${response.statusMessage}");
-      print("response code is ${response.data}");
-      await Future.delayed(const Duration(seconds: 2));
-      isLoadingSplashAnimation.value == false;
-      LocalDatabase.to.box.read("sessionActive") == true
-          ? SplashLogic.to.homeWithBottomNav
-              ? Get.off(() => BottomNavBarPage())
-              : Get.off(() => HomePage())
-          : Get.off(BottomNavBarPage());
-    } catch (e) {
-      if (e is dio_instance.DioException) {
-        isLoadingSplashAnimation.value == false;
-        print("Dio error message: ${e.message}");
-        if (e.response != null) {
-          print("Response data: ${e.response!.data}");
-        }
-      } else {
-        print("Error in getting structure: $e");
-      }
-      throw "";
-    }
-
-    ///---- Decode the JSON
-    Map<String, dynamic> configData = response.data;
-    jsonData = configData['data']['app_json'];
-
-    ///------------------------------
-    await setAppSettings(jsonData["settings"]);
-    CurrencyController.to.setMultiCurrency();
-    innerLoader.value = true;
-    homeWidgetsList.value = jsonData['widgets']["widget"];
-    menuWidgetsList.value = jsonData['widgets']["menuItems"];
-    log("===== Total Home Widgets Are => ${homeWidgetsList.value.length} ======");
-    log("===== Total Menu Widgets Are => ${menuWidgetsList.value.length} ======");
-    setColorsAndIcons();
-    if (!isRefreshing) {
-      checkCachedData();
-    }
-    await extractIDs();
-    if (productIDsList.isNotEmpty) {
-      await getProductsDetails();
-    }
-    if (collectionIDsList.isNotEmpty) {
-      await getCollectionDetails();
-    }
-    isLoading.value = false;
-    innerLoader.value = false;
-  }
+  // getAppConfigAPICall({bool isRefreshing = false}) async {
+  //   dio_instance.Response response;
+  //   log("token is ${LocalDatabase.to.box.read("staticUserAuthToken")}");
+  //   try {
+  //     isLoadingSplashAnimation.value == true;
+  //     dio_instance.Dio dio = dio_instance.Dio();
+  //     var headers = {
+  //       'Authorization':
+  //           'Bearer ${LocalDatabase.to.box.read("staticUserAuthToken")}'
+  //     };
+  //
+  //     response = await dio.get('${TapDay.adminStructureViewURL}',
+  //         options: dio_instance.Options(headers: headers));
+  //     print("response code is ${response.statusCode}");
+  //     print("response code is ${response.statusMessage}");
+  //     print("response code is ${response.data}");
+  //     await Future.delayed(const Duration(seconds: 2));
+  //     isLoadingSplashAnimation.value == false;
+  //     LocalDatabase.to.box.read("sessionActive") == true
+  //         ? SplashLogic.to.homeWithBottomNav
+  //             ? Get.off(() => BottomNavBarPage())
+  //             : Get.off(() => HomePage())
+  //         : Get.off(BottomNavBarPage());
+  //   } catch (e) {
+  //     if (e is dio_instance.DioException) {
+  //       isLoadingSplashAnimation.value == false;
+  //       print("Dio error message: ${e.message}");
+  //       if (e.response != null) {
+  //         print("Response data: ${e.response!.data}");
+  //       }
+  //     } else {
+  //       print("Error in getting structure: $e");
+  //     }
+  //     throw "";
+  //   }
+  //
+  //   ///---- Decode the JSON
+  //   Map<String, dynamic> configData = response.data;
+  //   jsonData = configData['data']['app_json'];
+  //
+  //   ///------------------------------
+  //   await setAppSettings(jsonData["settings"]);
+  //   CurrencyController.to.setMultiCurrency();
+  //   innerLoader.value = true;
+  //   homeWidgetsList.value = jsonData['widgets']["widget"];
+  //   menuWidgetsList.value = jsonData['widgets']["menuItems"];
+  //   log("===== Total Home Widgets Are => ${homeWidgetsList.value.length} ======");
+  //   log("===== Total Menu Widgets Are => ${menuWidgetsList.value.length} ======");
+  //   setColorsAndIcons();
+  //   if (!isRefreshing) {
+  //     checkCachedData();
+  //   }
+  //   await extractIDs();
+  //   if (productIDsList.isNotEmpty) {
+  //     await getProductsDetails();
+  //   }
+  //   if (collectionIDsList.isNotEmpty) {
+  //     await getCollectionDetails();
+  //   }
+  //   isLoading.value = false;
+  //   innerLoader.value = false;
+  // }
 
   setupConfigData({bool isRefreshing = false}) async {
     await setAppSettings(jsonData["settings"]);
@@ -199,8 +196,8 @@ class AppConfig extends GetxController {
 
     // domain dynamaic variable
     // print("fsffsfsfsfsfsffsfs: ${jsonData['user']['shops'][0]['domain']}");
-    LocalDatabase.to.box
-        .write('domainShop', jsonData['user']['shops'][0]['domain']);
+    // LocalDatabase.to.box
+    //     .write('domainShop', jsonData['user']['shops'][0]['domain']);
 
     homeWidgetsList.value = jsonData['widgets']["widget"];
     menuWidgetsList.value = jsonData['widgets']["menuItems"];

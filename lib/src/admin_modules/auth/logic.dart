@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
 import '../../custom_widgets/custom_snackbar.dart';
@@ -29,6 +31,17 @@ class AdminAuthLogic extends GetxController {
       isProcessing.value = false;
       showToastMessage(
           message: "Error in signing in, wrong email password entered");
+    }
+  }
+
+  void scanQRCode() async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+
+          '#ff6666', 'Back', false, ScanMode.QR);
+      debugPrint("QRCode_Result:-- $qrCode ");
+    } on PlatformException {
+      debugPrint('Failed to scan QR Code.');
     }
   }
 }

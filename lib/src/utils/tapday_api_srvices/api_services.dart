@@ -6,18 +6,17 @@ class TapDay {
   static String adminShopViewURL = '$baseUrlApi/shop/structure/show';
 
   ///----------- Service End Points
-  static String adminLoginURL = '$baseUrlApi/auth/login';
-  static String adminCreateClientURL = '$baseUrlApi/api/android/clients/create';
-  static String adminCreateOrderURL = '$baseUrlApi/android/orders/create';
-  static String adminStructureViewURL =
+  static String loginURL = '$baseUrlApi/auth/login';
+  static String createClientURL = '$baseUrlApi/api/android/clients/create';
+  static String createOrderURL = '$baseUrlApi/android/orders/create';
+  static String clientStructureViewURL =
       '$baseUrlApi/api/android/structure/view';
-  static String adminSplashURL =
-      '$baseUrlApi/android/appSetting/show?store=$storeName';
+  static String clientSplashImageURL = '$baseUrlApi/android/appSetting/show';
 
   ///----------- App Static information -----------
-  static const String storeName = 'FillinxSolutions';
-  static const String adminEmail = 'fillinxsolutions@tapify.com';
-  static const String adminPassword = 'Y0aBQ0op9X23';
+  // static const String storeName = 'FillinxSolutions';
+  // static const String adminEmail = 'fillinxsolutions@tapify.com';
+  // static const String adminPassword = 'Y0aBQ0op9X23';
 
   static const storeFrontAccessToken = 'd0d94fa9247bc280d6054076506d28a7';
   static const shopNameUrl = 'fillinxsolutions.myshopify.com';

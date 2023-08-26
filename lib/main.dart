@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tapify_admin/src/admin_modules/splash/view.dart';
+import 'package:tapify_admin/src/utils/theme/text_theme_config.dart';
 
 import 'src/global_controllers/dependency_injection.dart';
-import 'src/utils/theme/theme_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,12 @@ Future<void> main() async {
   // await NotificationService().init();
   // await NotificationService().requestIOSPermissions();
   ///--------------------------
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(const MyApp());
 }
 
@@ -74,8 +81,16 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            // navigatorObservers: <NavigatorObserver>[MyApp.observer],
-            theme: AppTheme.light(),
+            theme: ThemeData(
+              useMaterial3: true,
+              // primarySwatch: Colors.red,
+              colorSchemeSeed: Colors.white,
+              brightness: Brightness.light,
+              scaffoldBackgroundColor: Colors.white,
+              textTheme: AppTextStyle.appTextTheme,
+              // primaryColor: Colors.black,
+              // Or another color
+            ),
             home: AdminSplashPage(),
             builder: (context, child) {
               return MediaQuery(

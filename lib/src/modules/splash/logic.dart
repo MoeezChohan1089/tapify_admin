@@ -1,12 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/global_instances.dart';
-import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../../global_controllers/app_config/config_controller.dart';
-import '../../global_controllers/database_controller.dart';
 import '../../global_controllers/dependency_injection.dart';
-import '../auth/api_services/auth_api_service.dart';
 import '../bottom_nav_bar/view.dart';
 import '../home/view_home.dart';
 import 'state.dart';
@@ -65,12 +62,12 @@ class SplashLogic extends GetxController {
   }
 
   ///------ Sign in the default user
-  Future<bool> signInStaticUser() async {
-    if (LocalDatabase.to.box.read("staticUserAuthToken") == null) {
-      return await staticUserAPI(
-          email: TapDay.adminEmail, password: TapDay.adminPassword);
-    } else {
-      return true;
-    }
-  }
+  // Future<bool> signInStaticUser() async {
+  //   if (LocalDatabase.to.box.read("staticUserAuthToken") == null) {
+  //     return await staticUserAPI(
+  //         email: TapDay.adminEmail, password: TapDay.adminPassword);
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }

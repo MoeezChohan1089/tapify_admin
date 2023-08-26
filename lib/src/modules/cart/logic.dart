@@ -13,6 +13,7 @@ import 'package:tapify_admin/src/modules/cart/view.dart';
 import 'package:tapify_admin/src/modules/product_detail/logic.dart';
 import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
+import '../../admin_modules/home/logic.dart';
 import '../../api_services/shopify_flutter/models/models.dart';
 import '../../custom_widgets/custom_product_bottom_sheet.dart';
 import '../../custom_widgets/custom_snackbar.dart';
@@ -598,8 +599,7 @@ class CartLogic extends GetxController {
       Dio dio = Dio();
 
       final data = {
-        'shop':
-            LocalDatabase.to.box.read('domainShop') ?? '${TapDay.shopNameUrl}',
+        'shop': AdminHomeLogic.to.browsingShopDomain.value,
         'user_email': user_email,
         'order_id': order_id,
         'amount': amount,
@@ -615,7 +615,7 @@ class CartLogic extends GetxController {
       };
 
       final response = await dio.post(
-        '${TapDay.adminCreateOrderURL}',
+        '${TapDay.createOrderURL}',
         data: data,
         options: Options(headers: headers),
       );
@@ -721,164 +721,5 @@ class CartLogic extends GetxController {
     }
 
     return false; // Other conditions not met, product can't be added
-  }
-
-  ///------------------- NEW LOGIC FUNCTIONS ------------------///
-  Future<dynamic> fetchCheckoutDetails() async {
-    final checkoutId = await getCheckOutId();
-
-    String url =
-        "https://${LocalDatabase.to.box.read('domainShop')}/api/graphql";
-
-    final String query = """
-    query {
-      node(id: "$checkoutId") {
-        ... on Checkout {
-          id
-      email
-      ready
-      appliedGiftCards {
-        amountUsedV2 {
-          amount
-          currencyCode
-        }
-        balanceV2 {
-          amount
-          currencyCode
-        }
-        id
-      }
-      requiresShipping
-      shippingLine {
-        handle
-        priceV2 {
-          amount
-          currencyCode
-        }
-        title
-      }
-      shippingAddress {
-        address1
-        address2
-        city
-        company
-        country
-        countryCodeV2
-        firstName
-        formattedArea
-        id
-        lastName
-        latitude
-        longitude
-        name
-        phone
-        province
-        provinceCode
-        zip
-      }
-      completedAt
-      createdAt
-      currencyCode
-      lineItems(first: 10) {
-        edges {
-          node {
-            id
-            quantity
-            title
-            customAttributes {
-                key
-                value
-            }
-             discountAllocations {
-              allocatedAmount {
-                amount
-                currencyCode
-              }
-            }
-            variant {
-              id
-              priceV2 {
-                amount
-                currencyCode
-              }
-              title
-              image {
-                altText
-                originalSrc
-                id
-              }
-              compareAtPriceV2 {
-                amount
-                currencyCode
-              }
-              weight
-              weightUnit
-              availableForSale
-              sku
-              requiresShipping
-            }
-          }
-        }
-      }
-      note
-      webUrl
-      updatedAt
-      totalTaxV2 {
-        amount
-        currencyCode
-      }
-      totalPriceV2 {
-        amount
-        currencyCode
-      }
-      taxesIncluded
-      taxExempt
-      subtotalPriceV2 {
-        amount
-        currencyCode
-      }
-      orderStatusUrl
-      order {
-        id
-      }
-          discountApplications(first: 10) {
-  edges {
-    node {
-      allocationMethod
-      targetSelection
-      targetType
-      value {
-        __typename
-        ... on MoneyV2 {
-          amount
-          currencyCode
-        }
-        ... on PricingPercentageValue {
-          percentage
-        }
-      }
-      ... on DiscountCodeApplication {
-        applicable
-        code
-      }
-    }
-  }
-}
-
-        }
-      }
-    }
-  """;
-
-    final Dio dio = Dio();
-    dio.options.headers["X-Shopify-Storefront-Access-Token"] =
-        "${TapDay.storeFrontAccessToken}";
-    dio.options.headers["Content-Type"] = "application/graphql";
-
-    final response = await dio.post(url, data: query);
-
-    log("===== here is the response $response =======");
-
-    // return response.data;
   }
 }

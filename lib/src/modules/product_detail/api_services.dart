@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio_instance;
-import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
+import '../../admin_modules/home/logic.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 // import 'package:dio/dio.dart';
 
@@ -29,7 +29,7 @@ Future<Map<String, dynamic>> createCheckOut(
 
   // rest of the function remains the same
   final response = await dio.post(
-    'https://${LocalDatabase.to.box.read('domainShop')}/api/2023-01/graphql.json',
+    'https://${AdminHomeLogic.to.browsingShopDomain.value}/api/2023-01/graphql.json',
     options: dio_instance.Options(headers: {
       'Content-Type': 'application/json',
       'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'
@@ -118,7 +118,7 @@ getProductDetails(
   final data = {'query': query, 'variables': variables};
   // rest of the function remains the same
   final response = await dio.post(
-    'https://${LocalDatabase.to.box.read('domainShop')}/api/2023-01/graphql.json',
+    'https://${AdminHomeLogic.to.browsingShopDomain.value}/api/2023-01/graphql.json',
     options: dio_instance.Options(headers: {
       'Content-Type': 'application/json',
       'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'

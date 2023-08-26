@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../utils/constants/assets.dart';
 import '../../utils/constants/colors.dart';
+import '../../utils/constants/margins_spacnings.dart';
+import '../auth/view.dart';
 import 'components/customButtons.dart';
 import 'components/customHeadingImage.dart';
 import 'logic.dart';
@@ -27,6 +30,7 @@ class AdminHomePage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: AppColors.customWhiteTextColor,
         elevation: 0,
+        scrolledUnderElevation: 0,
         leading: const SizedBox(),
       ),
       body: SingleChildScrollView(
@@ -37,6 +41,39 @@ class AdminHomePage extends StatelessWidget {
             20.heightBox,
             const CustomButtons(),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Container(
+            width: double.maxFinite,
+            height: 50.h,
+            padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
+            child: ElevatedButton(
+              onPressed: () {
+                LocalDatabase.to.box.remove("adminSignedInToken");
+                Get.off(() => AdminSignInPage());
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.white,
+                side: const BorderSide(
+                  width: 1.0,
+                  color: Colors.red,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              child: Text(
+                "Logout",
+                style: context.text.bodyLarge
+                    ?.copyWith(color: AppColors.appPriceRedColor),
+              ),
+            ),
+          ),
         ),
       ),
     );
