@@ -1,0 +1,12 @@
+com.benjaminabel.vibration-jetified-window-1.0.0-beta04-0 /Users/fillinxsolution/.gradle/caches/transforms-3/167f56a428fd505ceac0234dbe92375f/transformed/jetified-window-1.0.0-beta04/res
+com.benjaminabel.vibration-core-1.6.0-1 /Users/fillinxsolution/.gradle/caches/transforms-3/19b9a62f961adc814ae3089b7ccb1486/transformed/core-1.6.0/res
+com.benjaminabel.vibration-jetified-annotation-experimental-1.1.0-2 /Users/fillinxsolution/.gradle/caches/transforms-3/d2e983f191d3f91dacec10410ef1a970/transformed/jetified-annotation-experimental-1.1.0/res
+com.benjaminabel.vibration-jetified-window-java-1.0.0-beta04-3 /Users/fillinxsolution/.gradle/caches/transforms-3/db2f296f4746142f6e63423375f83caf/transformed/jetified-window-java-1.0.0-beta04/res
+com.benjaminabel.vibration-main-4 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/vibration-1.7.7/android/src/main/res
+com.benjaminabel.vibration-release-5 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/vibration-1.7.7/android/src/release/res
+com.benjaminabel.vibration-pngs-6 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/generated/res/pngs/release
+com.benjaminabel.vibration-resValues-7 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/generated/res/resValues/release
+com.benjaminabel.vibration-rs-8 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/generated/res/rs/release
+com.benjaminabel.vibration-mergeReleaseResources-9 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.benjaminabel.vibration-mergeReleaseResources-10 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.benjaminabel.vibration-merged_res-11 /Users/fillinxsolution/Documents/tapify_admin/build/vibration/intermediates/merged_res/release

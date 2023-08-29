@@ -1,0 +1,13 @@
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-media-1.1.0-0 /Users/fillinxsolution/.gradle/caches/transforms-3/0e1ecd2ad67531c62cc16b7303a75808/transformed/media-1.1.0/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-1.0.0-beta04-1 /Users/fillinxsolution/.gradle/caches/transforms-3/167f56a428fd505ceac0234dbe92375f/transformed/jetified-window-1.0.0-beta04/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-core-1.6.0-2 /Users/fillinxsolution/.gradle/caches/transforms-3/19b9a62f961adc814ae3089b7ccb1486/transformed/core-1.6.0/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-annotation-experimental-1.1.0-3 /Users/fillinxsolution/.gradle/caches/transforms-3/d2e983f191d3f91dacec10410ef1a970/transformed/jetified-annotation-experimental-1.1.0/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-jetified-window-java-1.0.0-beta04-4 /Users/fillinxsolution/.gradle/caches/transforms-3/db2f296f4746142f6e63423375f83caf/transformed/jetified-window-java-1.0.0-beta04/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-main-5 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/flutter_local_notifications-9.9.1/android/src/main/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-release-6 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/flutter_local_notifications-9.9.1/android/src/release/res
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-pngs-7 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/generated/res/pngs/release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-resValues-8 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/generated/res/resValues/release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-rs-9 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/generated/res/rs/release
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-10 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-mergeReleaseResources-11 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.dexterous.flutterlocalnotifications.flutter_local_notifications-merged_res-12 /Users/fillinxsolution/Documents/tapify_admin/build/flutter_local_notifications/intermediates/merged_res/release

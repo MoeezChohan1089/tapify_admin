@@ -1,0 +1,14 @@
+dev.fluttercommunity.plus.share.share_plus-jetified-window-1.0.0-beta04-0 /Users/fillinxsolution/.gradle/caches/transforms-3/167f56a428fd505ceac0234dbe92375f/transformed/jetified-window-1.0.0-beta04/res
+dev.fluttercommunity.plus.share.share_plus-jetified-core-ktx-1.9.0-1 /Users/fillinxsolution/.gradle/caches/transforms-3/3274c4c7b823c2435964a7cd5ad6a0b6/transformed/jetified-core-ktx-1.9.0/res
+dev.fluttercommunity.plus.share.share_plus-core-1.9.0-2 /Users/fillinxsolution/.gradle/caches/transforms-3/66912b381174db014341235b5290e56d/transformed/core-1.9.0/res
+dev.fluttercommunity.plus.share.share_plus-lifecycle-runtime-2.3.1-3 /Users/fillinxsolution/.gradle/caches/transforms-3/7e4b8bb6f4ffb232b3ac7e267c0c4725/transformed/lifecycle-runtime-2.3.1/res
+dev.fluttercommunity.plus.share.share_plus-jetified-window-java-1.0.0-beta04-4 /Users/fillinxsolution/.gradle/caches/transforms-3/db2f296f4746142f6e63423375f83caf/transformed/jetified-window-java-1.0.0-beta04/res
+dev.fluttercommunity.plus.share.share_plus-jetified-annotation-experimental-1.3.0-5 /Users/fillinxsolution/.gradle/caches/transforms-3/fb4ee565198f86c9197586a317c4466f/transformed/jetified-annotation-experimental-1.3.0/res
+dev.fluttercommunity.plus.share.share_plus-main-6 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/share_plus-6.3.4/android/src/main/res
+dev.fluttercommunity.plus.share.share_plus-release-7 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/share_plus-6.3.4/android/src/release/res
+dev.fluttercommunity.plus.share.share_plus-pngs-8 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/generated/res/pngs/release
+dev.fluttercommunity.plus.share.share_plus-resValues-9 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/generated/res/resValues/release
+dev.fluttercommunity.plus.share.share_plus-rs-10 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/generated/res/rs/release
+dev.fluttercommunity.plus.share.share_plus-mergeReleaseResources-11 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/incremental/release/mergeReleaseResources/merged.dir
+dev.fluttercommunity.plus.share.share_plus-mergeReleaseResources-12 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+dev.fluttercommunity.plus.share.share_plus-merged_res-13 /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/merged_res/release

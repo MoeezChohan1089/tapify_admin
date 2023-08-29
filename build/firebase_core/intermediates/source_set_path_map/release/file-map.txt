@@ -1,0 +1,14 @@
+io.flutter.plugins.firebase.core.firebase_core-jetified-window-1.0.0-beta04-0 /Users/fillinxsolution/.gradle/caches/transforms-3/167f56a428fd505ceac0234dbe92375f/transformed/jetified-window-1.0.0-beta04/res
+io.flutter.plugins.firebase.core.firebase_core-core-1.6.0-1 /Users/fillinxsolution/.gradle/caches/transforms-3/19b9a62f961adc814ae3089b7ccb1486/transformed/core-1.6.0/res
+io.flutter.plugins.firebase.core.firebase_core-jetified-firebase-common-20.3.2-2 /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/res
+io.flutter.plugins.firebase.core.firebase_core-jetified-annotation-experimental-1.1.0-3 /Users/fillinxsolution/.gradle/caches/transforms-3/d2e983f191d3f91dacec10410ef1a970/transformed/jetified-annotation-experimental-1.1.0/res
+io.flutter.plugins.firebase.core.firebase_core-jetified-window-java-1.0.0-beta04-4 /Users/fillinxsolution/.gradle/caches/transforms-3/db2f296f4746142f6e63423375f83caf/transformed/jetified-window-java-1.0.0-beta04/res
+io.flutter.plugins.firebase.core.firebase_core-jetified-play-services-basement-18.1.0-5 /Users/fillinxsolution/.gradle/caches/transforms-3/dd404180837c724c9a1cabfb8f003f9b/transformed/jetified-play-services-basement-18.1.0/res
+io.flutter.plugins.firebase.core.firebase_core-main-6 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/firebase_core-2.14.0/android/src/main/res
+io.flutter.plugins.firebase.core.firebase_core-release-7 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/firebase_core-2.14.0/android/src/release/res
+io.flutter.plugins.firebase.core.firebase_core-pngs-8 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/generated/res/pngs/release
+io.flutter.plugins.firebase.core.firebase_core-resValues-9 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/generated/res/resValues/release
+io.flutter.plugins.firebase.core.firebase_core-rs-10 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/generated/res/rs/release
+io.flutter.plugins.firebase.core.firebase_core-mergeReleaseResources-11 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/intermediates/incremental/release/mergeReleaseResources/merged.dir
+io.flutter.plugins.firebase.core.firebase_core-mergeReleaseResources-12 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+io.flutter.plugins.firebase.core.firebase_core-merged_res-13 /Users/fillinxsolution/Documents/tapify_admin/build/firebase_core/intermediates/merged_res/release

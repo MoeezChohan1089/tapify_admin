@@ -117,20 +117,35 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                       ),
                       width: double.maxFinite,
                       height: appConfig.collectionsWidgetsList
-                                  .value[widget.categoryIndex]["customImage"] !=
-                              null
+                          .value[widget.categoryIndex]["customImage"] !=
+                          null
                           ? 85
                           : null,
                       child: (appConfig.collectionsWidgetsList
-                                  .value[widget.categoryIndex]["customImage"] !=
-                              null)
-                          ? Hero(
-                              tag:
-                                  "${appConfig.collectionsWidgetsList.value[widget.categoryIndex]["customImage"]}",
-                              child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                imageErrorBuilder: (context, url, error) =>
-                                    Container(
+                          .value[widget.categoryIndex]["customImage"] !=
+                          null)
+                          ? FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        imageErrorBuilder: (context, url, error) =>
+                            Container(
+                              color: Colors.grey.shade200,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  Assets.icons.noImageIcon,
+                                  height: 25.h,
+                                ),
+                              ),
+                            ),
+                        fit: BoxFit.cover,
+                        image: appConfig.collectionsWidgetsList
+                            .value[widget.categoryIndex]["customImage"],
+                      )
+                          : Row(
+                        children: [
+                          FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            imageErrorBuilder: (context, url, error) =>
+                                Container(
                                   color: Colors.grey.shade200,
                                   child: Center(
                                     child: SvgPicture.asset(
@@ -139,47 +154,24 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                                     ),
                                   ),
                                 ),
-                                fit: BoxFit.cover,
-                                image: appConfig.collectionsWidgetsList
-                                    .value[widget.categoryIndex]["customImage"],
-                              ),
-                            )
-                          : Row(
-                              children: [
-                                Hero(
-                                  tag:
-                                      "${appConfig.collectionsWidgetsList.value[widget.categoryIndex]["defaultImage"]}",
-                                  child: FadeInImage.memoryNetwork(
-                                    placeholder: kTransparentImage,
-                                    imageErrorBuilder: (context, url, error) =>
-                                        Container(
-                                      color: Colors.grey.shade200,
-                                      child: Center(
-                                        child: SvgPicture.asset(
-                                          Assets.icons.noImageIcon,
-                                          height: 25.h,
-                                        ),
-                                      ),
-                                    ),
-                                    fit: BoxFit.cover,
-                                    width: 85.h,
-                                    height: 85.h,
-                                    image: appConfig.collectionsWidgetsList
-                                            .value[widget.categoryIndex]
-                                        ["defaultImage"],
-                                  ),
-                                ),
-                                40.widthBox,
-                                Expanded(
-                                    child: Text(
-                                        appConfig.collectionsWidgetsList
-                                                    .value[widget.categoryIndex]
-                                                ["name"] ??
-                                            "Un-named Category",
-                                        style: context.text.bodyMedium
-                                            ?.copyWith(fontSize: 16.sp)))
-                              ],
-                            ),
+                            fit: BoxFit.cover,
+                            width: 85.h,
+                            height: 85.h,
+                            image: appConfig.collectionsWidgetsList
+                                .value[widget.categoryIndex]
+                            ["defaultImage"],
+                          ),
+                          40.widthBox,
+                          Expanded(
+                              child: Text(
+                                  appConfig.collectionsWidgetsList
+                                      .value[widget.categoryIndex]
+                                  ["name"] ??
+                                      "Un-named Category",
+                                  style: context.text.bodyMedium
+                                      ?.copyWith(fontSize: 16.sp)))
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -202,23 +194,23 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                       onTap: () {
                         HapticFeedback.lightImpact();
                         Get.to(
-                            () => CategoryProducts(
-                                  categoryName: subCategoryItem["name"] ??
-                                      "Un-named Category",
-                                  collectionID:
-                                      "${subCategoryItem["admin_graphql_api_id"]}",
-                                ),
+                                () => CategoryProducts(
+                              categoryName: subCategoryItem["name"] ??
+                                  "Un-named Category",
+                              collectionID:
+                              "${subCategoryItem["admin_graphql_api_id"]}",
+                            ),
                             transition: Transition.rightToLeft);
                       },
                       behavior: HitTestBehavior.opaque,
                       child: Container(
                         decoration: const BoxDecoration(
                             border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.appBordersColor,
-                            width: 0.5,
-                          ),
-                        )),
+                              bottom: BorderSide(
+                                color: AppColors.appBordersColor,
+                                width: 0.5,
+                              ),
+                            )),
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               vertical: pageMarginVertical + 2),

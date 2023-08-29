@@ -60,7 +60,7 @@ void sortingBottomSheetCollection({required BuildContext context, required Strin
                             onPressed: (){
                               Navigator.of(context).pop();
                             },
-                            icon: Icon(Icons.keyboard_arrow_down_outlined, color: AppColors.appTextColor, size: 30,),
+                            icon: Icon(Icons.keyboard_arrow_down_outlined, color: AppColors.appTextColor, size: 28.sp,),
                           ),
                         ),
                       ),

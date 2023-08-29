@@ -1,9 +1,11 @@
 class TapDay {
-  static String get baseUrl => 'https://api.tapday.com';
+  // static String get baseUrl => 'https://api.tapday.com';
+  static String get baseUrl => 'https://tapyfy.noumanengr.com';
   static String get baseUrlApi => '$baseUrl/api';
 
   ///----------- Admin Related APIs
   static String adminShopViewURL = '$baseUrlApi/shop/structure/show';
+  static String getShopListURL = '$baseUrlApi/shop/list';
 
   ///----------- Service End Points
   static String loginURL = '$baseUrlApi/auth/login';

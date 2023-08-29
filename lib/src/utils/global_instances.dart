@@ -33,7 +33,7 @@ resetShopify() {
   );
 }
 
-Future<String> fetchRandomImage(String storeName) async {
+Future<String> fetchShopSplashImage(String storeName) async {
   var dio = Dio();
   var response = await dio.request(
     "${TapDay.clientSplashImageURL}?store=$storeName",

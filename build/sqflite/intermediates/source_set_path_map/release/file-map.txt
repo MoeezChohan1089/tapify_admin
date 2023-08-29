@@ -1,0 +1,12 @@
+com.tekartik.sqflite-jetified-window-1.0.0-beta04-0 /Users/fillinxsolution/.gradle/caches/transforms-3/167f56a428fd505ceac0234dbe92375f/transformed/jetified-window-1.0.0-beta04/res
+com.tekartik.sqflite-core-1.6.0-1 /Users/fillinxsolution/.gradle/caches/transforms-3/19b9a62f961adc814ae3089b7ccb1486/transformed/core-1.6.0/res
+com.tekartik.sqflite-jetified-annotation-experimental-1.1.0-2 /Users/fillinxsolution/.gradle/caches/transforms-3/d2e983f191d3f91dacec10410ef1a970/transformed/jetified-annotation-experimental-1.1.0/res
+com.tekartik.sqflite-jetified-window-java-1.0.0-beta04-3 /Users/fillinxsolution/.gradle/caches/transforms-3/db2f296f4746142f6e63423375f83caf/transformed/jetified-window-java-1.0.0-beta04/res
+com.tekartik.sqflite-main-4 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/sqflite-2.2.8+4/android/src/main/res
+com.tekartik.sqflite-release-5 /Users/fillinxsolution/.pub-cache/hosted/pub.dev/sqflite-2.2.8+4/android/src/release/res
+com.tekartik.sqflite-pngs-6 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/generated/res/pngs/release
+com.tekartik.sqflite-resValues-7 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/generated/res/resValues/release
+com.tekartik.sqflite-rs-8 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/generated/res/rs/release
+com.tekartik.sqflite-mergeReleaseResources-9 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/intermediates/incremental/release/mergeReleaseResources/merged.dir
+com.tekartik.sqflite-mergeReleaseResources-10 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+com.tekartik.sqflite-merged_res-11 /Users/fillinxsolution/Documents/tapify_admin/build/sqflite/intermediates/merged_res/release

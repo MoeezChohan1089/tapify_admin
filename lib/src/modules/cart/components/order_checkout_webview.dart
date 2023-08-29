@@ -29,7 +29,7 @@ class _CheckoutWebViewState extends State<CheckoutWebView> {
   // Completer<WebViewController>();
 
   late final WebViewController controller;
-   bool _showProgressIndicator = true;
+  bool _showProgressIndicator = true;
   final logic = Get.put(CartLogic());
   final ordersListLogic = Get.put(OrderLogic());
 
@@ -57,34 +57,38 @@ class _CheckoutWebViewState extends State<CheckoutWebView> {
 
             log("==== page loading finished $url ====");
 
-              // CartLogic.to.resetCart();
-              Future.delayed(const Duration(seconds: 6)).then((_) {
-                if (mounted) {
-                  // controller.goBack();
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                }
-              });
-            },
+            // CartLogic.to.resetCart();
+            Future.delayed(const Duration(seconds: 6)).then((_) {
+              if (mounted) {
+                // controller.goBack();
+                // Navigator.of(context).popUntil((route) => route.isFirst);
+              }
+            });
+          },
           onWebResourceError: (WebResourceError error) {
 
           },
           onNavigationRequest: (NavigationRequest request) async {
             if (request.url.endsWith('/thank_you')) {
               CartLogic.to.resetCart();
-              Future.delayed( Duration(seconds: LocalDatabase.to.box.read('customerAccessToken') != null ? 6:12),(){
+              Future.delayed(const Duration(seconds: 6),(){
                 // Navigator.pop(context);
 
                 if(widget.checkoutAsGuest){
                   Navigator.pop(context);
                 } else {
-                 if(LocalDatabase.to.box.read('customerAccessToken') != null){
-                   Get.off(()=>  OrderPage(navigateToNext: true,));
-                   ordersListLogic.getOrdersService();
-                 }else{
-                   Get.off(()=>  BottomNavBarPage());
-                 }
+                  if (widget.checkoutAsGuest) {
+                    Navigator.pop(context);
+                  } else {
+                    if (LocalDatabase.to.box.read('customerAccessToken') !=
+                        null) {
+                      Get.off(() => OrderPage(navigateToNext: true,));
+                      ordersListLogic.getOrdersService();
+                    } else {
+                      Get.off(() => BottomNavBarPage());
+                    }
+                  }
                 }
-
 
               });
             }
@@ -93,7 +97,7 @@ class _CheckoutWebViewState extends State<CheckoutWebView> {
         ),
       )
       ..loadRequest(Uri.parse(widget.checkoutUrl));
-      // ..loadRequest(Uri.parse('https://flutter.dev'));
+    // ..loadRequest(Uri.parse('https://flutter.dev'));
 
     // #enddocregion webview_controller
   }

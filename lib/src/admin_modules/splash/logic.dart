@@ -25,7 +25,8 @@ class AdminSplashLogic extends GetxController {
     //--- check internet
     if (await checkInternetAccess()) {
       await Future.delayed(const Duration(milliseconds: 1500));
-      if (LocalDatabase.to.box.read("adminSignedInToken") != null) {
+      if (LocalDatabase.to.box.read("adminSignedInToken") != null &&
+          LocalDatabase.to.box.read("isViewingWithQR") == false) {
         Get.off(() => AdminHomePage());
       } else {
         Get.off(() => AdminSignInPage());

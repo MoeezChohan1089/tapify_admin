@@ -4,7 +4,7 @@ class AdminHomeLogic extends GetxController {
   static AdminHomeLogic get to => Get.find();
 
   RxBool isProcessing = false.obs;
-
+  var customerShopsList = [].obs;
   RxInt browsingShopId = 0.obs;
   RxString browsingShop = "".obs;
   RxString browsingShopDomain = "".obs;

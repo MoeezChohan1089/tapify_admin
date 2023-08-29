@@ -22,22 +22,17 @@ class TitleText extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: pageMarginVertical / 1.3,
-          horizontal: pageMarginHorizontal / 1.3),
+          horizontal: pageMarginHorizontal/1.3
+      ),
       width: context.deviceWidth,
       // color: Colors.black,
       child: Padding(
         padding: const EdgeInsets.only(top: 2),
-        child: Text(settings["title"],
-            textAlign: settings["titleAlignment"] == "left"
-                ? TextAlign.left
-                : settings["titleAlignment"] == "right"
-                    ? TextAlign.right
-                    : TextAlign.center,
-            style: settings["titleSize"] == "small"
-                ? context.text.titleSmall
-                : settings["titleSize"] == "medium"
-                    ? context.text.titleMedium
-                    : context.text.titleLarge),
+        child: Text(
+            settings["title"] ?? "",
+            textAlign: settings["titleAlignment"] == "left" ? TextAlign.left : settings["titleAlignment"] == "right" ? TextAlign.right : TextAlign.center,
+            style: settings["titleSize"] == "small" ? context.text.titleSmall : settings["titleSize"] == "medium" ? context.text.titleMedium : context.text.titleLarge
+        ),
       ),
     );
   }

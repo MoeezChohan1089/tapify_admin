@@ -100,7 +100,7 @@ class _CategoryPageState extends State<CategoryPage>
                 children: List.generate(
                     appConfig.collectionsWidgetsList.value.length, (index) {
                   final categoryItem =
-                      appConfig.collectionsWidgetsList.value[index];
+                  appConfig.collectionsWidgetsList.value[index];
 
                   return Padding(
                     padding: EdgeInsets.symmetric(
@@ -121,17 +121,17 @@ class _CategoryPageState extends State<CategoryPage>
                             //---- Move to Category Products
                             // CategoryProducts
                             Get.to(
-                                () => CategoryProducts(
-                                      categoryName: categoryItem["name"] ??
-                                          "Un-named Category",
-                                      collectionID:
-                                          "gid://shopify/Collection/${categoryItem["collectionId"]}",
-                                    ),
+                                    () => CategoryProducts(
+                                  categoryName: categoryItem["name"] ??
+                                      "Un-named Category",
+                                  collectionID:
+                                  "gid://shopify/Collection/${categoryItem["collectionId"]}",
+                                ),
                                 transition: Transition.rightToLeft);
                           } else {
                             //----- Move to Sub Collection Page
                             Get.to(
-                                () => SubCategoriesPage(categoryIndex: index),
+                                    () => SubCategoriesPage(categoryIndex: index),
                                 transition: Transition.rightToLeft);
                             // log("else one is running");
                           }
@@ -144,60 +144,54 @@ class _CategoryPageState extends State<CategoryPage>
                           ),
                           width: double.maxFinite,
                           height:
-                              (categoryItem["customImage"] != null) ? 85 : null,
+                          (categoryItem["customImage"] != null) ? 85 : null,
                           child: (categoryItem["customImage"] != null)
-                              ? Hero(
-                                  tag: "${categoryItem["customImage"]}",
-                                  child: FadeInImage.memoryNetwork(
-                                    placeholder: kTransparentImage,
-                                    imageErrorBuilder: (context, url, error) =>
-                                        Container(
-                                            color: Colors.grey.shade200,
-                                            child: Center(
-                                              child: SvgPicture.asset(
-                                                Assets.icons.noImageIcon,
-                                                height: 25.h,
-                                              ),
-                                            )),
-                                    fit: BoxFit.cover,
-                                    image: categoryItem["customImage"],
-                                  ),
-                                )
-                              : Row(
-                                  children: [
-                                    Hero(
-                                      tag: "${categoryItem["defaultImage"]}",
-                                      child: FadeInImage.memoryNetwork(
-                                        placeholder: kTransparentImage,
-                                        imageErrorBuilder:
-                                            (context, url, error) => Container(
-                                              height: 85.h,
-                                              width: 85.h,
-                                          color: Colors.grey.shade200,
-                                          child: Center(
-                                            child: SvgPicture.asset(
-                                              Assets.icons.noImageIcon,
-                                              height: 25.h,
-                                              width: 25.h,
-                                            ),
-                                          ),
-                                        ),
-                                        fit: BoxFit.cover,
-                                        image: categoryItem["defaultImage"] ?? "",
-                                        width: 85.h,
-                                        height: 85.h,
+                              ? FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            imageErrorBuilder: (context, url, error) =>
+                                Container(
+                                    color: Colors.grey.shade200,
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        Assets.icons.noImageIcon,
+                                        height: 25.h,
                                       ),
+                                    )),
+                            fit: BoxFit.cover,
+                            image: categoryItem["customImage"],
+                          )
+                              : Row(
+                            children: [
+                              FadeInImage.memoryNetwork(
+                                placeholder: kTransparentImage,
+                                imageErrorBuilder:
+                                    (context, url, error) => Container(
+                                  height: 85.h,
+                                  width: 85.h,
+                                  color: Colors.grey.shade200,
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      Assets.icons.noImageIcon,
+                                      height: 25.h,
+                                      width: 25.h,
                                     ),
-                                    40.widthBox,
-                                    Expanded(
-                                        child: Text(
-                                            categoryItem["name"] ??
-                                                "Un-named Category",
-                                            // textAlign: TextAlign.center,
-                                            style: context.text.bodyMedium
-                                                ?.copyWith(fontSize: 16.sp)))
-                                  ],
+                                  ),
                                 ),
+                                fit: BoxFit.cover,
+                                image: categoryItem["defaultImage"] ?? "",
+                                width: 85.h,
+                                height: 85.h,
+                              ),
+                              40.widthBox,
+                              Expanded(
+                                  child: Text(
+                                      categoryItem["name"] ??
+                                          "Un-named Category",
+                                      // textAlign: TextAlign.center,
+                                      style: context.text.bodyMedium
+                                          ?.copyWith(fontSize: 16.sp)))
+                            ],
+                          ),
                         ),
                       ),
                     ),

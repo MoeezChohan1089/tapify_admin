@@ -10,6 +10,7 @@ import '../home/view_home.dart';
 import '../profile/view.dart';
 import '../profile/view_guest.dart';
 import '../wishlist/view.dart';
+import 'components/exit_ensuring_dialogue.dart';
 import 'state.dart';
 
 class BottomNavBarLogic extends GetxController {
@@ -52,7 +53,19 @@ class BottomNavBarLogic extends GetxController {
     }
   }
 
-
+  Future<bool> onWillPop() async {
+    if (currentPageIndex.value != 0) {
+      currentPageIndex.value = 0;
+      return false;
+    } else {
+      final value = await showExitEnsureDialog();
+      if (value != null) {
+        return Future.value(value);
+      } else {
+        return Future.value(false);
+      }
+    }
+  }
 
   void handleMenuButtonPressed() {
     advancedDrawerController.showDrawer();

@@ -135,6 +135,7 @@ class FancyDrawerContent extends StatelessWidget {
                         });
                       } else {
                         return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () async {
                             HapticFeedback.lightImpact();
                             print("tapping on it");

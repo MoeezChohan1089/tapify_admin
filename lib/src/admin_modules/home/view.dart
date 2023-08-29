@@ -7,9 +7,9 @@ import 'package:tapify_admin/src/utils/extensions.dart';
 import '../../utils/constants/assets.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/margins_spacnings.dart';
-import '../auth/view.dart';
 import 'components/customButtons.dart';
 import 'components/customHeadingImage.dart';
+import 'components/sure_logout_dialog.dart';
 import 'logic.dart';
 
 class AdminHomePage extends StatelessWidget {
@@ -43,39 +43,41 @@ class AdminHomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Container(
-            width: double.maxFinite,
-            height: 50.h,
-            padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
-            child: ElevatedButton(
-              onPressed: () {
-                LocalDatabase.to.box.remove("adminSignedInToken");
-                Get.off(() => AdminSignInPage());
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.white,
-                side: const BorderSide(
-                  width: 1.0,
-                  color: Colors.red,
+      bottomNavigationBar: LocalDatabase.to.box.read("isViewingWithQR") == true
+          ? const SizedBox.shrink()
+          : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Container(
+                  width: double.maxFinite,
+                  height: 50.h,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      sureLoggingOffDialog();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(
+                        width: 1.0,
+                        color: Colors.red,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      "Logout",
+                      style: context.text.bodyLarge
+                          ?.copyWith(color: AppColors.appPriceRedColor),
+                    ),
+                  ),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              child: Text(
-                "Logout",
-                style: context.text.bodyLarge
-                    ?.copyWith(color: AppColors.appPriceRedColor),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

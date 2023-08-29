@@ -52,6 +52,8 @@ class _CustomHeadingImageState extends State<CustomHeadingImage> {
                   height: 108.h,
                 )),
         20.heightBox,
+
+        ///------ Tap to Explore Button
         Container(
           width: double.maxFinite,
           height: 56.h,
@@ -60,12 +62,22 @@ class _CustomHeadingImageState extends State<CustomHeadingImage> {
             return ElevatedButton(
               onPressed: () async {
                 logic.isProcessing.value = true;
-                logic.browsingShopId.value = 1;
-                logic.browsingShop.value = "FillinxSolutions";
+
+                ///-------- Previous Static ---------///
+                // logic.browsingShopId.value = 1;
+                // logic.browsingShop.value = "FillinxSolutions";
+                // logic.browsingShopDomain.value =
+                //     "fillinxsolutions.myshopify.com";
+
+                ///----------------------------------///
+
+                logic.browsingShopId.value = logic.customerShopsList[0]["id"];
+                logic.browsingShop.value = logic.customerShopsList[0]["name"];
                 logic.browsingShopDomain.value =
-                    "fillinxsolutions.myshopify.com";
+                    logic.customerShopsList[0]["myshopify_domain"];
+
                 final imageUrl =
-                    await fetchRandomImage(logic.browsingShop.value);
+                    await fetchShopSplashImage(logic.browsingShop.value);
                 Get.to(() => SplashPage(imageUrl: imageUrl));
                 logic.isProcessing.value = false;
               },

@@ -26,32 +26,32 @@ class DiscountWidget extends StatelessWidget {
       children: [
         (settings['isTitleHidden'] == false)
             ? Column(
-                children: [
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: pageMarginHorizontal / 1.3,
-                        right: pageMarginHorizontal / 1.3,
-                        bottom: 10.h,
-                        top: 7.h,
-                      ),
-                      child: Text('${settings['title']}',
-                          textAlign: settings["titleAlignment"] == "left"
-                              ? TextAlign.left
-                              : settings["titleAlignment"] == "right"
-                                  ? TextAlign.right
-                                  : TextAlign.center,
-                          style: settings['titleSize'] == "small"
-                              ? context.text.titleSmall
-                              : settings['titleSize'] == "medium"
-                                  ? context.text.titleMedium
-                                  : context.text.titleLarge),
-                    ),
-                  ),
-                  (pageMarginVertical / 2).heightBox,
-                ],
-              )
+          children: [
+            SizedBox(
+              width: double.maxFinite,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: pageMarginHorizontal / 1.3,
+                  right: pageMarginHorizontal / 1.3,
+                  bottom: 10.h,
+                  top: 7.h,
+                ),
+                child: Text('${settings['title']}',
+                    textAlign: settings["titleAlignment"] == "left"
+                        ? TextAlign.left
+                        : settings["titleAlignment"] == "right"
+                        ? TextAlign.right
+                        : TextAlign.center,
+                    style: settings['titleSize'] == "small"
+                        ? context.text.titleSmall
+                        : settings['titleSize'] == "medium"
+                        ? context.text.titleMedium
+                        : context.text.titleLarge),
+              ),
+            ),
+            (pageMarginVertical / 2).heightBox,
+          ],
+        )
             : const SizedBox(),
         GestureDetector(
           onTap: () async {
@@ -88,13 +88,13 @@ class DiscountWidget extends StatelessWidget {
                   height: settings["displayType"] == "normal"
                       ? 200.h
                       : settings["displayType"] == "vertical"
-                          ? 330.h
-                          : settings["displayType"] == "auto"
-                              ? null
-                              : 165.h,
+                      ? 330.h
+                      : settings["displayType"] == "auto"
+                      ? null
+                      : 165.h,
                   decoration: const BoxDecoration(
-                      // border: Border.all(color: AppColors.customIconColor),
-                      ),
+                    // border: Border.all(color: AppColors.customIconColor),
+                  ),
                   child: IntrinsicHeight(
                     child: Stack(
                       alignment: Alignment.center,
@@ -125,10 +125,10 @@ class DiscountWidget extends StatelessWidget {
                             height: settings["displayType"] == "normal"
                                 ? 200.h
                                 : settings["displayType"] == "vertical"
-                                    ? 330.h
-                                    : settings["displayType"] == "auto"
-                                        ? null
-                                        : 165.h,
+                                ? 330.h
+                                : settings["displayType"] == "auto"
+                                ? null
+                                : 165.h,
                             width: double.maxFinite,
                             padding: EdgeInsets.symmetric(horizontal: 15.w),
                             decoration: BoxDecoration(
