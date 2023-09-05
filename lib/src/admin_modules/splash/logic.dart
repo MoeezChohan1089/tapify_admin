@@ -29,7 +29,7 @@ class AdminSplashLogic extends GetxController {
           LocalDatabase.to.box.read("isViewingWithQR") == false) {
         Get.off(() => AdminHomePage());
       } else {
-        Get.off(() => AdminSignInPage());
+        Get.off(() => AdminSignInPage(isRedirectToWeb: false));
       }
     } else {
       currentState.value = "no-internet";

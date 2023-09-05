@@ -35,14 +35,9 @@ class SplashLogo extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FadeInImage(
-                placeholder:  AssetImage(Assets.images.simpleWhiteContainer),
-                // image: NetworkImage(imageUrl),
-                image: AssetImage(Assets.images.sanaSafinazLogo),
-                fadeInDuration: const Duration(milliseconds: 100),
-                fadeInCurve: Curves.easeIn,
-                height: 260.h,
-                width: 260.w,
+              SizedBox(
+                height: 35.h,
+                child: SvgPicture.asset(Assets.icons.layerIconLogo),
               ),
               // SizedBox(
               //   height: 60.h,

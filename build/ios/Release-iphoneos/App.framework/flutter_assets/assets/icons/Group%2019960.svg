@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88">
+  <g id="Group_19960" data-name="Group 19960" transform="translate(-11056 -15866)">
+    <circle id="Ellipse_335" data-name="Ellipse 335" cx="44" cy="44" r="44" transform="translate(11056 15866)" fill="#3b2a82" opacity="0.1"/>
+    <g id="bx-message-rounded-dots" transform="translate(11074.102 15884.279)" opacity="0.4">
+      <circle id="Ellipse_333" data-name="Ellipse 333" cx="3.941" cy="3.941" r="3.941" transform="translate(15.35 15.35)" fill="#3b2a82"/>
+      <ellipse id="Ellipse_334" data-name="Ellipse 334" cx="3.734" cy="3.941" rx="3.734" ry="3.941" transform="translate(28.626 15.35)" fill="#3b2a82"/>
+      <path id="Path_23706" data-name="Path 23706" d="M29.9,4C15.618,4,4,13.295,4,24.719,4,32.25,8.913,39,16.949,42.677V55.8l13.83-10.37C44.653,45.054,55.8,35.907,55.8,24.719,55.8,13.295,44.179,4,29.9,4Zm0,36.258h-.862l-6.907,5.18v-6.26l-1.66-.64C13.507,35.858,9.18,30.561,9.18,24.719,9.18,16.149,18.475,9.18,29.9,9.18s20.719,6.969,20.719,15.539S41.322,40.258,29.9,40.258Z" transform="translate(-4 -4)" fill="#3b2a82"/>
+    </g>
+  </g>
+</svg>

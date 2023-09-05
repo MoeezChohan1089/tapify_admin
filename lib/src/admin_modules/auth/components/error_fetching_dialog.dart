@@ -7,7 +7,7 @@ import '../../../utils/constants/colors.dart';
 
 errorFetchingDetails() {
   Get.defaultDialog(
-    barrierDismissible: true,
+    barrierDismissible: false,
     contentPadding: EdgeInsets.zero,
     backgroundColor: Colors.transparent,
     title: " ",

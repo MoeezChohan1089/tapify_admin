@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "681017234806",
-    "project_id": "adminapp-dc80f",
-    "storage_bucket": "adminapp-dc80f.appspot.com"
+    "project_number": "746698102872",
+    "project_id": "tapday-admin-app",
+    "storage_bucket": "tapday-admin-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:681017234806:android:4404a21d5251f6fca25657",
+        "mobilesdk_app_id": "1:746698102872:android:cd6ad04c7dfeccdc1f922d",
         "android_client_info": {
-          "package_name": "com.example.tapify_admin"
+          "package_name": "com.tapday.admin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "681017234806-q8bjnt9k6qpacl269figdt7oeabue0o7.apps.googleusercontent.com",
+          "client_id": "746698102872-jfrrdjnqh48kb0on8nj1rmoqk1cettdt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB6AO7Omtn6lRze0XTRGm_NmtMHF43cPf8"
+          "current_key": "AIzaSyD5VbbHBicjnQanpnRaoR-YSYP_1Ir22g0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "681017234806-q8bjnt9k6qpacl269figdt7oeabue0o7.apps.googleusercontent.com",
+              "client_id": "746698102872-jfrrdjnqh48kb0on8nj1rmoqk1cettdt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

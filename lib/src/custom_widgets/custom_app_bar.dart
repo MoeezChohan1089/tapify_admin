@@ -1,32 +1,21 @@
-import 'dart:async';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:transparent_image/transparent_image.dart';
 
 import '../global_controllers/app_config/config_controller.dart';
 import '../modules/bottom_nav_bar/logic.dart';
 import '../modules/bottom_nav_bar/view.dart';
-import '../modules/cart/components/product_added_to_cart_sheet.dart';
-import '../modules/cart/components/un_completed_cart_dialog.dart';
 import '../modules/cart/logic.dart';
 import '../modules/cart/view.dart';
-import '../modules/product_detail/api_services.dart';
 import '../modules/product_detail/logic.dart';
-import '../modules/splash/components/warning.dart';
 import '../utils/constants/assets.dart';
 import '../utils/constants/colors.dart';
-import '../utils/skeleton_loaders/shimmerLoader.dart';
-import 'local_notification_service.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isHome, showCart, showBack, showMenuIcon;
@@ -35,19 +24,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData? backIcon;
   final Widget? trailingButton;
 
-  CustomAppBar({super.key,
-    this.isHome = false,
-    required this.title,
-    this.onBackPress,
-    this.showCart = true,
-    this.showMenuIcon = false,
-    this.trailingButton,
-    this.backIcon,
-    this.showBack = true});
+  CustomAppBar(
+      {super.key,
+      this.isHome = false,
+      required this.title,
+      this.onBackPress,
+      this.showCart = true,
+      this.showMenuIcon = false,
+      this.trailingButton,
+      this.backIcon,
+      this.showBack = true});
 
   final bottomNav = BottomNavBarLogic.to;
   final logic = Get.put(ProductDetailLogic());
-
 
   void initializeTimezone() {
     tz.initializeTimeZones();
@@ -73,111 +62,117 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
           title: isHome
               ? Obx(() {
-            return AppConfig.to.homeAppBarLogo.value == ''
-                ? Text(
-              title.toUpperCase(),
-              style:
-              context.text.titleSmall?.copyWith(fontSize: 16.sp, color: AppConfig.to.iconCollectionColor.value),
-            )
-                : SizedBox(
-              height: 35.h,
-              // color: Colors.red,
-              child: FadeInImage.memoryNetwork(
-                image: AppConfig.to.homeAppBarLogo.value,
-                fit: BoxFit.cover,
-                placeholder: kTransparentImage,
-                imageErrorBuilder: (context, url,
-                    error) =>
-                    Container(
-                      color: Colors.grey.shade200,
-                      // color: Colors.grey.shade200,
-                      child: Center(
-                        child: SvgPicture.asset(Assets.icons.noImageIcon,
-                          height: 25.h,
-                        ),
-                      ),
-                    ),
-                //     (context, url) => SizedBox(
-                //   height: 50.h,
-                //   width: 100.w,
-                //   child: Shimmer.fromColors(
-                //     baseColor: Colors.grey.shade300,
-                //     highlightColor: Colors.grey.shade100,
-                //     child: Container(
-                //       color: AppColors.customWhiteTextColor,
-                //     ),
-                //   ),
-                // ),
-                // errorWidget: (context, url, error) => Text(
-                //   title.toUpperCase(),
-                //   style: context.text.titleSmall
-                //       ?.copyWith(fontSize: 16.sp, height: 3),
-                // ),
-              ),
-            );
-          })
+                  return AppConfig.to.homeAppBarLogo.value == ''
+                      ? Text(
+                          title.toUpperCase(),
+                          style: context.text.titleSmall?.copyWith(
+                              fontSize: 16.sp,
+                              color: AppConfig.to.iconCollectionColor.value),
+                        )
+                      : SizedBox(
+                          height: 35.h,
+                          // color: Colors.red,
+                          child: FadeInImage.memoryNetwork(
+                            image: AppConfig.to.homeAppBarLogo.value,
+                            fit: BoxFit.cover,
+                            placeholder: kTransparentImage,
+                            imageErrorBuilder: (context, url, error) =>
+                                Container(
+                              color: Colors.grey.shade200,
+                              // color: Colors.grey.shade200,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  Assets.icons.noImageIcon,
+                                  height: 25.h,
+                                ),
+                              ),
+                            ),
+                            //     (context, url) => SizedBox(
+                            //   height: 50.h,
+                            //   width: 100.w,
+                            //   child: Shimmer.fromColors(
+                            //     baseColor: Colors.grey.shade300,
+                            //     highlightColor: Colors.grey.shade100,
+                            //     child: Container(
+                            //       color: AppColors.customWhiteTextColor,
+                            //     ),
+                            //   ),
+                            // ),
+                            // errorWidget: (context, url, error) => Text(
+                            //   title.toUpperCase(),
+                            //   style: context.text.titleSmall
+                            //       ?.copyWith(fontSize: 16.sp, height: 3),
+                            // ),
+                          ),
+                        );
+                })
               : Text(
-            title.toUpperCase(),
-            style: context.text.titleSmall?.copyWith(fontSize: 16.sp, color: AppConfig.to.iconCollectionColor.value),
-          ),
+                  title.toUpperCase(),
+                  style: context.text.titleSmall?.copyWith(
+                      fontSize: 16.sp,
+                      color: AppConfig.to.iconCollectionColor.value),
+                ),
 
           ///----- Leading Icon (Drawer Opener / Back Navigator)
           leading: showMenuIcon
               ? IconButton(
-            onPressed: () {
-              if (bottomNav.isFancyDrawer.isTrue) {
-                HapticFeedback.lightImpact();
-                bottomNav.advancedDrawerController.showDrawer();
-              } else {
-                HapticFeedback.lightImpact();
-                bottomNav.navScaffoldKey.currentState?.openDrawer();
-              }
-            },
-            icon: ValueListenableBuilder<AdvancedDrawerValue>(
-              valueListenable: bottomNav.advancedDrawerController,
-              builder: (context, value, _) {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: value.visible
-                      ? Icon(
-                    Icons.arrow_back_ios,
-                    color: AppConfig.to.iconCollectionColor.value,
-                    key: ValueKey<bool>(value.visible),
-                  )
-                      : Obx(() {
-                    return SvgPicture.asset(
-                      Assets.icons.menuIcons[
-                      AppConfig.to.menuIconIndex.value],
-                      height: 21.h,
-                      color: AppConfig.to.iconCollectionColor.value,
-                    );
-                  }),
-                );
-              },
-            ),
-          )
+                  onPressed: () {
+                    if (bottomNav.isFancyDrawer.isTrue) {
+                      HapticFeedback.lightImpact();
+                      bottomNav.advancedDrawerController.showDrawer();
+                    } else {
+                      HapticFeedback.lightImpact();
+                      bottomNav.navScaffoldKey.currentState?.openDrawer();
+                    }
+                  },
+                  icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                    valueListenable: bottomNav.advancedDrawerController,
+                    builder: (context, value, _) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 250),
+                        child: value.visible
+                            ? Icon(
+                                Icons.arrow_back_ios,
+                                color: AppConfig.to.iconCollectionColor.value,
+                                key: ValueKey<bool>(value.visible),
+                              )
+                            : Obx(() {
+                                return SvgPicture.asset(
+                                  Assets.icons.menuIcons[
+                                      AppConfig.to.menuIconIndex.value],
+                                  height: 21.h,
+                                  color: AppConfig.to.iconCollectionColor.value,
+                                );
+                              }),
+                      );
+                    },
+                  ),
+                )
               : showBack
-              ? IconButton(
-              onPressed: onBackPress != null
-                  ? onBackPress!()
-                  : () {
-                HapticFeedback.lightImpact();
-                (logic.isRouteOk.value == true) ? Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => BottomNavBarPage()),
-                      (Route<dynamic> route) => false,
-                ) : Navigator.pop(context);
-              },
-              icon: Icon(
-                backIcon ?? Icons.arrow_back_ios,
-                color: AppConfig.to.iconCollectionColor.value,
-                size: backIcon != null ? 28.sp : 22.sp,
-              ))
-              : const SizedBox.shrink(),
+                  ? IconButton(
+                      onPressed: onBackPress != null
+                          ? onBackPress!()
+                          : () {
+                              HapticFeedback.lightImpact();
+                              (logic.isRouteOk.value == true)
+                                  ? Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomNavBarPage()),
+                                      (Route<dynamic> route) => false,
+                                    )
+                                  : Navigator.pop(context);
+                            },
+                      icon: Icon(
+                        backIcon ?? Icons.arrow_back_ios,
+                        color: AppConfig.to.iconCollectionColor.value,
+                        size: backIcon != null ? 28.sp : 22.sp,
+                      ))
+                  : const SizedBox.shrink(),
 
           ///----- Trailing Action Buttons
           actions: [
-
             ///-------- Chat Message Indicator Icon
             // isHome ? GetBuilder<CartLogic>(builder: (cartLogic) {
             //   return Stack(
@@ -220,68 +215,64 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             trailingButton != null
                 ? trailingButton!
                 : showCart
-                ? GetBuilder<CartLogic>(builder: (cartLogic) {
-              initializeTimezone();
+                    ? GetBuilder<CartLogic>(builder: (cartLogic) {
+                        initializeTimezone();
 
-              return IconButton(
-                onPressed: () {
-                  // getProductDetails();
-                  // productAddedToCart(context);
+                        return IconButton(
+                          onPressed: () {
+                            // getProductDetails();
+                            // productAddedToCart(context);
 
-                  // unCompletedCartItemDialog();
+                            // unCompletedCartItemDialog();
 
-                  HapticFeedback.lightImpact();
-                  Get.to(() => CartPage(),
-                      transition: Transition.downToUp,
-                      fullscreenDialog: true,
-                      duration:
-                      const Duration(milliseconds: 250)
-                  );
-                  // Get.to(()=>WarningScreen());
-                },
-                icon: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Obx(() {
-                      return SvgPicture.asset(
-                        Assets.icons.cartIcons[
-                        AppConfig.to.cartIconIndex.value],
-                        color: AppConfig.to.iconCollectionColor.value,
-                        height: 23.h,
-                      );
-                    }),
-
-
-                    cartLogic.currentCart != null
-                        ? cartLogic.currentCart!.lineItems.isNotEmpty
-                        ? Positioned(
-                      top: 5,
-                      right: 8,
-                      child: Obx(() {
-                        return Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppConfig.to.cartColor.value,
-                          ),
-                          child: Text(
-                            "${cartLogic.currentCart?.lineItems.length}",
-                            style: context.text.bodyMedium
-                                ?.copyWith(
-                                color: Colors.white,
-                                fontSize: 13.sp),
+                            HapticFeedback.lightImpact();
+                            Get.to(() => CartPage(),
+                                transition: Transition.downToUp,
+                                fullscreenDialog: true,
+                                duration: const Duration(milliseconds: 250));
+                            // Get.to(()=>WarningScreen());
+                          },
+                          icon: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Obx(() {
+                                return SvgPicture.asset(
+                                  Assets.icons.cartIcons[
+                                      AppConfig.to.cartIconIndex.value],
+                                  color: AppConfig.to.iconCollectionColor.value,
+                                  height: 23.h,
+                                );
+                              }),
+                              cartLogic.currentCart != null
+                                  ? cartLogic.currentCart!.lineItems.isNotEmpty
+                                      ? Positioned(
+                                          top: 5,
+                                          right: 8,
+                                          child: Obx(() {
+                                            return Container(
+                                              padding: const EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppConfig
+                                                    .to.cartColor.value,
+                                              ),
+                                              child: Text(
+                                                "${cartLogic.currentCart?.lineItems.length}",
+                                                style: context.text.bodyMedium
+                                                    ?.copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 13.sp),
+                                              ),
+                                            );
+                                          }),
+                                        )
+                                      : const SizedBox.shrink()
+                                  : const SizedBox.shrink(),
+                            ],
                           ),
                         );
-                      }),
-                    )
-                        : const SizedBox.shrink()
-                        : const SizedBox.shrink(),
-
-                  ],
-                ),
-              );
-            })
-                : const SizedBox.shrink(),
+                      })
+                    : const SizedBox.shrink(),
             // GetBuilder<CartLogic>(builder: (cartLogic) {
             //   return Stack(
             //     children: [

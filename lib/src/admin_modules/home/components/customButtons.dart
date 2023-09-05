@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/admin_modules/home/components/enums.dart';
 import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
-import '../../../custom_widgets/product_viewer_web.dart';
 import '../../../global_controllers/database_controller.dart';
 import '../../../utils/constants/assets.dart';
 import '../../auth/view.dart';
+import 'admin_web_view.dart';
 
 class CustomButtons extends StatefulWidget {
   const CustomButtons({Key? key}) : super(key: key);
@@ -71,11 +72,11 @@ class _CustomButtonsState extends State<CustomButtons> {
       children: [
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
-            Get.to(() => AdminSignInPage());
+            Get.to(() => AdminSignInPage(
+                isRedirectToWeb: true, urlToRedirect: PageURLs.notification));
           } else {
-            Get.to(() => const WebViewProduct(
-                  productUrl: "https://tapify-ansihali1221-gmailcom.vercel.app",
-                ));
+            Get.to(() =>
+                AdminWebView(pageURL: getEnumTypeURL(PageURLs.notification)));
           }
         },
             context,
@@ -85,11 +86,11 @@ class _CustomButtonsState extends State<CustomButtons> {
             AppColors.appTextColor),
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
-            Get.to(() => AdminSignInPage());
+            Get.to(() => AdminSignInPage(
+                isRedirectToWeb: true, urlToRedirect: PageURLs.messages));
           } else {
-            Get.to(() => const WebViewProduct(
-                  productUrl: "https://tapify-ansihali1221-gmailcom.vercel.app",
-                ));
+            Get.to(
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.messages)));
           }
         },
             context,
@@ -99,11 +100,11 @@ class _CustomButtonsState extends State<CustomButtons> {
             AppColors.appTextColor),
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
-            Get.to(() => AdminSignInPage());
+            Get.to(() => AdminSignInPage(
+                isRedirectToWeb: true, urlToRedirect: PageURLs.profile));
           } else {
-            Get.to(() => const WebViewProduct(
-                  productUrl: "https://tapify-ansihali1221-gmailcom.vercel.app",
-                ));
+            Get.to(
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.profile)));
           }
         },
             context,
@@ -113,11 +114,11 @@ class _CustomButtonsState extends State<CustomButtons> {
             AppColors.appTextColor),
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
-            Get.to(() => AdminSignInPage());
+            Get.to(() => AdminSignInPage(
+                isRedirectToWeb: true, urlToRedirect: PageURLs.support));
           } else {
-            Get.to(() => const WebViewProduct(
-                  productUrl: "https://tapify-ansihali1221-gmailcom.vercel.app",
-                ));
+            Get.to(
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.support)));
           }
         },
             context,

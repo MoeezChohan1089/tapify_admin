@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage>
       // 'video': () => VideoPlayerScreen(),
       'discount': () {
         logic.widgetCustomerCode.value = settings["customerCode"] ?? "";
-        logic.widgetShopifyCode.value = settings["shopifyCodes"] ?? "";
+        logic.widgetShopifyCode.value = settings["shopifyCode"] ?? "";
 
         return DiscountWidget(settings: settings);
       },

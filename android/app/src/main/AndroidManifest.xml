@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tapify_admin">
    <application
-        android:label="tapify_admin"
+        android:label="Tapday"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

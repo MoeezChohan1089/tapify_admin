@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
-import '../../../global_controllers/app_config/config_controller.dart';
 import '../../../global_controllers/database_controller.dart';
 import '../../../utils/constants/assets.dart';
 import '../../../utils/constants/colors.dart';
@@ -88,10 +87,13 @@ sureLoggingOffDialog() {
                   child: ElevatedButton(
                       onPressed: () {
                         LocalDatabase.to.box.remove("adminSignedInToken");
-                        Get.off(() => AdminSignInPage());
+                        Get.off(() => AdminSignInPage(
+                              isRedirectToWeb: false,
+                            ));
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppConfig.to.primaryColor.value,
+                        backgroundColor: Colors.black,
+                        // backgroundColor: AppConfig.to.primaryColor.value,
                         foregroundColor: Colors.white,
                         elevation: 0,
                         padding: const EdgeInsets.all(8),
@@ -104,7 +106,6 @@ sureLoggingOffDialog() {
                         style: TextStyle(
                             fontFamily: 'Sofia Pro Regular',
                             fontSize: 14.sp,
-                            // height: 1.2,
                             color: Colors.white),
                       )),
                 ),

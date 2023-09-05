@@ -57,14 +57,14 @@ class DiscountWidget extends StatelessWidget {
           onTap: () async {
             ///----- Apply Discount Code Here
             if (settings['disableInteraction'] == false &&
-                settings['shopifyCodes'] != null) {
+                settings['shopifyCode'] != null) {
               HapticFeedback.lightImpact();
 
               if (CartLogic.to.currentCart == null) {
                 LocalDatabase.to.box.write("tappedOnDiscount", true);
                 showToastMessage(message: "Discount added, start shopping now");
               } else if (CartLogic.to.currentCart!.lineItems.isNotEmpty) {
-                CartLogic.to.applyDiscount(settings['shopifyCodes']);
+                CartLogic.to.applyDiscount(settings['shopifyCode']);
                 await Future.delayed(const Duration(milliseconds: 250));
                 Get.to(() => CartPage(),
                     transition: Transition.downToUp,
@@ -74,6 +74,9 @@ class DiscountWidget extends StatelessWidget {
                 LocalDatabase.to.box.write("tappedOnDiscount", true);
                 showToastMessage(message: "Discount added, start shopping now");
               }
+            } else {
+              showToastMessage(message: "json data null");
+
             }
           },
           child: Column(

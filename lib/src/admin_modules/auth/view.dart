@@ -10,10 +10,14 @@ import 'package:tapify_admin/src/utils/extensions.dart';
 import '../../custom_widgets/custom_text_field.dart';
 import '../../modules/auth/components/or_divider.dart';
 import '../../utils/constants/colors.dart';
+import '../home/components/enums.dart';
 import 'logic.dart';
 
 class AdminSignInPage extends StatelessWidget {
-  AdminSignInPage({Key? key}) : super(key: key);
+  bool isRedirectToWeb = false;
+  final PageURLs? urlToRedirect;
+  AdminSignInPage({Key? key, required this.isRedirectToWeb, this.urlToRedirect})
+      : super(key: key);
 
   final logic = Get.put(AdminAuthLogic());
 
@@ -100,7 +104,10 @@ class AdminSignInPage extends StatelessWidget {
                       onPressed: () {
                         if (logic.formKeyValue.currentState!.validate()) {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          AdminAuthLogic.to.signInUser(context: context);
+                          AdminAuthLogic.to.signInUser(
+                              context: context,
+                              isRedirectToWeb: isRedirectToWeb,
+                              pageUrlType: urlToRedirect);
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -124,33 +131,39 @@ class AdminSignInPage extends StatelessWidget {
                     ),
                   );
                 }),
-                const OrDivider(),
-                SizedBox(
-                  width: double.maxFinite,
-                  height: 42.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      logic.scanQRCode();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(
-                        width: 1.0,
-                        color: Colors.blue,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    child: Text(
-                      "Scan QR Code",
-                      style:
-                          context.text.bodyLarge?.copyWith(color: Colors.blue),
-                    ),
-                  ),
-                ),
+                isRedirectToWeb
+                    ? const SizedBox.shrink()
+                    : Column(
+                        children: [
+                          const OrDivider(),
+                          SizedBox(
+                            width: double.maxFinite,
+                            height: 42.h,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                logic.scanQRCode();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.white,
+                                side: const BorderSide(
+                                  width: 1.0,
+                                  color: Colors.blue,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              child: Text(
+                                "Scan QR Code",
+                                style: context.text.bodyLarge
+                                    ?.copyWith(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
               ],
             ),
           );

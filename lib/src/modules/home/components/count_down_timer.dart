@@ -299,7 +299,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
               Padding(
                 padding: widget.settings['margin'] == true ? EdgeInsets.only(
                     left: 14.w, right: 14.w, bottom: 14.h) : EdgeInsets.only(
-                    left: 6, top: 16, right: 6),
+                    left: 6, top: 8, right: 6),
                 child: Column(
                   children: [
                     // For the numerical values

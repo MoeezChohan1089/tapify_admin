@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
@@ -24,8 +25,7 @@ class AdminHomePage extends StatelessWidget {
       appBar: AppBar(
         title: SizedBox(
           height: 35.h,
-          // color: Colors.red,
-          child: Image.asset(Assets.images.sanaSafinazLogo),
+          child: SvgPicture.asset(Assets.icons.layerIconLogo),
         ),
         centerTitle: true,
         backgroundColor: AppColors.customWhiteTextColor,
@@ -43,41 +43,43 @@ class AdminHomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: LocalDatabase.to.box.read("isViewingWithQR") == true
-          ? const SizedBox.shrink()
-          : SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Container(
-                  width: double.maxFinite,
-                  height: 50.h,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      sureLoggingOffDialog();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(
-                        width: 1.0,
-                        color: Colors.red,
+      bottomNavigationBar: GetBuilder<AdminHomeLogic>(builder: (logic) {
+        return LocalDatabase.to.box.read("isViewingWithQR") == true
+            ? const SizedBox.shrink()
+            : SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(
+                    width: double.maxFinite,
+                    height: 50.h,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        sureLoggingOffDialog();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(
+                          width: 1.0,
+                          color: Colors.red,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                      child: Text(
+                        "Logout",
+                        style: context.text.bodyLarge
+                            ?.copyWith(color: AppColors.appPriceRedColor),
                       ),
-                    ),
-                    child: Text(
-                      "Logout",
-                      style: context.text.bodyLarge
-                          ?.copyWith(color: AppColors.appPriceRedColor),
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+      }),
     );
   }
 }

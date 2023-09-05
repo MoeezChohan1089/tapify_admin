@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../utils/constants/assets.dart';
 
@@ -13,13 +14,9 @@ class SplashLogo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FadeInImage(
-            placeholder: AssetImage(Assets.images.simpleWhiteContainer),
-            image: AssetImage(Assets.images.sanaSafinazLogo),
-            fadeInDuration: const Duration(milliseconds: 300),
-            fadeInCurve: Curves.easeIn,
-            height: 260.h,
-            width: 260.w,
+          SizedBox(
+            height: 35.h,
+            child: SvgPicture.asset(Assets.icons.layerIconLogo),
           ),
         ],
       ),

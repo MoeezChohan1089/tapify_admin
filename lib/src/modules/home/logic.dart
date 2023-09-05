@@ -47,6 +47,8 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   RxBool videoEnded = false.obs;
   RxBool isFirstTime = true.obs;
   RxBool isClicked = false.obs;
+  RxDouble heightCheck = 0.0.obs;
+  RxDouble heightCheck1 = 0.0.obs;
 
   final ScrollController circleProductScroll = ScrollController();
 
@@ -58,37 +60,40 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     currentImageIndex.value = 0;
   }
 
-  initializeValueOfVideo(settings) {
+  initializeValueOfVideo(settings){
     print("value of state of loop: ${settings['loop']}");
-    controller = VideoPlayerController.networkUrl(
-      Uri.parse(settings['video'] ?? ""),
-    )
+    controller = VideoPlayerController.networkUrl(Uri.parse(settings['video'] ?? ""), )
       ..addListener(() {
         // This condition checks if the video has reached its end
-        if (controller.value.position == controller.value.duration &&
-            settings['loop'] == false) {
-          if (!videoEnded.value) {
-            // This check ensures setState is only called once at the video's end.
+        if (controller.value.position == controller.value.duration && settings['loop'] == false) {
+          if (!videoEnded.value) { // This check ensures setState is only called once at the video's end.
             videoEnded.value = true;
             controller.pause();
           }
         } else if (controller.value.isPlaying) {
-          if (videoEnded.value) {
-            // If video started playing again, update videoEnded
+          if (videoEnded.value) { // If video started playing again, update videoEnded
             videoEnded.value = false;
           }
-        } else if (isFirstTime.value && controller.value.isPlaying) {
+        }else if (isFirstTime.value && controller.value.isPlaying) {
           isFirstTime.value = false;
         }
       })
       ..initialize().then((_) {
+
+        if (controller.value.isInitialized) {
+          heightCheck.value = controller.value.size.aspectRatio;
+          heightCheck1.value = controller.value.size.height;
+          print("Video height: ${heightCheck.value}");
+        }
         // This will refresh the UI once the video is initialized
         if (settings['autoPlay'] == true) {
           controller.play();
         }
         controller.videoPlayerOptions!.webOptions!.controls;
         // Auto play the video if required
+
       });
+
 
     if (settings['loop'] == true) {
       controller.setLooping(true);

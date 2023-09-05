@@ -1,6 +1,6 @@
 class TapDay {
-  // static String get baseUrl => 'https://api.tapday.com';
-  static String get baseUrl => 'https://tapyfy.noumanengr.com';
+  static String get baseUrl => 'https://api.tapday.com';
+  // static String get baseUrl => 'https://tapyfy.noumanengr.com';
   static String get baseUrlApi => '$baseUrl/api';
 
   ///----------- Admin Related APIs
@@ -13,7 +13,8 @@ class TapDay {
   static String createOrderURL = '$baseUrlApi/android/orders/create';
   static String clientStructureViewURL =
       '$baseUrlApi/api/android/structure/view';
-  static String clientSplashImageURL = '$baseUrlApi/android/appSetting/show';
+  // static String clientSplashImageURL = '$baseUrlApi/android/appSetting/show';
+  static String clientSplashImageURL = '$baseUrlApi/android/settings/app/show';
 
   ///----------- App Static information -----------
   // static const String storeName = 'FillinxSolutions';

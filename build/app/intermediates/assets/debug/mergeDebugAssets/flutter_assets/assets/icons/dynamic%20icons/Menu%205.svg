@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Menu_5" data-name="Menu 5" transform="translate(-12528.639 8747.363)">
+    <rect id="Rectangle_4821" data-name="Rectangle 4821" width="24" height="24" transform="translate(12528.639 -8747.363)" fill="none"/>
+    <g id="_0a4a41795252b8ac7463806f0484b386" data-name="0a4a41795252b8ac7463806f0484b386" transform="translate(12519.168 -8756.833)">
+      <path id="Path_21521" data-name="Path 21521" d="M30.059,32.94a.969.969,0,1,1,0-1.938A.945.945,0,0,0,31,30.033V12.907a.971.971,0,0,0-.969-.969H12.907a.971.971,0,0,0-.969.969V30.033a.971.971,0,0,0,.969.969H24.7a.969.969,0,0,1,0,1.938H12.907A2.91,2.91,0,0,1,10,30.033V12.907A2.91,2.91,0,0,1,12.907,10H30.033a2.91,2.91,0,0,1,2.907,2.907V30.033A2.9,2.9,0,0,1,30.059,32.94Z" fill="#aeaeb2"/>
+      <path id="Path_21522" data-name="Path 21522" d="M216.6,277.338H204.969a.969.969,0,1,1,0-1.938H216.6a.969.969,0,1,1,0,1.938Z" transform="translate(-189.459 -259.187)" fill="#aeaeb2"/>
+      <path id="Path_21523" data-name="Path 21523" d="M216.6,461.138H204.969a.969.969,0,1,1,0-1.938H216.6a.969.969,0,1,1,0,1.938Z" transform="translate(-189.459 -438.685)" fill="#aeaeb2"/>
+      <path id="Path_21524" data-name="Path 21524" d="M216.6,644.838H204.969a.969.969,0,1,1,0-1.938H216.6a.969.969,0,1,1,0,1.938Z" transform="translate(-189.459 -618.085)" fill="#aeaeb2"/>
+    </g>
+  </g>
+</svg>

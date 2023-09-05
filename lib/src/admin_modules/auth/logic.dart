@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/admin_modules/home/components/enums.dart';
 import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
 import '../../custom_widgets/custom_snackbar.dart';
+import '../home/components/admin_web_view.dart';
 import '../home/view.dart';
 import 'api_services/api_services.dart';
 import 'components/error_fetching_dialog.dart';
@@ -22,20 +24,30 @@ class AdminAuthLogic extends GetxController {
   RxBool isProcessing = false.obs;
   RxBool gettingAPIResult = false.obs;
 
-  signInUser({required BuildContext context}) async {
-    // customLoader.showLoader(context);
+  signInUser(
+      {required BuildContext context,
+      required bool isRedirectToWeb,
+      required PageURLs? pageUrlType}) async {
     isProcessing.value = true;
     if (await adminUserLogInService(
         email: emailAdminController.text,
         password: passwordAdminController.text)) {
-      await getShopByQRCode(
-          qrToken: LocalDatabase.to.box.read("adminSignedInToken"));
-      isProcessing.value = false;
-      emailAdminController.clear();
-      passwordAdminController.clear();
-      LocalDatabase.to.box.write("isViewingWithQR", false);
-
-      Get.off(() => AdminHomePage());
+      if (isRedirectToWeb) {
+        isProcessing.value = false;
+        emailAdminController.clear();
+        passwordAdminController.clear();
+        LocalDatabase.to.box.write("isViewingWithQR", false);
+        AdminAuthLogic.to.update();
+        Get.off(() => AdminWebView(pageURL: getEnumTypeURL(pageUrlType!)));
+      } else {
+        await getShopByQRCode(
+            qrToken: LocalDatabase.to.box.read("adminSignedInToken"));
+        isProcessing.value = false;
+        emailAdminController.clear();
+        passwordAdminController.clear();
+        LocalDatabase.to.box.write("isViewingWithQR", false);
+        Get.off(() => AdminHomePage());
+      }
     } else {
       isProcessing.value = false;
       showToastMessage(

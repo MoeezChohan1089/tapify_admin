@@ -8,6 +8,7 @@ import '../../../custom_widgets/product_viewer_web.dart';
 import '../../../global_controllers/app_config/config_controller.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/margins_spacnings.dart';
+import '../../../utils/skeleton_loaders/shimmerLoader.dart';
 import '../logic.dart';
 import '../models/product_info_model.dart';
 
@@ -203,6 +204,7 @@ class SingleVideoViewState extends State<SingleVideoView> {
 
   singleImageVariant() {
     return Obx(() {
+      print("auto adjustment: ${logic.controller.value.size}");
       return GestureDetector(
         onTap: () {
           if (widget.settings["web_url"] != null) {
@@ -220,41 +222,56 @@ class SingleVideoViewState extends State<SingleVideoView> {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: widget.settings["displayType"] == "normal"
-                      ? 300.h
-                      : widget.settings["displayType"] == "vertical"
-                      ? 400.h
-                      : widget.settings["displayType"] == "auto"
-                      ? Get.height
-                      : 230.h,
+                // SizedBox(
+                //   height: widget.settings["displayType"] == "normal"
+                //       ? 300.h
+                //       : widget.settings["displayType"] == "vertical"
+                //       ? 400.h
+                //       : widget.settings["displayType"] == "auto"
+                //       ? Get.height
+                //       : 230.h,
+                //   width: double.maxFinite,
+                //   child: ClipRect(
+                //     child: FittedBox(
+                //       fit: BoxFit.cover,
+                //       child: SizedBox(
+                //         width: Get.height * 2 * logic.controller.value.aspectRatio,
+                //         height: widget.settings["displayType"] == "normal"
+                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                //             : widget.settings["displayType"] == "vertical"
+                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                //             : widget.settings["displayType"] == "auto"
+                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                //             : (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5,
+                //         child: VideoPlayer(logic.controller),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: MediaQuery.of(context).size.height,
+                //     child:
+                logic.heightCheck.value > 0.0? AspectRatio(
+                    aspectRatio: logic.heightCheck.value,
+                    child: VideoPlayer(logic.controller)):Container(
                   width: double.maxFinite,
-                  child: ClipRect(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: Get.height * 2 * logic.controller.value.aspectRatio,
-                        height: widget.settings["displayType"] == "normal"
-                            ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                            : widget.settings["displayType"] == "vertical"
-                            ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                            : widget.settings["displayType"] == "auto"
-                            ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                            : (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5,
-                        child: VideoPlayer(logic.controller),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                    height: widget.settings["displayType"] == "normal"
-                        ? 300.h
-                        : widget.settings["displayType"] == "vertical"
-                        ? 400.h
-                        : widget.settings["displayType"] == "auto"
-                        ? Get.height
-                        : 230.h,
-                    child: getPlayPauseButton())
+                  height: logic.heightCheck1.value,
+                  child: productShimmer(),),
+                // ),
+                logic.heightCheck.value > 0.0?   AspectRatio(
+                    aspectRatio: logic.heightCheck.value,
+                    // height: widget.settings["displayType"] == "normal"
+                    //     ? 300.h
+                    //     : widget.settings["displayType"] == "vertical"
+                    //     ? 400.h
+                    //     : widget.settings["displayType"] == "auto"
+                    //     ? Get.height
+                    //     : 230.h,
+                    child: getPlayPauseButton()):Container(
+                  width: double.maxFinite,
+                  height: logic.heightCheck1.value,
+                  child: productShimmer(),),
               ],
             )
 
