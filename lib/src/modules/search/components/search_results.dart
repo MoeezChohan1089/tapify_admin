@@ -155,6 +155,7 @@ class _SearchedResultState extends State<SearchedResult> {
                     logic.loadMoreController.loadComplete();
                   },
                   child: GridView(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                       padding: EdgeInsets.only(
                         bottom: pageMarginVertical * 2,
                         right: pageMarginHorizontal,

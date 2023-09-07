@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="default_web_client_id" translatable="false">681017234806-q8bjnt9k6qpacl269figdt7oeabue0o7.apps.googleusercontent.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">681017234806</string>
-    <string name="google_api_key" translatable="false">AIzaSyB6AO7Omtn6lRze0XTRGm_NmtMHF43cPf8</string>
-    <string name="google_app_id" translatable="false">1:681017234806:android:4404a21d5251f6fca25657</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB6AO7Omtn6lRze0XTRGm_NmtMHF43cPf8</string>
-    <string name="google_storage_bucket" translatable="false">adminapp-dc80f.appspot.com</string>
-    <string name="project_id" translatable="false">adminapp-dc80f</string>
+    <string name="default_web_client_id" translatable="false">746698102872-jfrrdjnqh48kb0on8nj1rmoqk1cettdt.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">746698102872</string>
+    <string name="google_api_key" translatable="false">AIzaSyD5VbbHBicjnQanpnRaoR-YSYP_1Ir22g0</string>
+    <string name="google_app_id" translatable="false">1:746698102872:android:cd6ad04c7dfeccdc1f922d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyD5VbbHBicjnQanpnRaoR-YSYP_1Ir22g0</string>
+    <string name="google_storage_bucket" translatable="false">tapday-admin-app.appspot.com</string>
+    <string name="project_id" translatable="false">tapday-admin-app</string>
 </resources>

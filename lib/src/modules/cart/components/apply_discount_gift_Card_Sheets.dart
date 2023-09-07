@@ -161,8 +161,8 @@ void showDiscountAndGiftCardSheet(
                             suffixIcon: Padding(
                               padding: EdgeInsets.only(
                                   right: 15.w,
-                                  top: 12.h,
-                                  bottom: 12.h
+                                top: 12.h,
+                                bottom: 12.h
                               ),
                               child: Image.asset(Assets.icons.discountTagIcon),
                             ),

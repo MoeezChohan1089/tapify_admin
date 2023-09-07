@@ -1,18 +1,28 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tapify_admin/src/utils/constants/colors.dart';
+import 'package:intl/intl.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
-
+import '../../../custom_widgets/DateDuration.dart';
 import '../../../custom_widgets/product_viewer_web.dart';
 import '../../../global_controllers/app_config/config_controller.dart';
+import '../../../global_controllers/database_controller.dart';
 import '../../../utils/constants/assets.dart';
 import '../../../utils/constants/margins_spacnings.dart';
 import '../../../utils/home_widgets_stylings.dart';
+import '../../../utils/skeleton_loaders/shimmerLoader.dart';
 import '../logic.dart';
+import 'package:timezone/timezone.dart' as tz;
+
 import '../models/product_info_model.dart';
 
 class CountDownTimer extends StatefulWidget {
@@ -208,7 +218,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
             Get.to(() =>
                 WebViewProduct(
                   productUrl: widget.settings["web_url"],
-                ));
+                ), opaque: false, transition: Transition.native);
           }
 
           if (widget.settings["metadata"]["data"].isNotEmpty &&
@@ -227,260 +237,256 @@ class _CountDownTimerState extends State<CountDownTimer> {
             }
           }
         },
-        child: Padding(
-          padding: widget.settings['margin'] == true
-              ? EdgeInsets.all(18.0)
-              : EdgeInsets.all(0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              (widget.settings['isTitleHidden'] == false) ? Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: 6, horizontal: pageMarginHorizontal / 1.5),
-                child: Column(
-                  children: [
-                    (pageMarginVertical / 1.3).heightBox,
-                    Container(
-                      width: double.maxFinite,
-                      child:
-                      Text(
-                        "${widget.settings['title']}", textAlign: widget
-                          .settings['titleAlignment'] == 'left' ? TextAlign
-                          .start : widget.settings['titleAlignment'] == "center"
-                          ? TextAlign.center
-                          : TextAlign.end, style: widget
-                          .settings['titleSize'] == "small"
-                          ? context.text.titleSmall!.copyWith(
-                          color: AppColors.appTextColor)
-                          : widget.settings['titleSize'] == "medium" ? context
-                          .text.titleMedium!.copyWith(
-                          color: AppColors.appTextColor) : context.text
-                          .titleLarge!.copyWith(color: AppColors.appTextColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            (widget.settings['isTitleHidden'] == false) ? Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 6, horizontal: pageMarginHorizontal / 1.5),
+              child: Column(
+                children: [
+                  (pageMarginVertical / 1.3).heightBox,
+                  Container(
+                    width: double.maxFinite,
+                    child:
+                    Text(
+                      "${widget.settings['title']}", textAlign: widget
+                        .settings['titleAlignment'] == 'left' ? TextAlign
+                        .start : widget.settings['titleAlignment'] == "center"
+                        ? TextAlign.center
+                        : TextAlign.end, style: widget
+                         .settings['titleSize'] == "small"
+                        ? context.text.titleSmall!.copyWith(
+                        color: AppColors.appTextColor)
+                        : widget.settings['titleSize'] == "medium" ? context
+                        .text.titleMedium!.copyWith(
+                        color: AppColors.appTextColor) : context.text
+                        .titleLarge!.copyWith(color: AppColors.appTextColor),
+                    ),
+                  ),
+                  widget.settings['image'] != null ? (pageMarginVertical /
+                      1.3).heightBox : (pageMarginVertical / 1.3).heightBox,
+                ],
+              ),
+            ) : const SizedBox(),
+
+            (widget.settings["image"] != null &&
+                widget.settings["metadata"]["data"].isEmpty)
+                ? singleImageVariant() ?? const SizedBox.shrink()
+                : customImageVariant() ?? const SizedBox.shrink(),
+            // widget.settings['image'] != null? Padding(
+            //   padding: const EdgeInsets.only(top: 10, bottom: 4),
+            //   child: Stack(
+            //     children: [
+            //       Shimmer.fromColors(
+            //         baseColor: Colors.grey[300]!,
+            //         highlightColor: Colors.grey[100]!,
+            //         child: Container(
+            //           color: Colors.grey[300],
+            //           height: widget.settings['displayType'] == "normal"? 300: widget.settings['displayType'] == "vertical"? 600: widget.settings['displayType'] == "auto"? null:230,
+            //           width: double.infinity,
+            //         ),
+            //       ),
+            //       FadeInImage.memoryNetwork(
+            //         image: widget.settings['image'].toString().startsWith('blob')? "https://st2.depositphotos.com/1002277/12135/i/950/depositphotos_121357882-stock-photo-word-demo-on-wood-planks.jpg":"${widget.settings['image']}",
+            //         fit: BoxFit.cover,
+            //         height: widget.settings['displayType'] == "normal"? 300: widget.settings['displayType'] == "vertical"? 600: widget.settings['displayType'] == "auto"? null:230,
+            //         width: double.maxFinite,
+            //         placeholder: kTransparentImage,
+            //         // progressIndicatorBuilder:
+            //         //     (context, url, downloadProgress) =>
+            //         //     productShimmer(),
+            //         // errorWidget: (context, url, error) =>
+            //         // const Icon(Icons.error),
+            //       ),
+            //     ],
+            //   ),
+            // ):SizedBox(),
+            Padding(
+              padding: widget.settings['margin'] == true ? EdgeInsets.only(
+                  left: 14.w, right: 14.w, bottom: 14.h) : EdgeInsets.only(
+                  left: 6, top: 8, right: 6),
+              child: Column(
+                children: [
+                  // For the numerical values
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      10.widthBox,
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              days,
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyLarge?.copyWith(
+                                  fontSize: 35.sp,
+                                  color: color,
+                                  height: textHeight
+                              ),
+                            ),
+                            4.heightBox,
+                            Text(
+                              "days",
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyMedium!.copyWith(
+                                  color: color, fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    widget.settings['image'] != null ? (pageMarginVertical /
-                        1.3).heightBox : (pageMarginVertical / 1.3).heightBox,
-                  ],
-                ),
-              ) : const SizedBox(),
+                      Expanded(
+                        child:
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                ":",
+                                style: context.text.bodyLarge?.copyWith(
+                                    fontSize: 35.sp,
+                                    color: color,
+                                    height: textHeight
+                                ),
+                              ),
+                            ),
+                            4.heightBox,
+                            Text('')
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              hours,
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyLarge?.copyWith(
+                                  fontSize: 35.sp,
+                                  color: color,
+                                  height: textHeight
+                              ),
+                            ),
+                            4.heightBox,
+                            Text(
+                              "hours",
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyMedium!.copyWith(
+                                  color: color, fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
+                      ),
 
-              (widget.settings["image"] != null &&
-                  widget.settings["metadata"]["data"].isEmpty)
-                  ? singleImageVariant() ?? const SizedBox.shrink()
-                  : customImageVariant() ?? const SizedBox.shrink(),
-              // widget.settings['image'] != null? Padding(
-              //   padding: const EdgeInsets.only(top: 10, bottom: 4),
-              //   child: Stack(
-              //     children: [
-              //       Shimmer.fromColors(
-              //         baseColor: Colors.grey[300]!,
-              //         highlightColor: Colors.grey[100]!,
-              //         child: Container(
-              //           color: Colors.grey[300],
-              //           height: widget.settings['displayType'] == "normal"? 300: widget.settings['displayType'] == "vertical"? 600: widget.settings['displayType'] == "auto"? null:230,
-              //           width: double.infinity,
-              //         ),
-              //       ),
-              //       FadeInImage.memoryNetwork(
-              //         image: widget.settings['image'].toString().startsWith('blob')? "https://st2.depositphotos.com/1002277/12135/i/950/depositphotos_121357882-stock-photo-word-demo-on-wood-planks.jpg":"${widget.settings['image']}",
-              //         fit: BoxFit.cover,
-              //         height: widget.settings['displayType'] == "normal"? 300: widget.settings['displayType'] == "vertical"? 600: widget.settings['displayType'] == "auto"? null:230,
-              //         width: double.maxFinite,
-              //         placeholder: kTransparentImage,
-              //         // progressIndicatorBuilder:
-              //         //     (context, url, downloadProgress) =>
-              //         //     productShimmer(),
-              //         // errorWidget: (context, url, error) =>
-              //         // const Icon(Icons.error),
-              //       ),
-              //     ],
-              //   ),
-              // ):SizedBox(),
-              Padding(
-                padding: widget.settings['margin'] == true ? EdgeInsets.only(
-                    left: 14.w, right: 14.w, bottom: 14.h) : EdgeInsets.only(
-                    left: 6, top: 8, right: 6),
-                child: Column(
-                  children: [
-                    // For the numerical values
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        10.widthBox,
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                days,
-                                textAlign: TextAlign.center,
+                      Expanded(
+                        child:
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                ":",
                                 style: context.text.bodyLarge?.copyWith(
                                     fontSize: 35.sp,
                                     color: color,
                                     height: textHeight
                                 ),
                               ),
-                              4.heightBox,
-                              Text(
-                                "days",
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: color, fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
+                            ),
+                            4.heightBox,
+                            Text('')
+                          ],
                         ),
-                        Expanded(
-                          child:
-                          Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  ":",
-                                  style: context.text.bodyLarge?.copyWith(
-                                      fontSize: 35.sp,
-                                      color: color,
-                                      height: textHeight
-                                  ),
-                                ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              minutes,
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyLarge?.copyWith(
+                                  fontSize: 35.sp,
+                                  color: color,
+                                  height: textHeight
                               ),
-                              4.heightBox,
-                              Text('')
-                            ],
-                          ),
+                            ),
+                            4.heightBox,
+                            Text(
+                              "minutes",
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyMedium!.copyWith(
+                                  color: color, fontSize: 12.sp),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                hours,
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyLarge?.copyWith(
-                                    fontSize: 35.sp,
-                                    color: color,
-                                    height: textHeight
-                                ),
-                              ),
-                              4.heightBox,
-                              Text(
-                                "hours",
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: color, fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ),
+                      ),
 
-                        Expanded(
-                          child:
-                          Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  ":",
-                                  style: context.text.bodyLarge?.copyWith(
-                                      fontSize: 35.sp,
-                                      color: color,
-                                      height: textHeight
-                                  ),
-                                ),
-                              ),
-                              4.heightBox,
-                              Text('')
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                minutes,
-                                textAlign: TextAlign.center,
+                      Expanded(
+                        child:
+                        Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                ":",
                                 style: context.text.bodyLarge?.copyWith(
                                     fontSize: 35.sp,
                                     color: color,
                                     height: textHeight
                                 ),
                               ),
-                              4.heightBox,
-                              Text(
-                                "minutes",
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: color, fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
+                            ),
+                            4.heightBox,
+                            Text('')
+                          ],
                         ),
-
-                        Expanded(
-                          child:
-                          Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  ":",
-                                  style: context.text.bodyLarge?.copyWith(
-                                      fontSize: 35.sp,
-                                      color: color,
-                                      height: textHeight
-                                  ),
-                                ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              seconds,
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyLarge?.copyWith(
+                                  fontSize: 35.sp,
+                                  color: color,
+                                  height: textHeight
                               ),
-                              4.heightBox,
-                              Text('')
-                            ],
-                          ),
+                            ),
+                            4.heightBox,
+                            Text(
+                              "seconds",
+                              textAlign: TextAlign.center,
+                              style: context.text.bodyMedium!.copyWith(
+                                  color: color, fontSize: 12.sp),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                seconds,
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyLarge?.copyWith(
-                                    fontSize: 35.sp,
-                                    color: color,
-                                    height: textHeight
-                                ),
-                              ),
-                              4.heightBox,
-                              Text(
-                                "seconds",
-                                textAlign: TextAlign.center,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: color, fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                        15.widthBox
-                      ],
-                    ),
-                  ],
+                      ),
+                      15.widthBox
+                    ],
+                  ),
+                  8.heightBox
+                ],
+              ),
+            ),
+            8.heightBox,
+            (widget.settings['isSubTitleHidden'] == false) ? Padding(
+              padding: EdgeInsets.only(
+                  left: pageMarginHorizontal, right: pageMarginHorizontal,
+                  bottom: pageMarginVertical / 2, top: pageMarginVertical + 10
+              ),
+              child: Container(
+                width: double.maxFinite,
+                child: Text(
+                  "${widget.settings['subtitle']}",
+                  textAlign: TextAlign.center,
+                  style: context.text.bodyLarge!.copyWith(color: color),
                 ),
               ),
-              8.heightBox,
-              (widget.settings['isSubTitleHidden'] == false) ? Padding(
-                padding: EdgeInsets.only(
-                    left: pageMarginHorizontal, right: pageMarginHorizontal,
-                    bottom: pageMarginVertical / 2, top: pageMarginVertical + 10
-                ),
-                child: Container(
-                  width: double.maxFinite,
-                  child: Text(
-                    "${widget.settings['subtitle']}",
-                    textAlign: TextAlign.center,
-                    style: context.text.bodyLarge!.copyWith(color: color),
-                  ),
-                ),
-              ) : const SizedBox(),
-            ],
-          ),
+            ) : const SizedBox(),
+          ],
         ),
       );
     });
@@ -495,7 +501,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
           Get.to(() =>
               WebViewProduct(
                 productUrl: widget.settings["web_url"],
-              ));
+              ), opaque: false, transition: Transition.native);
         }
       },
       child: Column(
@@ -529,37 +535,67 @@ class _CountDownTimerState extends State<CountDownTimer> {
               child: ClipRRect(
                 borderRadius: widget.settings['margin'] == true ? BorderRadius
                     .circular(3.r) : BorderRadius.circular(0),
-                child: widget.settings['image'] != null ? FadeInImage
-                    .memoryNetwork(
-                  image: widget.settings['image'],
-                  // color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
-                  // colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
-                  fit: BoxFit.cover,
-                  height: widget.settings['displayType'] == "normal"
-                      ? 300
-                      : widget.settings['displayType'] == "vertical"
-                      ? 600
-                      : widget.settings['displayType'] == "auto" ? null : 230,
-                  width: double.infinity,
-                  imageErrorBuilder: (context, url,
-                      error) =>
-                      Container(
-                        color: Colors.grey.shade200,
-                        // color: Colors.grey.shade200,
-                        child: Center(
-                          child: SvgPicture.asset(Assets.icons.noImageIcon,
-                            height: 25.h,
-                          ),
-                        ),
-                      ),
-
-                  // progressIndicatorBuilder:
-                  //     (context, url, downloadProgress) =>
-                  //     productShimmer(),
-                  // errorWidget: (context, url, error) =>
-                  // const Icon(Icons.error),
-                  placeholder: kTransparentImage,
-                ) : Container(
+                child: widget.settings['image'] != null ?
+                ExtendedImage.network(
+                        widget.settings['image'],
+                        fit: BoxFit.cover,
+                        // ensures that the image scales down if necessary, but not up
+                        width: double.infinity,
+                        height: widget.settings['displayType'] == "normal"
+                            ? 300
+                            : widget.settings['displayType'] == "vertical"
+                                ? 600
+                                : widget.settings['displayType'] == "auto"
+                                    ? null
+                                    : 230,
+                        cache: true,
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: Container(
+                                  width: 400,
+                                  height: 400,
+                                  color: Colors.grey[300],
+                                ),
+                              );
+                            case LoadState.completed:
+                              return null; //return null, so it continues to display the loaded image
+                            case LoadState.failed:
+                              return Container(
+                                width: double.maxFinite,
+                                height:
+                                    widget.settings['displayType'] == "normal"
+                                        ? 300
+                                        : widget.settings['displayType'] ==
+                                                "vertical"
+                                            ? 600
+                                            : widget.settings['displayType'] ==
+                                                    "auto"
+                                                ? null
+                                                : 230,
+                                child: SvgPicture.asset(
+                                  Assets.icons.noImageIcon,
+                                  height: widget.settings['displayType'] ==
+                                          "normal"
+                                      ? 300
+                                      : widget.settings['displayType'] ==
+                                              "vertical"
+                                          ? 600
+                                          : widget.settings['displayType'] ==
+                                                  "auto"
+                                              ? null
+                                              : 230,
+                                ),
+                              );
+                            default:
+                              return null;
+                          }
+                        },
+                      )
+                    : Container(
                   color: Colors.grey.shade200,
                   child: Center(
                     child: SvgPicture.asset(Assets.icons.noImageIcon,
@@ -570,6 +606,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
               ),
             ),
           ),
+          8.heightBox
         ],
       ),
     );
@@ -652,8 +689,8 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                   width: double.infinity,
                                 ),
                               ),
-                              widget.settings['image'] != null || (productInfo?.image.isNotEmpty ?? false)? FadeInImage.memoryNetwork(
-                                image:
+                              widget.settings['image'] != null || (productInfo?.image.isNotEmpty ?? false)?
+                              ExtendedImage.network(
                                 widget.settings['image'] ?? "${productInfo?.image.split(
                                     "?v=")[0]}?width=300",
                                 fit: BoxFit.cover,
@@ -665,25 +702,51 @@ class _CountDownTimerState extends State<CountDownTimer> {
                                     ? null
                                     : 230,
                                 width: double.infinity,
-                                imageErrorBuilder: (context, url,
-                                    error) =>
-                                    Container(
-                                      color: Colors.grey.shade200,
-                                      // color: Colors.grey.shade200,
-                                      child: Center(
-                                        child: SvgPicture.asset(
-                                          Assets.icons.noImageIcon,
-                                          height: 25.h,
-                                        ),
-                                      ),
-                                    ),
-                                // progressIndicatorBuilder:
-                                //     (context, url, downloadProgress) =>
-                                //     productShimmer(),
-                                // errorWidget: (context, url, error) =>
-                                // const Icon(Icons.error),
-                                placeholder: kTransparentImage,
-                              ):SizedBox.shrink(),
+                                cache: true,
+                                loadStateChanged: (ExtendedImageState state) {
+                                  switch (state.extendedImageLoadState) {
+                                    case LoadState.loading:
+                                      return  Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                  color: Colors.grey[300],
+                                  height: widget.settings['displayType'] ==
+                                  "normal" ? 330 : widget
+                                      .settings['displayType'] == "vertical"
+                                  ? 600
+                                      : widget.settings['displayType'] ==
+                                  "auto"
+                                  ? null
+                                      : 230,
+                                  width: double.infinity,
+                                  ),
+                                  );
+                                  //   Shimmer.fromColors(
+                                  //   baseColor: Colors.grey[300]!,
+                                  //   highlightColor: Colors.grey[100]!,
+                                  //   child: Container(
+                                  //     width: 300,
+                                  //     height: 200,
+                                  //     color: Colors.grey[300],
+                                  //   ),
+                                  // );
+                                    case LoadState.completed:
+                                      return null; //return null, so it continues to display the loaded image
+                                    case LoadState.failed:
+                                      return Container(
+                                          color: Colors.grey.shade200,
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              Assets.icons.noImageIcon,
+                                              height: 25.h,
+                                            ),
+                                          ));
+                                    default:
+                                      return null;
+                                  }
+                                },
+                              ):const SizedBox.shrink(),
                             ],
                           ),
                         ),
@@ -807,6 +870,7 @@ class _CountDownTimerState extends State<CountDownTimer> {
                 ),
               ],
             ) : const SizedBox(),
+            8.heightBox
           ],
         ),
       );

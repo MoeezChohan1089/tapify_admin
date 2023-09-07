@@ -24,12 +24,15 @@ class AdminSplashLogic extends GetxController {
 
     //--- check internet
     if (await checkInternetAccess()) {
+
+      // LocalDatabase.to.box.remove("adminSignedInToken");
+
       await Future.delayed(const Duration(milliseconds: 1500));
       if (LocalDatabase.to.box.read("adminSignedInToken") != null &&
           LocalDatabase.to.box.read("isViewingWithQR") == false) {
-        Get.off(() => AdminHomePage());
+        Get.off(() => AdminHomePage(), transition: Transition.native);
       } else {
-        Get.off(() => AdminSignInPage(isRedirectToWeb: false));
+        Get.off(() => AdminSignInPage(isRedirectToWeb: false), transition: Transition.native);
       }
     } else {
       currentState.value = "no-internet";

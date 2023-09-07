@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/skeleton_loaders/shimmerLoader.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../custom_widgets/product_viewer_web.dart';
 import '../../../global_controllers/app_config/config_controller.dart';
-import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/margins_spacnings.dart';
-import '../../../utils/skeleton_loaders/shimmerLoader.dart';
 import '../logic.dart';
 import '../models/product_info_model.dart';
 
@@ -29,15 +30,18 @@ class SingleVideoViewState extends State<SingleVideoView> {
   @override
   void initState() {
     super.initState();
-    logic.initializeValueOfVideo(widget.settings);
+    print("ffsfsfsd");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // logic.initializeValueOfVideo(widget.settings);
+    });
   }
 
 
-  @override
-  void dispose() {
-    logic.controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   logic.controller.dispose();
+  //   super.dispose();
+  // }
 
   Widget getPlayPauseButton() {
     // When loop is true and autoplay is true, we never show the button
@@ -85,7 +89,8 @@ class SingleVideoViewState extends State<SingleVideoView> {
         isClicked: logic.isClicked.value,
         isFirstTime: logic.isFirstTime.value,
         onPlayPauseClicked: () {
-          logic.isClicked.value = !logic.isClicked.value; // Toggle the value of isClicked every time
+          logic.isClicked.value =
+          !logic.isClicked.value; // Toggle the value of isClicked every time
           if (logic.isFirstTime.value) {
             logic.isFirstTime.value = false;
           }
@@ -94,14 +99,13 @@ class SingleVideoViewState extends State<SingleVideoView> {
     }
 
 
-
-
     return SizedBox.shrink();
   }
 
 
   @override
   Widget build(BuildContext context) {
+    // logic.initializeValueOfVideo(widget.settings);
     print("fffsfsfsss");
     // if (widget.settings['autoPlay'] == true) {
     //   logic.controller.play();
@@ -110,80 +114,53 @@ class SingleVideoViewState extends State<SingleVideoView> {
     //   videoEnded = true;
     //   logic.controller.pause();
     // }
-    return SingleChildScrollView(
-      child:
-      Column(
-        children: <Widget>[
-          widget.settings['isTitleHidden'] == false ? Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 6),
+    return Obx((){
+      return appConfig.innerLoader.value == true
+          ? Container(
+        margin: EdgeInsets.only(top: 8, bottom: 8),
+        height: 400.h,
+        width: double.infinity,
+        child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            enabled: logic.enabled.value,
             child: Container(
-              margin: widget.settings['titleAlignment'] != 'center'
-                  ? EdgeInsets.symmetric(
-                  horizontal: pageMarginHorizontal / 1.5)
-                  : EdgeInsets.symmetric(horizontal: 0,),
-              width: double.maxFinite,
-              child: Text('${widget.settings["title"]}',
-                textAlign: widget.settings['titleAlignment'] == 'left'
-                    ? TextAlign.left
-                    : widget.settings['titleAlignment'] == 'center'
-                    ? TextAlign.center
-                    : TextAlign.right,
-                style: widget.settings['titleSize'] == 'small' ? context.text
-                    .titleSmall : widget.settings['titleSize'] == 'medium'
-                    ? context.text.titleMedium
-                    : context.text.titleLarge,
+              color: AppColors.customWhiteTextColor,
+            )),
+      ): SingleChildScrollView(
+        child:
+        Column(
+          children: <Widget>[
+            widget.settings['isTitleHidden'] == false ? Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 6),
+              child: Container(
+                margin: widget.settings['titleAlignment'] != 'center'
+                    ? EdgeInsets.symmetric(
+                    horizontal: pageMarginHorizontal / 1.5)
+                    : EdgeInsets.symmetric(horizontal: 0,),
+                width: double.maxFinite,
+                child: Text('${widget.settings["title"]}',
+                  textAlign: widget.settings['titleAlignment'] == 'left'
+                      ? TextAlign.left
+                      : widget.settings['titleAlignment'] == 'center'
+                      ? TextAlign.center
+                      : TextAlign.right,
+                  style: widget.settings['titleSize'] == 'small' ? context.text
+                      .titleSmall : widget.settings['titleSize'] == 'medium'
+                      ? context.text.titleMedium
+                      : context.text.titleLarge,
+                ),
               ),
-            ),
-          ) : SizedBox(),
+            ) : SizedBox(),
 
-          (widget.settings["video"] != null &&
-              widget.settings["metadata"]["data"].isEmpty)
-              ? singleImageVariant() ?? SizedBox.shrink()
-              : customImageVariant(context) ?? SizedBox.shrink(),
-
-          // Padding(
-          //   padding: widget.settings["margin"] == true ? EdgeInsets.symmetric(horizontal: pageMarginHorizontal/1.5, vertical: pageMarginVertical/1.5):EdgeInsets.all(0),
-          //   child: Container(
-          //     // padding: const EdgeInsets.all(20),
-          //     height: widget.settings["displayType"] == "normal" ? 350.h: widget.settings["displayType"] == "vertical"? 500.h: widget.settings["displayType"] == "auto"? null:200.h,
-          //     width: double.maxFinite,
-          //     child: AspectRatio(
-          //       aspectRatio: _logic.controller.value.aspectRatio,
-          //       child: Stack(
-          //         alignment: Alignment.center,
-          //         children: <Widget>[
-          //
-          //           VideoPlayer(_logic.controller),
-          //           widget.settings['autoPlay'] == false?  _ControlsOverlay(logic.controller: _logic.controller):SizedBox.shrink(),
-          //           // ValueListenableBuilder(
-          //           //   valueListenable: _logic.controller,
-          //           //   builder: (context, VideoPlayerValue value, child) {
-          //           //     if (!value.isPlaying && !value.isBuffering) {
-          //           //       return GestureDetector(
-          //           //         onTap: () {
-          //           //           if (!_logic.controller.value.isPlaying) {
-          //           //             _logic.controller.play();
-          //           //           } else {
-          //           //             _logic.controller.pause();
-          //           //           }
-          //           //         },
-          //           //         child: Icon(Icons.play_arrow, size: 64.0, color: Colors.white),
-          //           //       );
-          //           //     } else {
-          //           //       return SizedBox.shrink(); // Returns an empty widget if the video is playing or buffering
-          //           //     }
-          //           //   },
-          //           // ),
-          //           // _ControlsOverlay(logic.controller: _logic.controller),
-          //           // VideoProgressIndicator(_logic.controller, allowScrubbing: true),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
-      ),
-    );
+            (widget.settings["video"] != null &&
+                widget.settings["metadata"]["data"].isEmpty)
+                ? singleImageVariant() ?? SizedBox.shrink()
+                : customImageVariant(context) ?? SizedBox.shrink(),
+          ],
+        ),
+      );
+    });
   }
 
   double videoContainerRatio = 0.5;
@@ -204,13 +181,14 @@ class SingleVideoViewState extends State<SingleVideoView> {
 
   singleImageVariant() {
     return Obx(() {
-      print("auto adjustment: ${logic.controller.value.size}");
+      print("auto adjustment: ${logic.enabled.value}");
       return GestureDetector(
         onTap: () {
           if (widget.settings["web_url"] != null) {
-            Get.to(() => WebViewProduct(
-              productUrl: widget.settings["web_url"],
-            ));
+            Get.to(() =>
+                WebViewProduct(
+                  productUrl: widget.settings["web_url"],
+                ), opaque: false, transition: Transition.native);
           }
         },
         child: Padding(
@@ -222,56 +200,37 @@ class SingleVideoViewState extends State<SingleVideoView> {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                // SizedBox(
-                //   height: widget.settings["displayType"] == "normal"
-                //       ? 300.h
-                //       : widget.settings["displayType"] == "vertical"
-                //       ? 400.h
-                //       : widget.settings["displayType"] == "auto"
-                //       ? Get.height
-                //       : 230.h,
+                ClipRRect(
+                  borderRadius: widget.settings["margin"] == true ? BorderRadius
+                      .circular(3.r) : BorderRadius.zero,
+                  child: AspectRatio(
+                      aspectRatio: logic.controller.value.aspectRatio,
+                      child: VideoPlayer(logic.controller)),
+                )
+                // logic.heightCheck.value > 0.0 ? ClipRRect(
+                //   borderRadius: widget.settings["margin"] == true ? BorderRadius
+                //       .circular(3.r) : BorderRadius.zero,
+                //   child: AspectRatio(
+                //       aspectRatio: logic.heightCheck.value,
+                //       child: VideoPlayer(logic.controller)),
+                // ) : Container(
                 //   width: double.maxFinite,
-                //   child: ClipRect(
-                //     child: FittedBox(
-                //       fit: BoxFit.cover,
-                //       child: SizedBox(
-                //         width: Get.height * 2 * logic.controller.value.aspectRatio,
-                //         height: widget.settings["displayType"] == "normal"
-                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                //             : widget.settings["displayType"] == "vertical"
-                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                //             : widget.settings["displayType"] == "auto"
-                //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
-                //             : (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5,
-                //         child: VideoPlayer(logic.controller),
-                //       ),
-                //     ),
-                //   ),
+                //   height: logic.heightCheck1.value,
+                //   child: productShimmer(),),
                 // ),
-                // Container(
-                //     width: MediaQuery.of(context).size.width,
-                //     height: MediaQuery.of(context).size.height,
-                //     child:
-                logic.heightCheck.value > 0.0? AspectRatio(
-                    aspectRatio: logic.heightCheck.value,
-                    child: VideoPlayer(logic.controller)):Container(
-                  width: double.maxFinite,
-                  height: logic.heightCheck1.value,
-                  child: productShimmer(),),
-                // ),
-                logic.heightCheck.value > 0.0?   AspectRatio(
-                    aspectRatio: logic.heightCheck.value,
-                    // height: widget.settings["displayType"] == "normal"
-                    //     ? 300.h
-                    //     : widget.settings["displayType"] == "vertical"
-                    //     ? 400.h
-                    //     : widget.settings["displayType"] == "auto"
-                    //     ? Get.height
-                    //     : 230.h,
-                    child: getPlayPauseButton()):Container(
-                  width: double.maxFinite,
-                  height: logic.heightCheck1.value,
-                  child: productShimmer(),),
+                // logic.heightCheck.value > 0.0 ? AspectRatio(
+                //     aspectRatio: logic.heightCheck.value,
+                //     // height: widget.settings["displayType"] == "normal"
+                //     //     ? 300.h
+                //     //     : widget.settings["displayType"] == "vertical"
+                //     //     ? 400.h
+                //     //     : widget.settings["displayType"] == "auto"
+                //     //     ? Get.height
+                //     //     : 230.h,
+                //     child: getPlayPauseButton()) : Container(
+                //   width: double.maxFinite,
+                //   height: logic.heightCheck1.value,
+                //   child: productShimmer(),),
               ],
             )
 
@@ -284,7 +243,7 @@ class SingleVideoViewState extends State<SingleVideoView> {
   final appConfig = AppConfig.to;
 
   customImageVariant(BuildContext context) {
-    if(widget.settings["metadata"]['data'].isNotEmpty){
+    if (widget.settings["metadata"]['data'].isNotEmpty) {
       ProductInfo? productInfo = appConfig.getProductById(
         id: widget.settings["metadata"]["data"][0]["id"],
         dataType: widget.settings["metadata"]['dataType'],
@@ -300,56 +259,77 @@ class SingleVideoViewState extends State<SingleVideoView> {
                   dataType: widget.settings["metadata"]['dataType']);
             }
           },
-          child:  Padding(
-            padding: widget.settings["margin"] == true
-                ? EdgeInsets.symmetric(
-                horizontal: pageMarginHorizontal / 1.5,
-                vertical: pageMarginVertical / 1.5)
-                : EdgeInsets.all(0),
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
+          child: Padding(
+              padding: widget.settings["margin"] == true
+                  ? EdgeInsets.symmetric(
+                  horizontal: pageMarginHorizontal / 1.5,
+                  vertical: pageMarginVertical / 1.5)
+                  : EdgeInsets.all(0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  // SizedBox(
+                  //   height: widget.settings["displayType"] == "normal"
+                  //       ? 300.h
+                  //       : widget.settings["displayType"] == "vertical"
+                  //       ? 400.h
+                  //       : widget.settings["displayType"] == "auto"
+                  //       ? Get.height
+                  //       : 230.h,
+                  //   width: double.maxFinite,
+                  //   child: ClipRect(
+                  //     child: FittedBox(
+                  //       fit: BoxFit.cover,
+                  //       child: SizedBox(
+                  //         width: Get.height * 2 * logic.controller.value.aspectRatio,
+                  //         height: widget.settings["displayType"] == "normal"
+                  //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                  //             : widget.settings["displayType"] == "vertical"
+                  //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                  //             : widget.settings["displayType"] == "auto"
+                  //             ? (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5
+                  //             : (widget.settings["autoPlay"] == true && widget.settings['loop'] == true) ? Get.height * 4: Get.height * 2.5,
+                  //         child: VideoPlayer(logic.controller),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //     width: MediaQuery.of(context).size.width,
+                  //     height: MediaQuery.of(context).size.height,
+                  //     child:
 
-                SizedBox( // Define your width
-                  height: widget.settings["displayType"] == "normal"
-                      ? 300.h
-                      : widget.settings["displayType"] == "vertical"
-                      ? 400.h
-                      : widget.settings["displayType"] == "auto"
-                      ? Get.height
-                      : 230.h, // Define your height
+                  ClipRRect(
+                    borderRadius: widget.settings["margin"] == true ? BorderRadius
+                        .circular(3.r) : BorderRadius.zero,
+                    child: AspectRatio(
+                        aspectRatio: logic.controller.value.aspectRatio,
+                        child: VideoPlayer(logic.controller)),
+                  )
 
-                  // height: 300,
+                  // logic.heightCheck.value > 0.0 ? AspectRatio(
+                  //     aspectRatio: logic.heightCheck.value,
+                  //     child: VideoPlayer(logic.controller)) : Container(
+                  //   width: double.maxFinite,
+                  //   height: logic.heightCheck1.value,
+                  //   child: productShimmer(),),
+                  // ),
+                  // logic.heightCheck.value > 0.0 ? AspectRatio(
+                  //     aspectRatio: logic.heightCheck.value,
+                  //     // height: widget.settings["displayType"] == "normal"
+                  //     //     ? 300.h
+                  //     //     : widget.settings["displayType"] == "vertical"
+                  //     //     ? 400.h
+                  //     //     : widget.settings["displayType"] == "auto"
+                  //     //     ? Get.height
+                  //     //     : 230.h,
+                  //     child: getPlayPauseButton()) : Container(
+                  //   width: double.maxFinite,
+                  //   height: logic.heightCheck1.value,
+                  //   child: productShimmer(),),
+                ],
+              )
 
-                  // height: Get.height,
-                  width: Get.width,
-                  child: ClipRect(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: Get.height * 2 * logic.controller.value.aspectRatio,
-                        height: widget.settings["displayType"] == "normal"
-                            ? Get.height * 4
-                            : widget.settings["displayType"] == "vertical"
-                            ? Get.height * 4
-                            : widget.settings["displayType"] == "auto"
-                            ? Get.height * 4
-                            : Get.height * 4,
-                        child: VideoPlayer(logic.controller),
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Container(
-                //     color: Colors.green,
-                //     child: VideoPlayer(logic.controller)),
-
-                // Container layer (on top of the video)
-
-                getPlayPauseButton(),
-              ],
-            ),
           ),
         );
       });

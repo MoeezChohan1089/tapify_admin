@@ -1,4 +1,4 @@
-// import 'package:tapify/src/api_services/shopify_flutter/models/src/product/product.dart';
+// import 'package:tapify_admin/src/api_services/shopify_flutter/models/src/product/product.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 

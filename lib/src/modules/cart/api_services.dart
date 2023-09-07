@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
-import '../../admin_modules/home/logic.dart';
-
 addOrderNoteToCheckout(String checkoutId, String note) async {
+
+
 // Replace 'your_access_token' with your actual Shopify Storefront access token
-  const String shopifyStorefrontAccessToken = TapDay.storeFrontAccessToken;
-  String shopifyStorefrontAPIEndpoint =
-      'https://${AdminHomeLogic.to.browsingShopDomain.value}/api/graphql';
+  const String shopifyStorefrontAccessToken = '${TapDay.storeFrontAccessToken}';
+  String shopifyStorefrontAPIEndpoint = 'https://${LocalDatabase.to.box.read('domainShop')}/api/graphql';
 
   final dio = Dio();
 
@@ -51,12 +51,13 @@ addOrderNoteToCheckout(String checkoutId, String note) async {
     if (response.statusCode == 200) {
       print('Note added successfully!');
     } else {
-      print(
-          'Failed to add note to checkout. Status code: ${response.statusCode}');
+      print('Failed to add note to checkout. Status code: ${response.statusCode}');
       print('Response: ${response.data}');
     }
   } catch (e) {
     print('Error occurred while adding note to checkout: $e');
   }
   // }
+
+
 }

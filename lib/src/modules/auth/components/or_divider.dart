@@ -9,7 +9,7 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return   Padding(
       padding: EdgeInsets.symmetric(
         vertical: pageMarginVertical * 2.3,
       ),
@@ -26,8 +26,9 @@ class OrDivider extends StatelessWidget {
           ),
           Text(
             'OR',
-            style:
-                context.text.bodyLarge?.copyWith(color: AppColors.appHintColor),
+            style: context.text.bodyLarge?.copyWith(
+              color: AppColors.appHintColor
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(

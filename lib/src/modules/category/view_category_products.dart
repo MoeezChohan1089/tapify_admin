@@ -7,20 +7,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:tapify_admin/src/modules/category/logic.dart';
+import 'package:tapify_admin/src/modules/home/logic.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../custom_widgets/custom_product_Card.dart';
 import '../../global_controllers/app_config/config_controller.dart';
 import '../../utils/constants/assets.dart';
-import '../../utils/constants/colors.dart';
 import '../../utils/constants/margins_spacnings.dart';
 import '../../utils/global_instances.dart';
 import '../../utils/skeleton_loaders/shimmerLoader.dart';
-import '../home/logic.dart';
 import 'components/sortBottomSheet.dart';
 import 'components/view_filters.dart';
-import 'logic.dart';
 
 class CategoryProducts extends StatefulWidget {
   final String collectionID;
@@ -93,7 +93,8 @@ class _CategoryProductsState extends State<CategoryProducts>
                             HapticFeedback.lightImpact();
                             Get.to(() => const CollectionFiltersView(),
                                 transition: Transition.downToUp,
-                                fullscreenDialog: true,
+                                opaque: true,
+                                 fullscreenDialog: true,
                                 duration: const Duration(milliseconds: 250));
                           },
                           child: Container(
@@ -312,6 +313,10 @@ class _CategoryProductsState extends State<CategoryProducts>
                                   .setupConfigData(isRefreshing: true);
                               logic1.resetCarosal();
                               loadMoreController.refreshCompleted();
+                              if (context.mounted) {
+                                categoryLogic.productFetchService(
+                                    context: context, id: widget.collectionID, isNewId: true);
+                              }
                               // await Future.delayed(const Duration(milliseconds: 2000));
                               // log("== calling on refresh =====");
                               //

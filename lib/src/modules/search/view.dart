@@ -48,32 +48,35 @@ class _SearchPageState extends State<SearchPage> {
         appBar: CustomAppBar(
           title: 'search',
         ),
-        body: Column(children: [
-           SearchFieldBar(),
-          Obx(() {
-            return logic.showSearchedResult.isTrue
-                ? logic.isLoading.isTrue ?   Expanded(
-                  child: SizedBox(
-                  height: MediaQuery.of(context).size.height-10,
-                  child: LoadingListPage()),
-                )    :   const SearchedResult()
-                :  Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    RecentSearches(),
-                    CollectionsList(),
-                    SuggestedProductsList(),
-                  ],
+        body: SafeArea(
+          child: Column(children: [
+             SearchFieldBar(),
+            Obx(() {
+              return logic.showSearchedResult.isTrue
+                  ? logic.isLoading.isTrue ?   Expanded(
+                    child: SizedBox(
+                    height: MediaQuery.of(context).size.height-10,
+                    child: LoadingListPage()),
+                  )    :   const SearchedResult()
+                  :  Expanded(
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  child: Column(
+                    children: const [
+                      RecentSearches(),
+                      CollectionsList(),
+                      SuggestedProductsList(),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
 
 
 
 
-        ]),
+          ]),
+        ),
       ),
     );
   }

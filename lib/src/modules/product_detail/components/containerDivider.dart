@@ -69,21 +69,21 @@ class _ContainerDividerState extends State<ContainerDivider> {
                             heading,
                             style: context.text.bodyMedium?.copyWith(
                                 color: AppColors.appTextColor, fontSize: 16.sp
-                                // height: 0.1
-                                ),
+                              // height: 0.1
+                            ),
                           ),
                           const Spacer(),
                           expand
                               ? Icon(
-                                  Icons.keyboard_arrow_up_outlined,
-                                  color: AppColors.customBlackTextColor,
-                                  size: 28.sp,
-                                )
+                            Icons.keyboard_arrow_up_outlined,
+                            color: AppColors.customBlackTextColor,
+                            size: 28.sp,
+                          )
                               : Icon(
-                                  Icons.keyboard_arrow_down_outlined,
-                                  color: AppColors.customBlackTextColor,
-                                  size: 28.sp,
-                                ),
+                            Icons.keyboard_arrow_down_outlined,
+                            color: AppColors.customBlackTextColor,
+                            size: 28.sp,
+                          ),
                         ],
                       ),
                     ),
@@ -92,21 +92,21 @@ class _ContainerDividerState extends State<ContainerDivider> {
                       duration: const Duration(milliseconds: 800),
                       child: expand
                           ? Builder(builder: (context) {
-                              return (heading == "Product Details")
-                                  ? renderHtmlContent(description)
-                                  : Container(
-                                      width: double.maxFinite,
-                                      child: Text(
-                                        description,
-                                        textAlign: TextAlign.left,
-                                        style: context.text.bodyMedium
-                                            ?.copyWith(fontSize: 13.sp),
-                                      ),
-                                    );
-                            })
+                        return (heading == "Product Details")
+                            ? renderHtmlContent(description)
+                            : Container(
+                          width: double.maxFinite,
+                          child: Text(
+                            description,
+                            textAlign: TextAlign.left,
+                            style: context.text.bodyMedium
+                                ?.copyWith(fontSize: 13.sp),
+                          ),
+                        );
+                      })
                           : Container(
-                              height: 0,
-                            ),
+                        height: 0,
+                      ),
                     ),
                     4.heightBox,
                   ],
@@ -135,18 +135,18 @@ class _ContainerDividerState extends State<ContainerDivider> {
     return Column(
       children: [
         widget.product != null &&
-                widget.product!.description != null &&
-                widget.product!.description!.isNotEmpty
+            widget.product!.description != null &&
+            widget.product!.description!.isNotEmpty
             ? customContainerDivide(
-                "Product Details", "${widget.product?.descriptionHtml}" ?? "",
-                expand: expanded)
+            "Product Details", "${widget.product?.descriptionHtml}" ?? "",
+            expand: expanded)
             : const SizedBox(),
         widget.product != null &&
-                widget.product!.vendor != null &&
-                widget.product!.vendor.isNotEmpty
+            widget.product!.vendor != null &&
+            widget.product!.vendor.isNotEmpty
             ? customContainerDivide(
-                "About the Brand", "${widget.product?.vendor}" ?? "",
-                expand: expanded3)
+            "About the Brand", "${widget.product?.vendor}" ?? "",
+            expand: expanded3)
             : const SizedBox(),
       ],
     );

@@ -24347,6 +24347,20 @@ com.google.android.material.transition.platform.TransitionUtils$CanvasOperation
 com.google.android.material.transition.platform.TransitionUtils$CornerSizeBinaryOperator
 com.google.android.material.transition.platform.TransitionUtils
 com.google.android.material.transition.platform.VisibilityAnimatorProvider
+com.google.android.play.core.common.IntentSenderForResultStarter
+com.google.android.play.core.common.LocalTestingException
+com.google.android.play.core.listener.StateUpdatedListener
+com.google.android.play.core.review.ReviewException:
+    public int getErrorCode()
+com.google.android.play.core.review.ReviewInfo:
+    public static com.google.android.play.core.review.ReviewInfo zzc(android.app.PendingIntent,boolean)
+com.google.android.play.core.review.ReviewManagerFactory:
+    private void <init>()
+com.google.android.play.core.review.model.ReviewErrorCode
+com.google.android.play.core.review.testing.FakeReviewManager
+com.google.android.play.corecommon.R$style
+com.google.android.play.corecommon.R
+com.google.android.play.review.R
 com.google.common.annotations.Beta
 com.google.common.annotations.GwtCompatible
 com.google.common.annotations.GwtIncompatible
@@ -28583,6 +28597,18 @@ creativemaybeno.wakelock.R$styleable
 creativemaybeno.wakelock.R
 creativemaybeno.wakelock.Wakelock:
     public final android.app.Activity getActivity()
+dev.britannio.in_app_review.BuildConfig
+dev.britannio.in_app_review.R$attr
+dev.britannio.in_app_review.R$color
+dev.britannio.in_app_review.R$dimen
+dev.britannio.in_app_review.R$drawable
+dev.britannio.in_app_review.R$id
+dev.britannio.in_app_review.R$integer
+dev.britannio.in_app_review.R$layout
+dev.britannio.in_app_review.R$string
+dev.britannio.in_app_review.R$style
+dev.britannio.in_app_review.R$styleable
+dev.britannio.in_app_review.R
 dev.fluttercommunity.plus.connectivity.BuildConfig
 dev.fluttercommunity.plus.connectivity.Connectivity:
     static final java.lang.String CONNECTIVITY_BLUETOOTH

@@ -2,34 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../global_controllers/app_config/config_controller.dart';
+
 void showToastMessage({required String message}) {
+
   Get.closeAllSnackbars();
 
   Get.showSnackbar(
     GetSnackBar(
       isDismissible: true,
       message: message,
-      messageText:
-          // Obx(() {
-          //   return
-          Text(
-        message,
-        style: TextStyle(
-            color: Colors.white,
-            // color: AppConfig.to.secondaryColor.value,
-            fontSize: 16.sp),
-      )
-
-      //   ;
-      // })
-      ,
+      messageText: Obx(() {
+        return Text(message,
+          style: TextStyle(
+              color: AppConfig.to.secondaryColor.value,
+              fontSize: 16.sp
+          ),
+        );
+      }),
       duration: const Duration(seconds: 3),
-      backgroundColor: Colors.black,
-      // backgroundColor: AppConfig.to.primaryColor.value,
+      backgroundColor: AppConfig.to.primaryColor.value,
       snackStyle: SnackStyle.FLOATING,
       snackPosition: SnackPosition.TOP,
       borderRadius: 5.r,
-      margin: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
+      margin: EdgeInsets.only(
+          left: 20.w,
+          right: 20.w,
+          top: 20.h
+      ),
     ),
   );
 

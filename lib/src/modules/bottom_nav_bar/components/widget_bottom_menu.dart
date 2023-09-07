@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+import 'package:tapify_admin/src/modules/auth/view.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
+import '../../../global_controllers/database_controller.dart';
 import '../logic.dart';
 
 class BottomNavItem extends StatelessWidget {
@@ -41,13 +43,15 @@ class BottomNavItem extends StatelessWidget {
                   })
                 : SvgPicture.asset(inActiveIcon,
                     color: Colors.black, height: 22.h),
+
             2.heightBox,
             logic.currentPageIndex.value == indexValue
-                ? Obx(() {
+                ?
+            Obx(() {
                     return Text(
                       title,
-                      style: context.text.bodySmall
-                          ?.copyWith(color: AppConfig.to.primaryColor.value),
+                      style: context.text.bodySmall?.copyWith(
+                          color: AppConfig.to.primaryColor.value),
                     );
                   })
                 : Text(

@@ -3,28 +3,32 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tapify_admin/src/admin_modules/splash/view.dart';
+import 'package:tapify_admin/src/custom_widgets/local_notification_service.dart';
+import 'package:tapify_admin/src/global_controllers/notification_service.dart';
 import 'package:tapify_admin/src/utils/theme/text_theme_config.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'src/global_controllers/dependency_injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await GetStorage.init();
   await DependencyInjection.init();
 
   ///----- notification functions
-  // Get.put(NotificationService());
-  // notificationInitializeMain();
-  // tz.initializeTimeZones();
-  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  // FlutterLocalNotificationsPlugin();
-  // await NotificationService().init();
-  // await NotificationService().requestIOSPermissions();
+  Get.put(NotificationService());
+  notificationInitializeMain();
+  tz.initializeTimeZones();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  await NotificationService().init();
+  await NotificationService().requestIOSPermissions();
   ///--------------------------
 
   SystemChrome.setPreferredOrientations([
@@ -82,6 +86,8 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
+            defaultTransition: Transition.leftToRight,
+
             theme: ThemeData(
               useMaterial3: true,
               // primarySwatch: Colors.red,

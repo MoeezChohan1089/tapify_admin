@@ -17,6 +17,7 @@ import '../../global_controllers/app_config/config_controller.dart';
 import '../../global_controllers/database_controller.dart';
 import '../../utils/global_instances.dart';
 import '../cart/logic.dart';
+import '../wishlist/logic.dart';
 import 'state.dart';
 
 class SearchLogic extends GetxController {
@@ -33,6 +34,7 @@ class SearchLogic extends GetxController {
   SortKeyProduct sortKeyProduct = SortKeyProduct.TITLE;
   final searchTextController = TextEditingController();
   final Rx<List<Product>> searchResultProducts = Rx<List<Product>>([]);
+  final Rx<List<Product>> searchResultProducts1 = Rx<List<Product>>([]);
   List<Product> get searchedProducts => searchResultProducts.value.isNotEmpty ? searchResultProducts.value : [];
   bool _noMoreProductsShown = false;
 
@@ -41,8 +43,8 @@ class SearchLogic extends GetxController {
 
     if(isNewSearch){
       searchResultProducts.value = [];
+      WishlistLogic.to.suggestedProducts.value = [];
     } else {
-
     }
 
     // Check if the search text contains special characters
@@ -94,9 +96,15 @@ class SearchLogic extends GetxController {
 
         if(AppConfig.to.appSettingsStoreSettings["displaySoldoutInSearch"]){
           searchResultProducts.value.add(element);
+
+          WishlistLogic.to.suggestedProducts.value = List<Product>.from(WishlistLogic.to.suggestedProducts.value)
+            ..add(element);
         } else {
           if(element.availableForSale == true) {
             searchResultProducts.value.add(element);
+
+            WishlistLogic.to.suggestedProducts.value = List<Product>.from(WishlistLogic.to.suggestedProducts.value)
+              ..add(element);
           }
         }
       }
@@ -123,6 +131,7 @@ class SearchLogic extends GetxController {
         }
       }
       update();
+      WishlistLogic.to.update();
       log("==== SUCCESS retrieved products ===> ${searchResultProducts.value.length}  ====");
 
     } catch (e) {
@@ -215,33 +224,33 @@ class SearchLogic extends GetxController {
   ///----
   ///----------- Page Functions -----------///
   ///----
-  // getSearchedProducts() async {
-  //   log("====== in the search products field =======");
-  //   showSearchedResult.value = true;
-  //   isLoading.value = true;
-  //
-  //
-  //   try {
-  //     final response = await shopifyStore.getAllProductsOnQuery(
-  //       "",
-  //       searchTextController.text
-  //     );
-  //     _searchResultProducts.value = response ?? [];
-  //
-  //     _searchResultProducts.value.isEmpty ?
-  //       showSearchedResult.value = false : showSearchedResult.value = true;
-  //
-  //     isLoading.value = false;
-  //     log("==== SUCCESS retrieved products ===> ${_searchResultProducts.value}  ====");
-  //   } catch (e) {
-  //     showSearchedResult.value = false;
-  //     isLoading.value = false;
-  //     log("==== ERROR in fetching home products ==> $e ====");
-  //   }
-  //
-  //
-  //
-  // }
+  getSearchedProducts() async {
+    log("====== in the search products field =======");
+    showSearchedResult.value = true;
+    isLoading.value = true;
+
+
+    try {
+      final response = await shopifyStore.getAllProductsOnQuery(
+        "",
+        searchTextController.text
+      );
+      searchResultProducts1.value = response ?? [];
+
+      searchResultProducts1.value.isEmpty ?
+        showSearchedResult.value = false : showSearchedResult.value = true;
+
+      isLoading.value = false;
+      log("==== SUCCESS retrieved products ===> ${searchResultProducts1.value}  ====");
+    } catch (e) {
+      showSearchedResult.value = false;
+      isLoading.value = false;
+      log("==== ERROR in fetching home products ==> $e ====");
+    }
+
+
+
+  }
 
   // addProductToCart({required BuildContext context, index}) {
   //

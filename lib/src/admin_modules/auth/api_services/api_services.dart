@@ -39,9 +39,6 @@ adminUserLogInService({required String email, required String password}) async {
 getShopByQRCode({required String qrToken}) async {
   try {
     Dio dio = Dio();
-
-    // final response = await dio.get(TapDay.getShopListURL);
-
     var headers = {'Authorization': 'Bearer $qrToken'};
     final response = await dio.get(TapDay.getShopListURL,
         options: Options(headers: headers));

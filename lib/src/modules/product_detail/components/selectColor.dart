@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:tapify/src/utils/constants/colors.dart';
-// import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-// import 'package:tapify/src/utils/extensions.dart';
+// import 'package:tapify_admin/src/utils/constants/colors.dart';
+// import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+// import 'package:tapify_admin/src/utils/extensions.dart';
 //
 // class SelectColor extends StatefulWidget {
 //   const SelectColor({Key? key}) : super(key: key);

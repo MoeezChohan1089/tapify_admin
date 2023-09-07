@@ -2,8 +2,8 @@
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:get/get.dart';
-// import 'package:tapify/src/modules/cart/view.dart';
-// import 'package:tapify/src/utils/constants/assets.dart';
+// import 'package:tapify_admin/src/modules/cart/view.dart';
+// import 'package:tapify_admin/src/utils/constants/assets.dart';
 //
 // import '../side_drawer_simple.dart';
 // import 'logic.dart';

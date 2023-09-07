@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio_instance;
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 
-import '../../admin_modules/home/logic.dart';
 import '../../utils/tapday_api_srvices/api_services.dart';
 // import 'package:dio/dio.dart';
 
-Future<Map<String, dynamic>> createCheckOut(
-    {String variantId = "gid://shopify/ProductVariant/45352467497272",
-    int quantity = 2}) async {
+Future<Map<String, dynamic>> createCheckOut({String variantId = "gid://shopify/ProductVariant/45352467497272", int quantity = 2}) async {
   const String mutation = r'''
     mutation checkoutCreate($input: CheckoutCreateInput!) {
       checkoutCreate(input: $input) {
@@ -27,31 +25,30 @@ Future<Map<String, dynamic>> createCheckOut(
 
   dio_instance.Dio dio = dio_instance.Dio();
 
+
   // rest of the function remains the same
   final response = await dio.post(
-    'https://${AdminHomeLogic.to.browsingShopDomain.value}/api/2023-01/graphql.json',
-    options: dio_instance.Options(headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'
-    }),
-    data: jsonEncode({
-      'query': mutation,
-      'variables': {
-        'input': {
-          'lineItems': [
-            {
-              'variantId': variantId,
-              'quantity': quantity,
-            },
-          ],
+      'https://${LocalDatabase.to.box.read('domainShop')}/api/2023-01/graphql.json',
+      options: dio_instance.Options(headers: {'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'}),
+      data: jsonEncode({
+        'query': mutation,
+        'variables': {
+          'input': {
+            'lineItems': [
+              {
+                'variantId': variantId,
+                'quantity': quantity,
+              },
+            ],
+          },
         },
-      },
-    }),
-  );
+      }),
+    );
 
   final body = response.data;
 
   print("create checkout response is $body");
+
 
   // Handle potential errors
   if (body['errors'] != null) {
@@ -63,6 +60,13 @@ Future<Map<String, dynamic>> createCheckOut(
   }
 
   return body['data']['checkoutCreate']['checkout'];
+
+
+
+
+
+
+
 
   // final response = await dio.post (
   //   Uri.parse('$_shopifyStore/api/2023-01/graphql.json'),
@@ -88,8 +92,8 @@ Future<Map<String, dynamic>> createCheckOut(
   // return body['data']['node'];
 }
 
-getProductDetails(
-    {String productId = "gid://shopify/Product/8367105507640"}) async {
+getProductDetails({String productId = "gid://shopify/Product/8367105507640"}) async {
+
   print("in the new function Hurraayyyy......");
 
   const query = '''
@@ -111,6 +115,7 @@ getProductDetails(
     }
   ''';
 
+
   dio_instance.Dio dio = dio_instance.Dio();
 
   final variables = {'productId': productId};
@@ -118,15 +123,13 @@ getProductDetails(
   final data = {'query': query, 'variables': variables};
   // rest of the function remains the same
   final response = await dio.post(
-    'https://${AdminHomeLogic.to.browsingShopDomain.value}/api/2023-01/graphql.json',
-    options: dio_instance.Options(headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'
-    }),
+    'https://${LocalDatabase.to.box.read('domainShop')}/api/2023-01/graphql.json',
+    options: dio_instance.Options(headers: {'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': '${TapDay.storeFrontAccessToken}'}),
     data: data,
   );
 
   final body = response.data;
 
   print("create checkout response is $body");
+
 }

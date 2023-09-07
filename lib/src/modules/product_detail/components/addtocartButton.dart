@@ -2,9 +2,9 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:tapify/src/modules/product_detail/api_services.dart';
-// import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-// import 'package:tapify/src/utils/extensions.dart';
+// import 'package:tapify_admin/src/modules/product_detail/api_services.dart';
+// import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+// import 'package:tapify_admin/src/utils/extensions.dart';
 // import 'package:vibration/vibration.dart';
 //
 // import '../../../custom_widgets/customPopupDialogue.dart';

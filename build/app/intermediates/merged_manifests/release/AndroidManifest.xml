@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tapify_admin"
+    package="com.tapday.admin"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -26,16 +26,16 @@
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
 
     <permission
-        android:name="com.example.tapify_admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.tapday.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.tapify_admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.tapday.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:name="android.app.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:icon="@mipmap/ic_launcher"
-        android:label="tapify_admin"
+        android:label="Tapday"
         android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.NoActionBar" >
         <activity
@@ -123,7 +123,7 @@
 
         <provider
             android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
-            android:authorities="com.example.tapify_admin.flutterfirebasemessaginginitprovider"
+            android:authorities="com.tapday.admin.flutterfirebasemessaginginitprovider"
             android:exported="false"
             android:initOrder="99" />
 
@@ -153,7 +153,7 @@
         -->
         <provider
             android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
-            android:authorities="com.example.tapify_admin.flutter.share_provider"
+            android:authorities="com.tapday.admin.flutter.share_provider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -202,10 +202,15 @@
 
         <provider
             android:name="com.google.firebase.provider.FirebaseInitProvider"
-            android:authorities="com.example.tapify_admin.firebaseinitprovider"
+            android:authorities="com.tapday.admin.firebaseinitprovider"
             android:directBootAware="true"
             android:exported="false"
             android:initOrder="100" />
+
+        <activity
+            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver
             android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
@@ -222,11 +227,6 @@
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <activity
-            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -247,7 +247,12 @@
 
         <receiver
             android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-            android:exported="false" />
+            android:exported="false" /> <!-- The activities will be merged into the manifest of the hosting app. -->
+        <activity
+            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+            android:exported="false"
+            android:stateNotNeeded="true"
+            android:theme="@style/Theme.PlayCore.Transparent" />
     </application>
 
 </manifest>

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,14 +13,15 @@ import '../logic.dart';
 
 class ProductPhotoGallery extends StatelessWidget {
   final dynamic product;
+  final CarouselController  carouselController;
+  Rx<int> currentImageIndex;
+  ProductPhotoGallery({Key? key, required this.product, required this.carouselController, required this.currentImageIndex}) : super(key: key);
 
-  ProductPhotoGallery({Key? key, required this.product}) : super(key: key);
-
-  final productDetailLogic = ProductDetailLogic.to;
+  // final productDetailLogic = ProductDetailLogic.to;
   @override
   Widget build(BuildContext context) {
     final PageController pageController =
-        PageController(initialPage: productDetailLogic.currentImageIndex.value);
+    PageController(initialPage: currentImageIndex.value);
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -50,15 +52,16 @@ class ProductPhotoGallery extends StatelessWidget {
                   value: event == null
                       ? 0
                       : event.cumulativeBytesLoaded /
-                          event.expectedTotalBytes!.toInt(),
+                      event.expectedTotalBytes!.toInt(),
                 ),
               ),
             ),
             backgroundDecoration: BoxDecoration(color: Colors.grey.shade100),
             pageController: pageController,
             onPageChanged: (int val) {
-              productDetailLogic.currentImageIndex.value = val;
-              productDetailLogic.carouselController.jumpToPage(val);
+              currentImageIndex.value = val;
+              carouselController.jumpToPage(val);
+              // productDetailLogic.carouselController.jumpToPage(val);
             },
           ),
           Positioned(
@@ -75,46 +78,47 @@ class ProductPhotoGallery extends StatelessWidget {
           product?.images.length == 1 ? 0.heightBox : 10.heightBox,
           product?.images.length != 1
               ? SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                        product?.images.length ?? 0,
-                        (index) => Obx(() {
-                              return Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 250),
-                                      height: 7.h,
-                                      width: productDetailLogic
-                                                  .currentImageIndex.value ==
-                                              index
-                                          ? 25.h
-                                          : 7.h,
-                                      decoration: productDetailLogic
-                                                  .currentImageIndex.value ==
-                                              index
-                                          ? BoxDecoration(
-                                              color: AppConfig
-                                                  .to.primaryColor.value,
-                                              borderRadius:
-                                                  BorderRadius.circular(50.r))
-                                          : BoxDecoration(
-                                              color: AppColors.appBordersColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(50.r)),
-                                    ),
-                                  ),
-                                  4.widthBox
-                                ],
-                              );
-                            })),
-                  ),
-                )
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                  product?.images.length ?? 0,
+                      (index) =>
+                      Obx(() {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10),
+                              child: AnimatedContainer(
+                                duration:
+                                const Duration(milliseconds: 250),
+                                height: 7.h,
+                                width: currentImageIndex.value ==
+                                    index
+                                    ? 25.h
+                                    : 7.h,
+                                decoration: currentImageIndex.value ==
+                                    index
+                                    ? BoxDecoration(
+                                    color: AppConfig
+                                        .to.primaryColor.value,
+                                    borderRadius:
+                                    BorderRadius.circular(50.r))
+                                    : BoxDecoration(
+                                    color: AppColors.appBordersColor,
+                                    borderRadius:
+                                    BorderRadius.circular(50.r)),
+                              ),
+                            ),
+                            4.widthBox
+                          ],
+                        )
+                        ;
+                      })
+              ),
+            ),
+          )
               : const SizedBox.shrink(),
         ],
       ),

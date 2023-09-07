@@ -4,6 +4,7 @@ import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../api_services/shopify_flutter/models/models.dart';
+import '../../../utils/constants/colors.dart';
 import '../logic.dart';
 
 class billingAddressScreen extends StatefulWidget {
@@ -25,19 +26,11 @@ class _shippingAddressScreenState extends State<billingAddressScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Billing address",
-            style: context.text.labelMedium?.copyWith(fontSize: 14.5.sp),
-          ),
+          Text("Billing address",
+            style: context.text.labelMedium?.copyWith(fontSize: 14.5.sp),),
           8.heightBox,
-          widget.orderDetailsBilling!.shippingAddress != null
-              ? Text(
-                  "${widget.orderDetailsBilling?.shippingAddress.address1}",
-                  style: context.text.bodyMedium?.copyWith(
-                    height: 1.2,
-                  ),
-                )
-              : const SizedBox()
+          widget.orderDetailsBilling!.shippingAddress != null? Text("${widget.orderDetailsBilling?.shippingAddress.address1}",
+            style: context.text.bodyMedium?.copyWith(height: 1.2,),):const SizedBox()
         ],
       ),
     );

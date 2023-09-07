@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-29:/values-w820dp-v13/values-w820dp-v13.xml",
+            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-30:/values-w820dp-v13/values-w820dp-v13.xml",
             "map": [
                 {
                     "source": "/Users/fillinxsolution/Documents/tapify_admin/build/flutter_barcode_scanner/intermediates/packaged_res/release/values-w820dp-v13/values-w820dp-v13.xml",

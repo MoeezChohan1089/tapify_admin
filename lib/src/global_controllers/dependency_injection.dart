@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/global_controllers/reviews/reviews_controller.dart';
+import '../admin_modules/auth/logic.dart';
 import '../custom_widgets/custom_product_bottom_sheet.dart';
 import '../modules/auth/logic.dart';
 import '../modules/cart/logic.dart';
@@ -26,6 +27,11 @@ class DependencyInjection {
 
     Get.put<NetworkConnection>(
       NetworkConnection(),
+      permanent: true,
+    );
+
+    Get.put<AdminAuthLogic>(
+      AdminAuthLogic(),
       permanent: true,
     );
 

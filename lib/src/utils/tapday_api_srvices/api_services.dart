@@ -21,6 +21,8 @@ class TapDay {
   // static const String adminEmail = 'fillinxsolutions@tapify.com';
   // static const String adminPassword = 'Y0aBQ0op9X23';
 
+  static const vendorsFCMTopic = 'tapday-vendors';
+
   static const storeFrontAccessToken = 'd0d94fa9247bc280d6054076506d28a7';
   static const shopNameUrl = 'fillinxsolutions.myshopify.com';
 

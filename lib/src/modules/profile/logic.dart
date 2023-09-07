@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:shopify_flutter/shopify_flutter.dart';
 import 'package:tapify_admin/src/modules/auth/view.dart';
 import 'package:tapify_admin/src/modules/bottom_nav_bar/logic.dart';
+import 'package:tapify_admin/src/modules/home/logic.dart';
 
 import '../../custom_widgets/custom_snackbar.dart';
 import '../../global_controllers/database_controller.dart';
 import '../../utils/global_instances.dart';
+import '../bottom_nav_bar/view.dart';
 import 'api_service/profile_apis.dart';
 import 'state.dart';
 
@@ -18,6 +22,7 @@ class ProfileLogic extends GetxController {
   RxList userInfo = [].obs;
   RxBool isProcessing = false.obs;
 
+
   // ShopifyUser userGet = ShopifyUser();
 
   signOutUser({required BuildContext context}) async {
@@ -25,7 +30,7 @@ class ProfileLogic extends GetxController {
 
     isProcessing.value = true;
 
-    if (await signOutApiService()) {
+    if (await  signOutApiService()){
       LocalDatabase.to.box.remove("customerAccessToken");
       // customLoader.hideLoader();
       isProcessing.value = false;
@@ -58,11 +63,11 @@ class ProfileLogic extends GetxController {
   deleteUser({required BuildContext context, required String id}) async {
     customLoader.showLoader(context);
     print("value id: $id");
-    if (await deleteAccountApiService(id: id)) {
+    if (await  deleteAccountApiService(id: id)){
       LocalDatabase.to.box.remove("customerAccessToken");
       customLoader.hideLoader();
-      Get.offAll(
-        () => AuthPage(),
+      Get.offAll(() => AuthPage(),
+
       );
       showToastMessage(message: "Account delete");
       // Get.showSnackbar(
@@ -88,7 +93,8 @@ class ProfileLogic extends GetxController {
   }
 
   void getUserInfo() {
-    final List info = LocalDatabase.to.box.read('userInfo') ?? [];
+    final List info =
+        LocalDatabase.to.box.read('userInfo') ?? [];
     userInfo.value.assignAll(info);
   }
 }

@@ -31,6 +31,7 @@ class BottomNavBarPage extends StatelessWidget {
       child: Obx(() {
         return logic.isFancyDrawer.isTrue
             ? AdvancedDrawer(
+          key: logic.navScaffoldKey,
           backdrop: Container(
             width: double.infinity,
             height: double.infinity,
@@ -113,7 +114,7 @@ class BottomNavBarPage extends StatelessWidget {
             : Scaffold(
           drawer: SideDrawerSimple(
             scaffoldKey: logic.navScaffoldKey,
-          ),
+           ),
           key: logic.navScaffoldKey,
           body: logic.bottomPages(context),
           bottomNavigationBar: Container(

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
 import '../../main.dart';
 
@@ -69,12 +70,21 @@ void requestPermission() async {
   }
 }
 
-void listenFCM() async {
-  FirebaseMessaging.instance.subscribeToTopic("tapify-demo1");
+subscriberAdminFCM() async {
+  FirebaseMessaging.instance.subscribeToTopic(TapDay.vendorsFCMTopic);  //---- shop name
   await FirebaseMessaging.instance.getToken().then((value) {
-    log("Token saved :: ${value}");
+    log("Token saved :: $value");
   });
+}
 
+subscribeShopTopic({required String shopName}) async {
+  final splitShopName = shopName.toString().split(".myshopify.com")[0];
+  log("====> Shop name to subscribe is :: $splitShopName <=====");
+  FirebaseMessaging.instance.subscribeToTopic(splitShopName);  //---- shop name
+}
+
+
+void listenFCM() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;

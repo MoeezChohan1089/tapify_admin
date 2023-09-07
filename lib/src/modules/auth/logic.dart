@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/utils/global_instances.dart';
 
 import '../../custom_widgets/custom_snackbar.dart';
 import '../bottom_nav_bar/view.dart';
+import '../home/view.dart';
+import '../home/view_home.dart';
 import 'api_services/auth_api_service.dart';
 import 'state.dart';
 // import 'package:shopify_flutter/shopify_flutter.dart';
@@ -26,11 +29,15 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
 
   // ShopifyUser userGet = ShopifyUser();
 
+
+
   ///------ On Logging Success
   Function? onSuccessNavigator;
-  onAuthSuccessUpdate(dynamic onSuccessNavigate) {
+  onAuthSuccessUpdate(dynamic onSuccessNavigate){
     onSuccessNavigator = onSuccessNavigate;
   }
+
+
 
   ///------ Sign In Form Controllers ------
   TextEditingController emailTextController = TextEditingController();
@@ -52,12 +59,12 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
       if (onSuccessNavigator != null) {
         onSuccessNavigator!();
       } else {
-        Get.off(() => BottomNavBarPage());
+        Get.offAll(() => BottomNavBarPage());
       }
+
     } else {
       isProcessing.value = false;
-      showToastMessage(
-          message: "Error in signing in, wrong email password entered");
+      showToastMessage(message: "Error in signing in, wrong email password entered");
       // Get.showSnackbar(
       //   const GetSnackBar(
       //     isDismissible: true,
@@ -69,6 +76,11 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
       // customLoader.hideLoader();
     }
   }
+
+
+
+
+
 
   ///------ Sign Up Form Controllers -------
   TextEditingController firstNameController = TextEditingController();
@@ -101,7 +113,7 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
       if (onSuccessNavigator != null) {
         onSuccessNavigator!();
       } else {
-        Get.off(() => BottomNavBarPage());
+        Get.offAll(() => BottomNavBarPage());
       }
     } else {
       isProcessing.value = false;
@@ -119,13 +131,17 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
     }
   }
 
+
+
   // Forgot Password-------
   TextEditingController emailForgotController = TextEditingController();
   GlobalKey<FormState> forgetPassFormKey = GlobalKey<FormState>();
 
+
   forgotUser({required BuildContext context}) async {
     // customLoader.showLoader(context);
-    if (await forgotPasswordApiService(email: emailForgotController.text)) {
+    if (await forgotPasswordApiService(
+        email: emailForgotController.text)) {
       isProcessing.value = false;
       showToastMessage(message: "Email sent for reset password.");
       emailForgotController.clear();
@@ -135,7 +151,11 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
     }
   }
 
-  clearTextControllers() {
+
+
+
+  clearTextControllers(){
+
     emailTextController.clear();
     passwordTextController.clear();
 
@@ -145,8 +165,12 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
     passController.clear();
     confirmController.clear();
 
+
     emailForgotController.clear();
+
+
   }
+
 
   bool containsSpecialCharacters(String value) {
     final specialCharacters = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
@@ -161,4 +185,7 @@ class AuthLogic extends GetxController with GetSingleTickerProviderStateMixin {
   bool containsOnlySpaces(String value) {
     return value.trim().isEmpty;
   }
+
+
+
 }

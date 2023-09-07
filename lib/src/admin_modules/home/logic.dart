@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../global_controllers/notification_service.dart';
+
 class AdminHomeLogic extends GetxController {
   static AdminHomeLogic get to => Get.find();
 
@@ -8,12 +10,18 @@ class AdminHomeLogic extends GetxController {
   RxInt browsingShopId = 0.obs;
   RxString browsingShop = "".obs;
   RxString browsingShopDomain = "".obs;
-  RxString browsingStorefrontToken = "d0d94fa9247bc280d6054076506d28a7".obs;
+  RxString browsingStorefrontToken = "".obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    requestPermission();
+    loadFCM();
+    listenFCM();
+    subscriberAdminFCM();
+
     // requestPermission();
     // loadFCM();
     // listenFCM();

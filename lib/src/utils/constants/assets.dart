@@ -79,6 +79,7 @@ class _IconAssets {
   final String supportIcon = "assets/icons/Group 22145.svg";
   final String arrowIcon = "assets/icons/arrow.svg";
   final String layerIconLogo = "assets/icons/Layer1.svg";
+  final String exitIcon = "assets/icons/exit.svg";
 
   //--------- Dynamic Icons Selection
   //---- Cart

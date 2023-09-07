@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/custom_widgets/product_viewer_web.dart';
 import 'package:tapify_admin/src/modules/home/models/product_info_model.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:video_player/video_player.dart';
 
 // import 'package:shopify_flutter/models/src/product/product.dart';
@@ -14,10 +13,19 @@ import 'package:video_player/video_player.dart';
 
 import '../../api_services/shopify_flutter/models/src/product/product.dart';
 import '../../custom_widgets/DateDuration.dart';
+import '../../custom_widgets/custom_snackbar.dart';
+import '../../global_controllers/database_controller.dart';
 import '../../utils/global_instances.dart';
 import '../category/view_category_products.dart';
+import '../product_detail/view.dart';
 import '../product_detail/view_product_detail.dart';
+import 'components/circle_product_list.dart';
+import 'components/custom_divider.dart';
+import 'components/marquee_text.dart';
+import 'components/search_bar.dart';
+import 'models/model_home_ui_settings.dart';
 import 'state.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   static HomeLogic get to => Get.find();
@@ -41,72 +49,181 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   var dateTime;
   var cdate;
   DateTime startSelectedDate = DateTime.now();
-  final GlobalKey<CarouselSliderState> carouselKey =
-      GlobalKey<CarouselSliderState>();
+  // List selectedVideos = [];
   late VideoPlayerController controller;
   RxBool videoEnded = false.obs;
   RxBool isFirstTime = true.obs;
   RxBool isClicked = false.obs;
-  RxDouble heightCheck = 0.0.obs;
-  RxDouble heightCheck1 = 0.0.obs;
+  //
+  // List<VideoPlayerController> controllers = [];
+  // RxBool videoEnded = false.obs;
+  // RxBool isFirstTime = true.obs;
+  // RxBool isClicked = false.obs;
+
+  // RxDouble heightCheck = 0.0.obs;
+  // RxDouble heightCheck1 = 0.0.obs;
+  bool isImageLoaded = false;
+
+  RxBool enabled = true.obs;
+  RxBool enabledShow = false.obs;
+
+
 
   final ScrollController circleProductScroll = ScrollController();
 
   ///-------- Discount Widget Codes
-  RxString widgetShopifyCode = "".obs;
-  RxString widgetCustomerCode = "".obs;
+  // RxString widgetShopifyCode = "".obs;
+  // RxString widgetCustomerCode = "".obs;
+  RxList codesDiscountWidget = RxList([]);
 
-  void resetCarosal() {
+  void resetCarosal(){
     currentImageIndex.value = 0;
   }
 
-  initializeValueOfVideo(settings){
-    print("value of state of loop: ${settings['loop']}");
-    controller = VideoPlayerController.networkUrl(Uri.parse(settings['video'] ?? ""), )
-      ..addListener(() {
-        // This condition checks if the video has reached its end
-        if (controller.value.position == controller.value.duration && settings['loop'] == false) {
-          if (!videoEnded.value) { // This check ensures setState is only called once at the video's end.
-            videoEnded.value = true;
-            controller.pause();
-          }
-        } else if (controller.value.isPlaying) {
-          if (videoEnded.value) { // If video started playing again, update videoEnded
-            videoEnded.value = false;
-          }
-        }else if (isFirstTime.value && controller.value.isPlaying) {
-          isFirstTime.value = false;
-        }
-      })
-      ..initialize().then((_) {
+ // void initializeValueOfVideo(settings){
+ //    // print("value of state of loop: ${settings['loop']}");
+ //
+ //   String videoUrl = settings['video'] ?? "";
+ //   print("video URL=====$videoUrl");
+ //   controller = VideoPlayerController.networkUrl(Uri.parse(settings['video'] ?? ""), )
+ //    // selectedVideos.add(videoUrl);
+ //      ..addListener(() {
+ //        // This condition checks if the video has reached its end
+ //        if (controller.value.position == controller.value.duration && settings['loop'] == false) {
+ //          if (!videoEnded.value) { // This check ensures setState is only called once at the video's end.
+ //            videoEnded.value = true;
+ //            controller.pause();
+ //          }
+ //        } else if (controller.value.isPlaying) {
+ //          if (videoEnded.value) { // If video started playing again, update videoEnded
+ //            videoEnded.value = false;
+ //          }
+ //        }else if (isFirstTime.value && controller.value.isPlaying) {
+ //          isFirstTime.value = false;
+ //        }
+ //      })
+ //      ..initialize().then((_) {
+ //        update();
+ //        if (controller.value.isInitialized) {
+ //          // selectedVideos.add(videoUrl);
+ //          // heightCheck.value = controller.value.size.aspectRatio;
+ //          // heightCheck1.value = controller.value.size.height;
+ //          // print("Video height: ${heightCheck.value}");
+ //        }
+ //        // This will refresh the UI once the video is initialized
+ //        // if (settings['autoPlay'] == true) {
+ //        //   controller.play();
+ //        //   update();
+ //        // }
+ //        controller.setVolume(0);
+ //        controller.play();
+ //        update();
+ //        controller.videoPlayerOptions!.webOptions!.controls;
+ //        // Auto play the video if required
+ //        update();
+ //      });
+ //    if (settings['loop'] == true) {
+ //      controller.setLooping(true);
+ //      update();
+ //    } else {
+ //      controller.setLooping(false);
+ //      update();
+ //    }
+ //  }
 
-        if (controller.value.isInitialized) {
-          heightCheck.value = controller.value.size.aspectRatio;
-          heightCheck1.value = controller.value.size.height;
-          print("Video height: ${heightCheck.value}");
-        }
-        // This will refresh the UI once the video is initialized
-        if (settings['autoPlay'] == true) {
-          controller.play();
-        }
-        controller.videoPlayerOptions!.webOptions!.controls;
-        // Auto play the video if required
+  // initializedVideo(settings){
+  //   VideoPlayerController controller = VideoPlayerController.networkUrl(Uri.parse(settings['video'] ?? ""), );
+  //   // selectedVideos.add(videoUrl);
+  //   controller..addListener(() {
+  //     // This condition checks if the video has reached its end
+  //     if (controller.value.position == controller.value.duration && settings['loop'] == false) {
+  //       if (!videoEnded.value) { // This check ensures setState is only called once at the video's end.
+  //         videoEnded.value = true;
+  //         controller.pause();
+  //       }
+  //     } else if (controller.value.isPlaying) {
+  //       if (videoEnded.value) { // If video started playing again, update videoEnded
+  //         videoEnded.value = false;
+  //       }
+  //     }else if (isFirstTime.value && controller.value.isPlaying) {
+  //       isFirstTime.value = false;
+  //     }
+  //   })
+  //     ..initialize().then((_) {
+  //       update();
+  //       if (controller.value.isInitialized) {
+  //         // selectedVideos.add(videoUrl);
+  //         // heightCheck.value = controller.value.size.aspectRatio;
+  //         // heightCheck1.value = controller.value.size.height;
+  //         // print("Video height: ${heightCheck.value}");
+  //       }
+  //       // This will refresh the UI once the video is initialized
+  //       // if (settings['autoPlay'] == true) {
+  //       //   controller.play();
+  //       //   update();
+  //       // }
+  //       controller.setVolume(0);
+  //       controller.play();
+  //       update();
+  //       controller.videoPlayerOptions!.webOptions!.controls;
+  //       // Auto play the video if required
+  //       update();
+  //     });
+  //
+  //   // controllers.add(controller);
+  //   if (settings['loop'] == true) {
+  //     controller.setLooping(true);
+  //     update();
+  //   } else {
+  //     controller.setLooping(false);
+  //     update();
+  //   }
+  // }
 
+
+  addUpdateCodesList(dynamic settings) { //---- JSON settings of discount widget
+    final customerCode = settings["customerCode"] ?? "";
+    final shopifyCode = settings["shopifyCode"] ?? "";
+
+    // Check if the pair already exists in the list
+    bool pairExists = codesDiscountWidget.any((codePair) =>
+    codePair["customer_code"] == customerCode &&
+        codePair["shopify_code"] == shopifyCode
+    );
+
+    // If the pair doesn't exist, add it to the list
+    if (!pairExists) {
+      codesDiscountWidget.add({
+        "customer_code": customerCode,
+        "shopify_code": shopifyCode,
       });
+    }
+  }
 
+  //---- save the tapped discount card index
+  tappedOnDiscountWidget(dynamic settings) {
+    final customerCode = settings["customerCode"] ?? "";
+    final shopifyCode = settings["shopifyCode"] ?? "";
 
-    if (settings['loop'] == true) {
-      controller.setLooping(true);
+    // Find the index in the list where the pair matches
+    final index = codesDiscountWidget.indexWhere((codePair) =>
+    codePair["customer_code"] == customerCode &&
+        codePair["shopify_code"] == shopifyCode);
+
+    if (index != -1) {
+      // Save the tapped discount card index to LocalDatabase
+      LocalDatabase.to.box.write("tappedDiscountIndex", index);
+      LocalDatabase.to.box.write("tappedOnDiscount", true);
+      showToastMessage(message: "Discount added, start shopping now");
     } else {
-      controller.setLooping(false);
+      showToastMessage(message: "Discount not found"); // Handle case where the pair is not in the list
     }
   }
 
   void togglePlayPause() {
     if (controller.value.isPlaying) {
       controller.pause();
-      isClicked.value =
-          false; // Considering it's an RxBool from GetX or similar
+      isClicked.value = false;  // Considering it's an RxBool from GetX or similar
     } else {
       controller.play();
       isClicked.value = true;
@@ -114,6 +231,7 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   }
 
   calculationFun(dynamic settings) {
+
     DateTime startDate = DateTime.parse(settings['startDate']);
     DateTime endDate = DateTime.parse(settings['endDate']);
 
@@ -126,23 +244,18 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     if (convertstartDate.isBefore(now)) {
       convertstartDate = tz.TZDateTime.from(DateTime.now(), pacificTimeZone);
     }
-    DateTime splitDate = DateTime(
-        convertstartDate.year,
-        convertstartDate.month,
-        convertstartDate.day,
-        convertstartDate.hour,
-        convertstartDate.minute,
-        convertstartDate.second);
+    DateTime splitDate = DateTime(convertstartDate.year, convertstartDate.month, convertstartDate.day, convertstartDate.hour, convertstartDate.minute, convertstartDate.second);
+
 
     Duration difference1 = endDate.difference(splitDate);
+
 
     int days = difference1.inDays;
     int hours = difference1.inHours.remainder(24);
     int minutes = difference1.inMinutes.remainder(60);
     int seconds = difference1.inSeconds.remainder(60);
 
-    countdownDuration1.value =
-        Duration(days: days, hours: hours, minutes: minutes, seconds: seconds);
+    countdownDuration1.value = Duration(days: days, hours: hours, minutes: minutes, seconds: seconds);
 
     reset1();
     startTimer1();
@@ -185,39 +298,52 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
     // storeSeconds(duration1);
   }
 
-  resetTheScrolls() {
+
+  resetTheScrolls(){
     circleProductScroll.jumpTo(0);
   }
+
+
+
 
   ///---------- Product On Tap Navigator
   productDetailNavigator(
       {required BuildContext context,
-      required ProductInfo info,
-      required String dataType}) {
+        required ProductInfo info,
+        required String dataType}) {
     if (dataType == "product") {
       //------ If dataType is Product then Product Detail
       print("value of ID: ${info.id}");
-      Get.to(
-        () => NewProductDetails(
-          productId: info.id.toString(),
-        ),
-      );
+      Get.to(() => NewProductDetails(
+        productId: info.id.toString(),
+      ), opaque: false, transition: Transition.native);
+
     } else if (dataType == "collection") {
       //---------- if dataType is Collection then Products by Collection
-      Get.to(() =>
-          CategoryProducts(collectionID: info.id, categoryName: info.title));
+      Get.to(() => CategoryProducts(
+          collectionID: info.id,
+          categoryName: info.title), opaque: false, transition: Transition.native);
+
+
+
+
     } else {
       //-------- if Web URL then open web
-      if (info.webUrl != "") {
+      if(info.webUrl != "") {
         Get.to(() => WebViewProduct(
-              productUrl: info.webUrl,
-            ));
+          productUrl: info.webUrl,
+        ), opaque: false, transition: Transition.native);
       }
+
+
+
     }
   }
 
   ///------- product carousel
   RxInt currentCarouselIndex = 1.obs;
+
+
 
   ///--------- Products by Tags Logic
   RxInt selectedCollectionIndex = 0.obs;
@@ -225,38 +351,48 @@ class HomeLogic extends GetxController with GetSingleTickerProviderStateMixin {
   dynamic catProdSettings;
   final Rx<List<Product>> productsByTagsList = Rx<List<Product>>([]);
 
-  getProducts({bool isChangingCategory = true}) async {
+  getProducts({bool isChangingCategory = true, bool isFromHome = false}) async {
     log("====> Build Method of - Get Products Called <====");
 
-    // if(isChangingCategory || productsByTagsList.value.isEmpty) {
-    isLoading.value = true;
-    productsByTagsList.value = [];
-    // }
+    if(isFromHome && productsByTagsList.value.isNotEmpty){
+      //--- do nothing
+      log("==> callign method doign nothing <====");
+    } else {
+      // if(isChangingCategory || productsByTagsList.value.isEmpty) {
+      isLoading.value = true;
+      productsByTagsList.value = [];
+      // }
 
-    // isLoading.value = productsList.value.isNotEmpty ? false : true;
-    // if(productsList.value.isNotEmpty) {
-    //
-    // }
-    // productsList.value = [];
-    String collectionId =
-        "gid://shopify/Collection/${catProdSettings["metadata"]["data"][selectedCollectionIndex.value]['id']}";
-    int limit = catProdSettings["viewType"] == "small"
-        ? 8
-        : (catProdSettings["viewType"] == "medium" ? 6 : 4);
-    try {
-      final products = await shopifyStore
-          .getXProductsAfterCursorWithinCollection(collectionId, limit);
-      for (var element in products ?? []) {
-        productsByTagsList.value.add(element);
+      // isLoading.value = productsList.value.isNotEmpty ? false : true;
+      // if(productsList.value.isNotEmpty) {
+      //
+      // }
+      // productsList.value = [];
+      String collectionId =
+          "gid://shopify/Collection/${catProdSettings["metadata"]["data"][selectedCollectionIndex.value]['id']}";
+      int limit = catProdSettings["viewType"] == "small"
+          ? 8
+          : (catProdSettings["viewType"] == "medium" ? 6 : 4);
+      try {
+        final products = await shopifyStore
+            .getXProductsAfterCursorWithinCollection(collectionId, limit);
+        for (var element in products ?? []) {
+          productsByTagsList.value.add(element);
+        }
+        isLoading.value = false;
+      } catch (e) {
+        isLoading.value = false;
+        debugPrint(" Error in fetching collection products $e");
       }
-      isLoading.value = false;
-    } catch (e) {
-      isLoading.value = false;
-      debugPrint(" Error in fetching collection products $e");
     }
+
+
+
   }
 
-  void initializeAndPlayVideo(settings) {}
+  void initializeAndPlayVideo(settings) {
+
+  }
 
 // RxBool isLoading = true.obs;
 // RxBool innerLoader = false.obs;

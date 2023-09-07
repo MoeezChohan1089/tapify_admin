@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:tapify/src/custom_widgets/customTextField.dart';
-// import 'package:tapify/src/utils/extensions.dart';
+// import 'package:tapify_admin/src/custom_widgets/customTextField.dart';
+// import 'package:tapify_admin/src/utils/extensions.dart';
 // import '../../../custom_widgets/custom_text_field.dart';
 // import '../../../utils/constants/colors.dart';
 // import '../../../utils/constants/margins_spacnings.dart';

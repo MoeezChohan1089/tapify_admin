@@ -16,22 +16,15 @@ class orderNoteScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: pageMarginVertical),
       child: Container(
         color: Colors.grey.shade100,
-        padding: EdgeInsets.symmetric(
-            horizontal: pageMarginHorizontal, vertical: pageMarginVertical),
+        padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal,vertical: pageMarginVertical),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Order Note:",
-              style: context.text.labelSmall
-                  ?.copyWith(color: Colors.black, fontSize: 15.sp),
-            ),
+            Text("Order Note:",
+              style: context.text.labelSmall?.copyWith(color: Colors.black, fontSize: 15.sp),),
             8.heightBox,
-            Text(
-              "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
-              style: context.text.bodyMedium
-                  ?.copyWith(height: 1.2, color: AppColors.appHintColor),
-            )
+            Text("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
+              style: context.text.bodyMedium?.copyWith(height: 1.2, color: AppColors.appHintColor),)
           ],
         ),
       ),

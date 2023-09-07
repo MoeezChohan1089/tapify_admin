@@ -1,7 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
+
+import '../../../utils/constants/colors.dart';
 
 class EnjoyFreeShipping extends StatelessWidget {
   const EnjoyFreeShipping({Key? key}) : super(key: key);
@@ -9,11 +12,9 @@ class EnjoyFreeShipping extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: pageMarginHorizontal, vertical: pageMarginVertical * 2),
+      padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal, vertical: pageMarginVertical * 2),
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: pageMarginHorizontal, vertical: pageMarginVertical),
+        padding: EdgeInsets.symmetric(horizontal: pageMarginHorizontal,vertical: pageMarginVertical),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.r),
           color: Colors.grey.shade100,
@@ -21,15 +22,11 @@ class EnjoyFreeShipping extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Enjoy Free Shipping",
-              style: context.text.labelSmall?.copyWith(fontSize: 15.sp),
-            ),
+            Text("Enjoy Free Shipping",
+            style: context.text.labelSmall?.copyWith(fontSize: 15.sp),),
             8.heightBox,
-            Text(
-              "Spend \$150 or more on full-price and sale items to get free shipping",
-              style: context.text.bodyMedium?.copyWith(height: 1.2),
-            )
+            Text("Spend \$150 or more on full-price and sale items to get free shipping",
+              style: context.text.bodyMedium?.copyWith(height: 1.2),)
           ],
         ),
       ),

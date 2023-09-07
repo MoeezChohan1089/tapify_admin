@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:tapify_admin/src/admin_modules/home/logic.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
+import '../../../global_controllers/database_controller.dart';
+import '../../../global_controllers/notification_service.dart';
 import '../../../modules/splash/view.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/margins_spacnings.dart';
@@ -75,10 +77,22 @@ class _CustomHeadingImageState extends State<CustomHeadingImage> {
                 logic.browsingShop.value = logic.customerShopsList[0]["name"];
                 logic.browsingShopDomain.value =
                     logic.customerShopsList[0]["myshopify_domain"];
+                subscribeShopTopic(shopName: logic.browsingShopDomain.value);
+                logic.browsingStorefrontToken.value = logic.customerShopsList[0]["store_front_token"];
 
-                final imageUrl =
-                    await fetchShopSplashImage(logic.browsingShop.value);
-                Get.to(() => SplashPage(imageUrl: imageUrl));
+                ///-------- REMOVE THE PREVIOUS ------///
+                //--- Remove Wishlist
+                LocalDatabase.to.box.remove("wishlist");
+                //--- Remove Recently Viewed
+                LocalDatabase.to.box.remove("recentSearch");
+                LocalDatabase.to.box.remove("recentlyViewed");
+                //--- Remove Suggested Products
+                LocalDatabase.to.box.remove("adminSignedInToken");
+                ///--------------------------------------
+
+                const imageUrl = "https://c4.wallpaperflare.com/wallpaper/536/854/415/alexandra-daddario-4k-pc-desktop-hd-wallpaper-preview.jpg";
+                    // await fetchShopSplashImage(logic.browsingShop.value);
+                Get.to(() => SplashPage(imageUrl: imageUrl), transition: Transition.native, opaque: false);
                 logic.isProcessing.value = false;
               },
               style: ElevatedButton.styleFrom(

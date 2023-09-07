@@ -29,6 +29,14 @@
             {
               "client_id": "746698102872-jfrrdjnqh48kb0on8nj1rmoqk1cettdt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "746698102872-uj3huh34n8ovn6nekbao43b9cf8704p3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tapday.admin",
+                "app_store_id": "6464056594"
+              }
             }
           ]
         }

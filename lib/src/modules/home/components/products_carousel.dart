@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -136,9 +137,9 @@ class _ProductsCarouselState extends State<ProductsCarousel> {
     return Obx(() {
       return appConfig.innerLoader.value == true
           ? Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 8),
-        child: ShimerCarosalPage(),
-      )
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: ShimerCarosalPage(),
+          )
           : Padding(
         padding: EdgeInsets.symmetric(vertical: pageMarginVertical),
         child: Column(
@@ -248,32 +249,55 @@ class _ProductsCarouselState extends State<ProductsCarousel> {
                               child: Container(
                                 // color: Colors.green,
                                 margin: EdgeInsets.symmetric(
-                                  horizontal:
-                                  widget.settings["contentMargin"] ==
-                                      true
-                                      ? 12.0
-                                      : 3.0,),
+                                    horizontal:
+                                    widget.settings["contentMargin"] ==
+                                        true
+                                        ? 12.0
+                                        : 3.0,),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5.r),
-                                  child: CachedNetworkImage(
-                                      imageUrl: indexData["path"] ??
-                                          productInfo!.image,
-                                      fit:
-                                      widget.settings['imageFill'] == true
-                                          ? BoxFit.cover
-                                          : BoxFit.contain,
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                          productShimmer(),
-                                      errorWidget: (context, url, error) =>
-                                          Center(
-                                            child: SvgPicture.asset(
-                                              Assets.icons.noImageIcon,
-                                              height: 24.h,
-                                            ),
-                                          )),
+                                  child:  ExtendedImage.network(
+                                    indexData["path"] ??
+                                        productInfo!.image,
+                                    fit: widget.settings['imageFill'] == true
+                                        ? BoxFit.cover
+                                        : BoxFit.contain,
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    cache: true,
+                                    loadStateChanged: (ExtendedImageState state) {
+                                      switch (state.extendedImageLoadState) {
+                                        case LoadState.loading:
+                                          return Container(
+                                            height: double.maxFinite,
+                                            width: double.maxFinite,
+                                            color: Colors.white,
+                                          );
+                                      //   Shimmer.fromColors(
+                                      //   baseColor: Colors.grey[300]!,
+                                      //   highlightColor: Colors.grey[100]!,
+                                      //   child: Container(
+                                      //     width: 300,
+                                      //     height: 200,
+                                      //     color: Colors.grey[300],
+                                      //   ),
+                                      // );
+                                        case LoadState.completed:
+                                          return null; //return null, so it continues to display the loaded image
+                                        case LoadState.failed:
+                                          return Container(
+                                              color: Colors.grey.shade200,
+                                              child: Center(
+                                                child: SvgPicture.asset(
+                                                  Assets.icons.noImageIcon,
+                                                  height: 25.h,
+                                                ),
+                                              ));
+                                        default:
+                                          return null;
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
                             ),

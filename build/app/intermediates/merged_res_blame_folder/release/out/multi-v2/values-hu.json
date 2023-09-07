@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-29:/values-hu/values-hu.xml",
+            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-30:/values-hu/values-hu.xml",
             "map": [
                 {
                     "source": "/Users/fillinxsolution/.gradle/caches/transforms-3/dd404180837c724c9a1cabfb8f003f9b/transformed/jetified-play-services-basement-18.1.0/res/values-hu/values.xml",

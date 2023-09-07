@@ -10,10 +10,10 @@
 // import 'package:shopify_flutter/models/src/product/product.dart';
 // import 'package:shopify_flutter/shopify/src/shopify_store.dart';
 // import 'package:sliding_up_panel/sliding_up_panel.dart';
-// import 'package:tapify/src/global_controllers/app_config/config_controller.dart';
-// import 'package:tapify/src/modules/home/components/search_bar.dart';
-// import 'package:tapify/src/utils/constants/assets.dart';
-// import 'package:tapify/src/utils/extensions.dart';
+// import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+// import 'package:tapify_admin/src/modules/home/components/search_bar.dart';
+// import 'package:tapify_admin/src/utils/constants/assets.dart';
+// import 'package:tapify_admin/src/utils/extensions.dart';
 //
 // import '../../global_controllers/database_controller.dart';
 // import '../../order/view.dart';

@@ -21,29 +21,38 @@ class CurrencySelector extends StatelessWidget {
     return Visibility(
       visible: CurrencyController.to.multiCurrencyEnabled.value,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: pageMarginVertical / 2),
-        margin: EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
-        decoration: const BoxDecoration(
+        padding: EdgeInsets.symmetric(
+            vertical: pageMarginVertical / 2
+        ),
+        margin: EdgeInsets.symmetric(
+            horizontal: pageMarginHorizontal
+        ),
+        decoration:  const BoxDecoration(
             border: Border(
-          bottom: BorderSide(
-            color: AppColors.appBordersColor,
-            width: 0.5,
-          ),
-        )),
+              bottom: BorderSide(
+                color: AppColors.appBordersColor,
+                width: 0.5,
+              ),
+            )
+        ),
         child: Row(
           children: [
+
             SizedBox(
               width: 45,
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: SvgPicture.asset(Assets.icons.currencyIcon)),
             ),
+
+
             Expanded(
-              child: Text(
-                "Selected Currency",
+              child: Text("Selected Currency",
                 style: context.text.bodyLarge,
               ),
             ),
+
+
             Expanded(
               child: Obx(() {
                 return DropdownButtonHideUnderline(
@@ -54,29 +63,37 @@ class CurrencySelector extends StatelessWidget {
                     //     style: context.text.bodyLarge
                     // ),
 
-                    style: context.text.labelSmall?.copyWith(fontSize: 15.sp),
+                    style: context.text.labelSmall?.copyWith(
+                        fontSize: 15.sp
+                    ),
 
                     items: CurrencyController.to.exchangeRateOptions
                         .map(
-                          (option) => DropdownMenuItem(
+                          (option) =>
+                          DropdownMenuItem(
                             value: option,
                             alignment: Alignment.center,
                             child: Text(
                               option,
                               textAlign: TextAlign.center,
-                              style: context.text.labelSmall
-                                  ?.copyWith(fontSize: 15.sp),
+                              style: context.text.labelSmall?.copyWith(
+                                  fontSize: 15.sp
+                              ),
                             ),
                           ),
-                        )
-                        .toList(),
+                    ).toList(),
                     value: CurrencyController.to.selectedCurrency.value,
                     onChanged: (value) {
-                      CurrencyController.to.selectedCurrency.value =
-                          value as String;
+
+                      CurrencyController.to.selectedCurrency.value = value as String;
+
+
+
+
 
                       showToastMessage(
-                          message: "Currency has been updated to $value");
+                          message: "Currency has been updated to $value"
+                      );
 
                       // setState(() {
                       //   selectedColor = value as String;
@@ -84,12 +101,15 @@ class CurrencySelector extends StatelessWidget {
                     },
 
                     customButton: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.h
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(CurrencyController.to.selectedCurrency.value),
                           4.widthBox,
+
                           Icon(
                             Icons.keyboard_arrow_down_outlined,
                             color: Colors.black,
@@ -132,6 +152,8 @@ class CurrencySelector extends StatelessWidget {
                 );
               }),
             ),
+
+
           ],
         ),
       ),

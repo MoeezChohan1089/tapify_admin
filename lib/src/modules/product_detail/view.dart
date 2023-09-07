@@ -6,9 +6,9 @@
 // import 'package:flutter_svg/svg.dart';
 // import 'package:get/get.dart';
 // import 'package:sliding_up_panel/sliding_up_panel.dart';
-// import 'package:tapify/src/custom_widgets/custom_product_bottom_sheet.dart';
-// import 'package:tapify/src/utils/constants/margins_spacnings.dart';
-// import 'package:tapify/src/utils/extensions.dart';
+// import 'package:tapify_admin/src/custom_widgets/custom_product_bottom_sheet.dart';
+// import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
+// import 'package:tapify_admin/src/utils/extensions.dart';
 // import 'package:vibration/vibration.dart';
 //
 // import '../../api_services/shopify_flutter/models/models.dart';

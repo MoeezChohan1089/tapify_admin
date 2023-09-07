@@ -86,7 +86,7 @@ class _CollectionsListState extends State<CollectionsList> {
                               selection = index;
                               Get.to(() => CategoryProducts(
                                 collectionID: logic.categoryCollection[index].id,
-                                categoryName: logic.categoryCollection[index].title,));
+                                categoryName: logic.categoryCollection[index].title,), opaque: false, transition: Transition.native);
                             },
                             child: customButton(logic.categoryCollection[index].title),
                           );

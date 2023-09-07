@@ -76,7 +76,7 @@ class _AdminWebViewState extends State<AdminWebView> {
         scrolledUnderElevation: 0,
         centerTitle: true,
         title: SizedBox(
-          height: 30.h,
+          height: 35.h,
           child: SvgPicture.asset(Assets.icons.layerIconLogo),
         ),
         leading: IconButton(

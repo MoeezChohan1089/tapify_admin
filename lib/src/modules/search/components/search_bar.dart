@@ -68,21 +68,22 @@ class _SearchFieldBarState extends State<SearchFieldBar> {
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  10.widthBox,
                   Align(
-                    widthFactor: 2.5,
+                    widthFactor: 1.8,
                     heightFactor: 1,
                     child: SvgPicture.asset(
                       Assets.icons.searchIcon,
                       color: AppColors.appHintColor,
-                      height: 14,
+                      height: 16,
                     ),
                   ),
                   Container(
-                    // margin: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        "|", style: context.text.bodyMedium?.copyWith(
-                          color: AppColors.appHintColor),)),
-                  13.widthBox,
+                    // color: Colors.yellow,
+                      margin:const EdgeInsets.only(top: 2),
+                      child: Text("|", style: context.text.bodyMedium?.copyWith(color: AppColors.appHintColor),)),
+
+                  8.widthBox,
                 ],
               ),
               // onChanged: (word){

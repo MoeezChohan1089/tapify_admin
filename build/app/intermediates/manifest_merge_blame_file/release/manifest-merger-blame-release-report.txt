@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.tapify_admin"
+3    package="com.tapday.admin"
 4    android:versionCode="1"
 5    android:versionName="1.0.0" >
 6
@@ -57,12 +57,12 @@
 27
 28    <permission
 28-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
-29        android:name="com.example.tapify_admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+29        android:name="com.tapday.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 29-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
 30        android:protectionLevel="signature" />
 30-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
 31
-32    <uses-permission android:name="com.example.tapify_admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+32    <uses-permission android:name="com.tapday.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 32-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
 32-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
 33
@@ -73,8 +73,8 @@
 36-->[androidx.core:core:1.10.1] /Users/fillinxsolution/.gradle/caches/transforms-3/30854453b720fe339b2bfc14ef0003d2/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
 37        android:icon="@mipmap/ic_launcher"
 37-->/Users/fillinxsolution/Documents/tapify_admin/android/app/src/main/AndroidManifest.xml:6:9-43
-38        android:label="tapify_admin"
-38-->/Users/fillinxsolution/Documents/tapify_admin/android/app/src/main/AndroidManifest.xml:4:9-37
+38        android:label="Tapday"
+38-->/Users/fillinxsolution/Documents/tapify_admin/android/app/src/main/AndroidManifest.xml:4:9-31
 39        android:largeHeap="true"
 39-->[:flutter_barcode_scanner] /Users/fillinxsolution/Documents/tapify_admin/build/flutter_barcode_scanner/intermediates/merged_manifest/release/AndroidManifest.xml:16:9-33
 40        android:theme="@style/Theme.AppCompat.NoActionBar" >
@@ -230,7 +230,7 @@
 124-->[:firebase_messaging] /Users/fillinxsolution/Documents/tapify_admin/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:43:9-47:38
 125            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
 125-->[:firebase_messaging] /Users/fillinxsolution/Documents/tapify_admin/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:44:13-102
-126            android:authorities="com.example.tapify_admin.flutterfirebasemessaginginitprovider"
+126            android:authorities="com.tapday.admin.flutterfirebasemessaginginitprovider"
 126-->[:firebase_messaging] /Users/fillinxsolution/Documents/tapify_admin/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:45:13-88
 127            android:exported="false"
 127-->[:firebase_messaging] /Users/fillinxsolution/Documents/tapify_admin/build/firebase_messaging/intermediates/merged_manifest/release/AndroidManifest.xml:46:13-37
@@ -286,7 +286,7 @@
 154-->[:share_plus] /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:15:9-23:20
 155            android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
 155-->[:share_plus] /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-77
-156            android:authorities="com.example.tapify_admin.flutter.share_provider"
+156            android:authorities="com.tapday.admin.flutter.share_provider"
 156-->[:share_plus] /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-74
 157            android:exported="false"
 157-->[:share_plus] /Users/fillinxsolution/Documents/tapify_admin/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:18:13-37
@@ -369,7 +369,7 @@
 203-->[com.google.firebase:firebase-common:20.3.2] /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:25:9-30:39
 204            android:name="com.google.firebase.provider.FirebaseInitProvider"
 204-->[com.google.firebase:firebase-common:20.3.2] /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:26:13-77
-205            android:authorities="com.example.tapify_admin.firebaseinitprovider"
+205            android:authorities="com.tapday.admin.firebaseinitprovider"
 205-->[com.google.firebase:firebase-common:20.3.2] /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:27:13-72
 206            android:directBootAware="true"
 206-->[com.google.firebase:firebase-common:20.3.2] /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:28:13-43
@@ -378,43 +378,43 @@
 208            android:initOrder="100" />
 208-->[com.google.firebase:firebase-common:20.3.2] /Users/fillinxsolution/.gradle/caches/transforms-3/baf67be4b84146cc9a6e5db83bcaa9f1/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:30:13-36
 209
-210        <receiver
-210-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:29:9-33:20
-211            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-211-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:30:13-85
-212            android:enabled="true"
-212-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:31:13-35
-213            android:exported="false" >
-213-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:32:13-37
-214        </receiver>
-215
-216        <service
-216-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:35:9-38:40
-217            android:name="com.google.android.gms.measurement.AppMeasurementService"
-217-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:36:13-84
-218            android:enabled="true"
-218-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:37:13-35
-219            android:exported="false" />
-219-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:38:13-37
-220        <service
-220-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:39:9-43:72
-221            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-221-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:40:13-87
-222            android:enabled="true"
-222-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:41:13-35
-223            android:exported="false"
-223-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:42:13-37
-224            android:permission="android.permission.BIND_JOB_SERVICE" />
-224-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:43:13-69
-225
-226        <activity
-226-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
-227            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-227-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+210        <activity
+210-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+211            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+211-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+212            android:exported="false"
+212-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+213            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+213-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+214
+215        <receiver
+215-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:29:9-33:20
+216            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+216-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:30:13-85
+217            android:enabled="true"
+217-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:31:13-35
+218            android:exported="false" >
+218-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:32:13-37
+219        </receiver>
+220
+221        <service
+221-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:35:9-38:40
+222            android:name="com.google.android.gms.measurement.AppMeasurementService"
+222-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:36:13-84
+223            android:enabled="true"
+223-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:37:13-35
+224            android:exported="false" />
+224-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:38:13-37
+225        <service
+225-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:39:9-43:72
+226            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+226-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:40:13-87
+227            android:enabled="true"
+227-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:41:13-35
 228            android:exported="false"
-228-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
-229            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-229-->[com.google.android.gms:play-services-base:18.0.1] /Users/fillinxsolution/.gradle/caches/transforms-3/baf09bedea915862bd81d7fe0139aff1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+228-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:42:13-37
+229            android:permission="android.permission.BIND_JOB_SERVICE" />
+229-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/fillinxsolution/.gradle/caches/transforms-3/3c9452bfe5ae53e35e04e8bd96d84675/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:43:13-69
 230
 231        <meta-data
 231-->[com.google.android.gms:play-services-basement:18.1.0] /Users/fillinxsolution/.gradle/caches/transforms-3/dd404180837c724c9a1cabfb8f003f9b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
@@ -450,8 +450,18 @@
 248-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/fillinxsolution/.gradle/caches/transforms-3/3248b0e5fffbd2239b20797a08fcdd80/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
 249            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
 249-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/fillinxsolution/.gradle/caches/transforms-3/3248b0e5fffbd2239b20797a08fcdd80/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
-250            android:exported="false" />
+250            android:exported="false" /> <!-- The activities will be merged into the manifest of the hosting app. -->
 250-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/fillinxsolution/.gradle/caches/transforms-3/3248b0e5fffbd2239b20797a08fcdd80/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
-251    </application>
-252
-253</manifest>
+251        <activity
+251-->[com.google.android.play:core-common:2.0.2] /Users/fillinxsolution/.gradle/caches/transforms-3/124dfecceb2845d53581a6c2bab36e53/transformed/jetified-core-common-2.0.2/AndroidManifest.xml:14:9-18:65
+252            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+252-->[com.google.android.play:core-common:2.0.2] /Users/fillinxsolution/.gradle/caches/transforms-3/124dfecceb2845d53581a6c2bab36e53/transformed/jetified-core-common-2.0.2/AndroidManifest.xml:15:13-93
+253            android:exported="false"
+253-->[com.google.android.play:core-common:2.0.2] /Users/fillinxsolution/.gradle/caches/transforms-3/124dfecceb2845d53581a6c2bab36e53/transformed/jetified-core-common-2.0.2/AndroidManifest.xml:16:13-37
+254            android:stateNotNeeded="true"
+254-->[com.google.android.play:core-common:2.0.2] /Users/fillinxsolution/.gradle/caches/transforms-3/124dfecceb2845d53581a6c2bab36e53/transformed/jetified-core-common-2.0.2/AndroidManifest.xml:17:13-42
+255            android:theme="@style/Theme.PlayCore.Transparent" />
+255-->[com.google.android.play:core-common:2.0.2] /Users/fillinxsolution/.gradle/caches/transforms-3/124dfecceb2845d53581a6c2bab36e53/transformed/jetified-core-common-2.0.2/AndroidManifest.xml:18:13-62
+256    </application>
+257
+258</manifest>

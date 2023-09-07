@@ -26,7 +26,7 @@ class CategoryLogic extends GetxController {
   RxBool loadingValue = false.obs;
   Rx<bool> categoryProductLoader = false.obs;
   final RefreshController loadMoreController =
-      RefreshController(initialRefresh: false);
+  RefreshController(initialRefresh: false);
   SortKeyProductCollection sortKeyProduct = SortKeyProductCollection.TITLE;
   List<Map<String, dynamic>> selectedFilters = [];
   RxBool showFilteredProducts = false.obs;
@@ -164,9 +164,9 @@ class CategoryLogic extends GetxController {
 
   fetchProductBasedOnFilters(
       {required BuildContext context,
-      bool isNewId = false,
-      SortKeyProductCollection sortKey =
-          SortKeyProductCollection.TITLE}) async {
+        bool isNewId = false,
+        SortKeyProductCollection sortKey =
+            SortKeyProductCollection.TITLE}) async {
     // if(isNewId){
     productsFetch.value = [];
     // }
@@ -182,14 +182,14 @@ class CategoryLogic extends GetxController {
 
     try {
       final categoryProducts =
-          await shopifyStore.getFilteredXProductsAfterCursorWithinCollection(
+      await shopifyStore.getFilteredXProductsAfterCursorWithinCollection(
         currentCategoryId.value,
         250,
         selectedFilters.length == 1 ? selectedFilters[0] : selectedFilters,
         startCursor: showFilteredProducts.isTrue
             ? productsFetch.value.isEmpty
-                ? null
-                : productsFetch.value.last.cursor
+            ? null
+            : productsFetch.value.last.cursor
             : null,
         sortKey: sortKey,
       );
@@ -216,10 +216,10 @@ class CategoryLogic extends GetxController {
 
   productFetchService(
       {required BuildContext context,
-      required String id,
-      bool isNewId = false,
-      SortKeyProductCollection sortKey =
-          SortKeyProductCollection.TITLE}) async {
+        required String id,
+        bool isNewId = false,
+        SortKeyProductCollection sortKey =
+            SortKeyProductCollection.TITLE}) async {
     currentCategoryId.value = id;
     if (isNewId) {
       productsFetch.value = [];
@@ -239,7 +239,7 @@ class CategoryLogic extends GetxController {
     }
     try {
       final categoryProducts =
-          await shopifyStore.getXProductsAfterCursorWithinCollection(
+      await shopifyStore.getXProductsAfterCursorWithinCollection(
         id,
         10,
         startCursor: productsFetch.value.isEmpty
@@ -252,9 +252,15 @@ class CategoryLogic extends GetxController {
       if (productsFetch.isEmpty) {
         print(
             "handle to be fetched is ${categoryProducts![0].collectionList![0].handle}");
-        filtersAvailable = await getCollectionFilters(
-          collectHandle: categoryProducts[0].collectionList![0].handle!,
-        );
+
+        getFilterList()  async {
+          filtersAvailable = await getCollectionFilters(
+            collectHandle: categoryProducts[0].collectionList![0].handle!,
+          );
+        }
+        getFilterList();
+
+
       }
       for (var element in categoryProducts ?? []) {
         productsFetch.value.add(element);

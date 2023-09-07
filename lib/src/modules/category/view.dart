@@ -5,10 +5,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tapify_admin/src/modules/category/view_2.dart';
 import 'package:tapify_admin/src/modules/category/view_category_products.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:extended_image/extended_image.dart';
 
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../global_controllers/app_config/config_controller.dart';
@@ -27,7 +29,9 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<CategoryPage> {
+    with TickerProviderStateMixin
+    , AutomaticKeepAliveClientMixin<CategoryPage>
+{
   final logic = Get.put(CategoryLogic());
 
   final state = Get.find<CategoryLogic>().state;
@@ -51,6 +55,7 @@ class _CategoryPageState extends State<CategoryPage>
 
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -127,12 +132,16 @@ class _CategoryPageState extends State<CategoryPage>
                                   collectionID:
                                   "gid://shopify/Collection/${categoryItem["collectionId"]}",
                                 ),
-                                transition: Transition.rightToLeft);
+                                transition: Transition.rightToLeft,
+                                // fullscreenDialog: true,
+                                // gestureWidth: (_) => 100.0,
+                                opaque: false
+                            );
                           } else {
                             //----- Move to Sub Collection Page
                             Get.to(
                                     () => SubCategoriesPage(categoryIndex: index),
-                                transition: Transition.rightToLeft);
+                                transition: Transition.rightToLeft, opaque: false,);
                             // log("else one is running");
                           }
                         },
@@ -146,42 +155,129 @@ class _CategoryPageState extends State<CategoryPage>
                           height:
                           (categoryItem["customImage"] != null) ? 85 : null,
                           child: (categoryItem["customImage"] != null)
-                              ? FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            imageErrorBuilder: (context, url, error) =>
-                                Container(
-                                    color: Colors.grey.shade200,
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        Assets.icons.noImageIcon,
-                                        height: 25.h,
-                                      ),
-                                    )),
+                              ?
+
+                          ExtendedImage.network(
+                            "${categoryItem["customImage"]}",
                             fit: BoxFit.cover,
-                            image: categoryItem["customImage"],
+                            cache: true,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      width: 300,
+                                      height: 200,
+                                      color: Colors.grey[300],
+                                    ),
+                                  );
+                                case LoadState.completed:
+                                  return null; //return null, so it continues to display the loaded image
+                                case LoadState.failed:
+                                  return Container(
+                                      color: Colors.grey.shade200,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          Assets.icons.noImageIcon,
+                                          height: 25.h,
+                                        ),
+                                      ));
+                                default:
+                                  return null;
+                              }
+                            },
                           )
+
+                          ///-------- simple image network
+                          // Image.network(
+                          //   categoryItem["customImage"],
+                          //   fit: BoxFit.cover,
+                          //     errorBuilder: (context, url, error) =>
+                          //         Container(
+                          //             color: Colors.grey.shade200,
+                          //             child: Center(
+                          //               child: SvgPicture.asset(
+                          //                 Assets.icons.noImageIcon,
+                          //                 height: 25.h,
+                          //               ),
+                          //             )),
+                          // )
+
+
+                          ///----- fade in image
+                          // FadeInImage.memoryNetwork(
+                          //   placeholder: kTransparentImage,
+                          //   imageErrorBuilder: (context, url, error) =>
+                          //       Container(
+                          //           color: Colors.grey.shade200,
+                          //           child: Center(
+                          //             child: SvgPicture.asset(
+                          //               Assets.icons.noImageIcon,
+                          //               height: 25.h,
+                          //             ),
+                          //           )),
+                          //   fit: BoxFit.cover,
+                          //   image: categoryItem["customImage"],
+                          // )
                               : Row(
                             children: [
-                              FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                imageErrorBuilder:
-                                    (context, url, error) => Container(
-                                  height: 85.h,
-                                  width: 85.h,
-                                  color: Colors.grey.shade200,
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      Assets.icons.noImageIcon,
-                                      height: 25.h,
-                                      width: 25.h,
-                                    ),
-                                  ),
-                                ),
+                              ExtendedImage.network(
+                                categoryItem["defaultImage"] ?? "",
                                 fit: BoxFit.cover,
-                                image: categoryItem["defaultImage"] ?? "",
-                                width: 85.h,
+                                cache: true,
                                 height: 85.h,
+                                width: 85.h,
+                                loadStateChanged: (ExtendedImageState state) {
+                                  switch (state.extendedImageLoadState) {
+                                    case LoadState.loading:
+                                      return Shimmer.fromColors(
+                                        baseColor: Colors.grey[300]!,
+                                        highlightColor: Colors.grey[100]!,
+                                        child: Container(
+                                          width: 300,
+                                          height: 200,
+                                          color: Colors.grey[300],
+                                        ),
+                                      );
+                                    case LoadState.completed:
+                                      return null; //return null, so it continues to display the loaded image
+                                    case LoadState.failed:
+                                      return Container(
+                                          color: Colors.grey.shade200,
+                                          child: Center(
+                                            child: SvgPicture.asset(
+                                              Assets.icons.noImageIcon,
+                                              height: 25.h,
+                                            ),
+                                          ));
+                                    default:
+                                      return null;
+                                  }
+                                },
                               ),
+
+                              // FadeInImage.memoryNetwork(
+                              //   placeholder: kTransparentImage,
+                              //   imageErrorBuilder:
+                              //       (context, url, error) => Container(
+                              //     height: 85.h,
+                              //     width: 85.h,
+                              //     color: Colors.grey.shade200,
+                              //     child: Center(
+                              //       child: SvgPicture.asset(
+                              //         Assets.icons.noImageIcon,
+                              //         height: 25.h,
+                              //         width: 25.h,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   fit: BoxFit.cover,
+                              //   image: categoryItem["defaultImage"] ?? "",
+                              //   width: 85.h,
+                              //   height: 85.h,
+                              // ),
                               40.widthBox,
                               Expanded(
                                   child: Text(

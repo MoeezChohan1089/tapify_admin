@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tapify_admin/src/modules/category/view_category_products.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -124,43 +126,123 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                       child: (appConfig.collectionsWidgetsList
                           .value[widget.categoryIndex]["customImage"] !=
                           null)
-                          ? FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        imageErrorBuilder: (context, url, error) =>
-                            Container(
-                              color: Colors.grey.shade200,
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  Assets.icons.noImageIcon,
-                                  height: 25.h,
-                                ),
-                              ),
-                            ),
-                        fit: BoxFit.cover,
-                        image: appConfig.collectionsWidgetsList
+                          ?
+                      ExtendedImage.network(
+
+                        appConfig.collectionsWidgetsList
                             .value[widget.categoryIndex]["customImage"],
-                      )
-                          : Row(
-                        children: [
-                          FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            imageErrorBuilder: (context, url, error) =>
-                                Container(
+                        fit: BoxFit.cover,
+                        cache: true,
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: Container(
+                                  width: 300,
+                                  height: 200,
+                                  color: Colors.grey[300],
+                                ),
+                              );
+                            case LoadState.completed:
+                              return null; //return null, so it continues to display the loaded image
+                            case LoadState.failed:
+                              return Container(
                                   color: Colors.grey.shade200,
                                   child: Center(
                                     child: SvgPicture.asset(
                                       Assets.icons.noImageIcon,
                                       height: 25.h,
                                     ),
-                                  ),
-                                ),
-                            fit: BoxFit.cover,
-                            width: 85.h,
-                            height: 85.h,
-                            image: appConfig.collectionsWidgetsList
+                                  ));
+                            default:
+                              return null;
+                          }
+                        },
+                      )
+
+                      // FadeInImage.memoryNetwork(
+                      //   placeholder: kTransparentImage,
+                      //   imageErrorBuilder: (context, url, error) =>
+                      //       Container(
+                      //         color: Colors.grey.shade200,
+                      //         child: Center(
+                      //           child: SvgPicture.asset(
+                      //             Assets.icons.noImageIcon,
+                      //             height: 25.h,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //   fit: BoxFit.cover,
+                      //   image: appConfig.collectionsWidgetsList
+                      //       .value[widget.categoryIndex]["customImage"],
+                      // )
+                          : Row(
+                        children: [
+
+                          ExtendedImage.network(
+                            appConfig.collectionsWidgetsList
                                 .value[widget.categoryIndex]
                             ["defaultImage"],
+                            fit: BoxFit.cover,
+                            cache: true,
+                            height: 85.h,
+                            width: 85.h,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      width: 300,
+                                      height: 200,
+                                      color: Colors.grey[300],
+                                    ),
+                                  );
+                                case LoadState.completed:
+                                  return null; //return null, so it continues to display the loaded image
+                                case LoadState.failed:
+                                  return Container(
+                                      color: Colors.grey.shade200,
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          Assets.icons.noImageIcon,
+                                          height: 25.h,
+                                        ),
+                                      ));
+                                default:
+                                  return null;
+                              }
+                            },
                           ),
+
+
+
+                          // FadeInImage.memoryNetwork(
+                          //   placeholder: kTransparentImage,
+                          //   imageErrorBuilder: (context, url, error) =>
+                          //       Container(
+                          //         color: Colors.grey.shade200,
+                          //         child: Center(
+                          //           child: SvgPicture.asset(
+                          //             Assets.icons.noImageIcon,
+                          //             height: 25.h,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //   fit: BoxFit.cover,
+                          //   width: 85.h,
+                          //   height: 85.h,
+                          //   image: appConfig.collectionsWidgetsList
+                          //       .value[widget.categoryIndex]
+                          //   ["defaultImage"],
+                          // ),
+
+
+
+
                           40.widthBox,
                           Expanded(
                               child: Text(
@@ -200,6 +282,7 @@ class _SubCategoriesPageState extends State<SubCategoriesPage>
                               collectionID:
                               "${subCategoryItem["admin_graphql_api_id"]}",
                             ),
+                            opaque: false,
                             transition: Transition.rightToLeft);
                       },
                       behavior: HitTestBehavior.opaque,

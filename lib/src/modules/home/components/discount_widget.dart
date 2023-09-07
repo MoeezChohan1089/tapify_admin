@@ -1,9 +1,12 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tapify_admin/src/modules/cart/logic.dart';
+import 'package:tapify_admin/src/modules/home/logic.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -61,18 +64,20 @@ class DiscountWidget extends StatelessWidget {
               HapticFeedback.lightImpact();
 
               if (CartLogic.to.currentCart == null) {
-                LocalDatabase.to.box.write("tappedOnDiscount", true);
-                showToastMessage(message: "Discount added, start shopping now");
+                HomeLogic.to.tappedOnDiscountWidget(settings);
+                // LocalDatabase.to.box.write("tappedOnDiscount", true);
+                // showToastMessage(message: "Discount added, start shopping now");
               } else if (CartLogic.to.currentCart!.lineItems.isNotEmpty) {
                 CartLogic.to.applyDiscount(settings['shopifyCode']);
-                await Future.delayed(const Duration(milliseconds: 250));
+                await Future.delayed(const Duration(milliseconds: 500));
                 Get.to(() => CartPage(),
                     transition: Transition.downToUp,
-                    fullscreenDialog: true,
+                    opaque: false,
                     duration: const Duration(milliseconds: 250));
               } else {
-                LocalDatabase.to.box.write("tappedOnDiscount", true);
-                showToastMessage(message: "Discount added, start shopping now");
+                HomeLogic.to.tappedOnDiscountWidget(settings);
+                // LocalDatabase.to.box.write("tappedOnDiscount", true);
+                // showToastMessage(message: "Discount added, start shopping now");
               }
             } else {
               showToastMessage(message: "json data null");
@@ -102,27 +107,49 @@ class DiscountWidget extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        FadeInImage.memoryNetwork(
-                          image: settings['image'] ?? "",
-                          fit: BoxFit.cover,
-                          height: settings["displayType"] == "auto"
-                              ? null
-                              : double.infinity,
-                          width: double.infinity,
-                          // colorBlendMode: BlendMode.darken,
-                          imageErrorBuilder: (context, url, error) => Container(
-                            color: Colors.grey.shade200,
-                            child: Center(
-                              child: SvgPicture.asset(
-                                Assets.icons.noImageIcon,
-                                height: 25.h,
-                              ),
-                            ),
+                        RepaintBoundary(
+                          child: ExtendedImage.network(
+                            settings['image'] ?? "",
+                            fit: BoxFit.cover,  // ensures that the image scales down if necessary, but not up
+                            height: settings["displayType"] == "auto"
+                                ? null
+                                : double.infinity,
+                            width: double.infinity,
+                            cache: true,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      color: Colors.grey[300],
+                                    ),
+                                  );
+                                case LoadState.completed:
+                                  return null; //return null, so it continues to display the loaded image
+                                case LoadState.failed:
+                                  return Container(
+                                    width: double.maxFinite,
+                                    height: settings["displayType"] == "auto"
+                                        ? null
+                                        : double.infinity,
+                                    child: SvgPicture.asset(
+                                      Assets.icons.noImageIcon,
+                                      height: settings["displayType"] == "auto"
+                                          ? null
+                                          : double.infinity,
+                                    ),
+                                  );
+                                default:
+                                  return null;
+                              }
+                            },
                           ),
-                          placeholder: kTransparentImage,
-                          // errorWidget: (context, url, error) =>
-                          // const Icon(Icons.error),
                         ),
+
                         if (settings['titlePosition'] == "center")
                           Container(
                             height: settings["displayType"] == "normal"

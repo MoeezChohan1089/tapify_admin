@@ -4,7 +4,7 @@
     "type": "COMPATIBLE_SCREEN_MANIFEST",
     "kind": "Directory"
   },
-  "applicationId": "com.example.tapify_admin",
+  "applicationId": "com.tapday.admin",
   "variantName": "release",
   "elements": []
 }

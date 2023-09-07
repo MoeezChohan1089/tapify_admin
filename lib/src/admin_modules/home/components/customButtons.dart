@@ -73,10 +73,10 @@ class _CustomButtonsState extends State<CustomButtons> {
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
             Get.to(() => AdminSignInPage(
-                isRedirectToWeb: true, urlToRedirect: PageURLs.notification));
+                isRedirectToWeb: true, urlToRedirect: PageURLs.notification), transition: Transition.native, opaque: false);
           } else {
             Get.to(() =>
-                AdminWebView(pageURL: getEnumTypeURL(PageURLs.notification)));
+                AdminWebView(pageURL: getEnumTypeURL(PageURLs.notification)), transition: Transition.native, opaque: false);
           }
         },
             context,
@@ -87,10 +87,10 @@ class _CustomButtonsState extends State<CustomButtons> {
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
             Get.to(() => AdminSignInPage(
-                isRedirectToWeb: true, urlToRedirect: PageURLs.messages));
+                isRedirectToWeb: true, urlToRedirect: PageURLs.messages), transition: Transition.native, opaque: false);
           } else {
             Get.to(
-                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.messages)));
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.messages)), transition: Transition.native, opaque: false);
           }
         },
             context,
@@ -101,10 +101,10 @@ class _CustomButtonsState extends State<CustomButtons> {
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
             Get.to(() => AdminSignInPage(
-                isRedirectToWeb: true, urlToRedirect: PageURLs.profile));
+                isRedirectToWeb: true, urlToRedirect: PageURLs.profile), transition: Transition.native, opaque: false);
           } else {
             Get.to(
-                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.profile)));
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.profile)), transition: Transition.native, opaque: false);
           }
         },
             context,
@@ -115,10 +115,10 @@ class _CustomButtonsState extends State<CustomButtons> {
         CustomButtonBox(() {
           if (LocalDatabase.to.box.read("isViewingWithQR")) {
             Get.to(() => AdminSignInPage(
-                isRedirectToWeb: true, urlToRedirect: PageURLs.support));
+                isRedirectToWeb: true, urlToRedirect: PageURLs.support), transition: Transition.native, opaque: false);
           } else {
             Get.to(
-                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.support)));
+                () => AdminWebView(pageURL: getEnumTypeURL(PageURLs.support)), transition: Transition.native, opaque: false);
           }
         },
             context,

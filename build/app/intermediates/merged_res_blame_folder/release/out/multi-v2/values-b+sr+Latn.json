@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-29:/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-30:/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/Users/fillinxsolution/.gradle/caches/transforms-3/d9ecccacc492528d49aa40d29902b30e/transformed/jetified-exoplayer-core-2.18.7/res/values-b+sr+Latn/values-b+sr+Latn.xml",

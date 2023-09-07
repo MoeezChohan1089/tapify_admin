@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-29:/values-v22/values-v22.xml",
+            "outputFile": "com.example.tapify_admin.app-mergeReleaseResources-30:/values-v22/values-v22.xml",
             "map": [
                 {
                     "source": "/Users/fillinxsolution/.gradle/caches/transforms-3/8c271ef34d36b8d5cf547f8a5adf6209/transformed/appcompat-1.2.0/res/values-v22/values-v22.xml",

@@ -1,4 +1,7 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -23,56 +26,56 @@ class SingleImageWidget extends StatelessWidget {
 
   final String imageSize = "square";
 
-  double getWidth(String str) {
-    switch (str) {
-      case 'normal-small':
-        return 300;
-      case 'normal-small':
-        return 142;
-      case 'normal-small':
-        return 180;
-      case 'horizontal-small':
-        return 230;
-      case 'horizontal-small':
-        return 212;
-      case 'horizontal-small':
-        return 248;
-      case 'vertical-small':
-        return 400;
-      case 'vertical-small':
-        return 140;
-      case 'vertical-small':
-        return 179;
-      case 'auto-small':
-        return -1;
-      case 'auto-small':
-        return 140;
-      case 'auto-small':
-        return 179;
-      default:
-        return 0; // return a default value if the string doesn't match any case
-    }
-  }
+  // double getWidth(String str) {
+  //   switch (str) {
+  //     case 'normal-small':
+  //       return 300;
+  //     case 'normal-small':
+  //       return 142;
+  //     case 'normal-small':
+  //       return 180;
+  //     case 'horizontal-small':
+  //       return 230;
+  //     case 'horizontal-small':
+  //       return 212;
+  //     case 'horizontal-small':
+  //       return 248;
+  //     case 'vertical-small':
+  //       return 400;
+  //     case 'vertical-small':
+  //       return 140;
+  //     case 'vertical-small':
+  //       return 179;
+  //     case 'auto-small':
+  //       return -1;
+  //     case 'auto-small':
+  //       return 140;
+  //     case 'auto-small':
+  //       return 179;
+  //     default:
+  //       return 0; // return a default value if the string doesn't match any case
+  //   }
+  // }
 
-  customBoxCategory(String src) {
-    Image image = Image.asset(src);
-
-    return Container(
-      // padding: EdgeInsets.symmetric(
-      //   horizontal: pageMarginHorizontal
-      // ),
-      width: double.maxFinite,
-      height: getWidth("${settings['displayType']}-${settings['viewType']}"),
-      // height: MediaQuery.of(context).size.height * 0.4,
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.customIconColor),
-      ),
-      child: Image.asset(
-        src,
-        fit: BoxFit.fill,
-      ),
-    );
-  }
+  // customBoxCategory(String src) {
+  //   Image image = Image.asset(src);
+  //
+  //   return Container(
+  //     // padding: EdgeInsets.symmetric(
+  //     //   horizontal: pageMarginHorizontal
+  //     // ),
+  //     width: double.maxFinite,
+  //     height: getWidth("${settings['displayType']}-${settings['viewType']}"),
+  //     // height: MediaQuery.of(context).size.height * 0.4,
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: AppColors.customIconColor),
+  //     ),
+  //     child: Image.asset(
+  //       src,
+  //       fit: BoxFit.fill,
+  //     ),
+  //   );
+  // }
 
   final appConfig = AppConfig.to;
 
@@ -270,15 +273,18 @@ class SingleImageWidget extends StatelessWidget {
     });
   }
 
+
+
   singleImageVariant() {
-    return GestureDetector(
+    return appConfig.innerLoader.value == true
+        ? productShimmer(): GestureDetector(
       onTap: () {
         if (settings['disableInteraction'] == false &&
             settings["web_url"] != null) {
           ///------ Open the Web
           Get.to(() => WebViewProduct(
             productUrl: settings["web_url"],
-          ));
+          ), opaque: false, transition: Transition.native);
         }
       },
       child: Padding(
@@ -298,54 +304,96 @@ class SingleImageWidget extends StatelessWidget {
             : EdgeInsets.zero,
         child: Container(
           width: double.maxFinite,
-          height: settings['displayType'] == "normal"
-              ? 300
-              : settings['displayType'] == "vertical"
-              ? 400
-              : settings['displayType'] == "auto"
-              ? null
-              : 230,
           decoration: BoxDecoration(
             borderRadius: settings['margin'] == true
                 ? BorderRadius.circular(5.r)
-                : BorderRadius.circular(0),
+                : BorderRadius.zero,
           ),
           child: ClipRRect(
+            clipBehavior: Clip.hardEdge,
             borderRadius: settings['margin'] == true
                 ? BorderRadius.circular(3.r)
-                : BorderRadius.circular(0),
+                : BorderRadius.zero,
             child: settings['image'] != null
-                ? FadeInImage.memoryNetwork(
-              image: settings['image'],
-              // color: settings['titlePosition'] == "center" ?  Colors.black.withOpacity(0.4):null,
-              // colorBlendMode: settings['titlePosition'] == "center" ? BlendMode.darken:null,
-              fit: BoxFit.cover,
-              height: settings['displayType'] == "normal"
-                  ? 300
-                  : settings['displayType'] == "vertical"
-                  ? 600
-                  : settings['displayType'] == "auto"
-                  ? null
-                  : 230,
-              width: double.infinity,
-              imageErrorBuilder: (context, url, error) => Container(
-                color: Colors.grey.shade200,
-                // color: Colors.grey.shade200,
-                child: Center(
-                  child: SvgPicture.asset(
-                    Assets.icons.noImageIcon,
-                    height: 25.h,
+                ?
+
+
+            RepaintBoundary(
+              child: Container(
+                width: double.maxFinite,
+                height: settings['displayType'] == "normal"
+                    ? 300
+                    : settings['displayType'] == "vertical"
+                    ? 400
+                    : settings['displayType'] == "auto"
+                    ? null
+                    : 230,
+                decoration: BoxDecoration(
+                  borderRadius: settings['margin'] == true
+                      ? BorderRadius.circular(5.r)
+                      : BorderRadius.zero,
+                ),
+                child: ClipRRect(
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: settings['margin'] == true
+                      ? BorderRadius.circular(3.r)
+                      : BorderRadius.zero,
+                  child: ExtendedImage.network(
+                    settings['image'],
+                    fit: BoxFit.cover,  // ensures that the image scales down if necessary, but not up
+                    width: double.infinity,
+                    height: settings['displayType'] == "normal"
+                        ? 300
+                        : settings['displayType'] == "vertical"
+                        ? 600
+                        : settings['displayType'] == "auto"
+                        ? null
+                        : 230,
+                    cache: true,
+                    loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: Container(
+                              width: 400,
+                              height: 400,
+                              color: Colors.grey[300],
+                            ),
+                          );
+                        case LoadState.completed:
+                          return null; //return null, so it continues to display the loaded image
+                        case LoadState.failed:
+                          return Container(
+                            width: double.maxFinite,
+                            height: settings['displayType'] == "normal"
+                                ? 300
+                                : settings['displayType'] == "vertical"
+                                ? 600
+                                : settings['displayType'] == "auto"
+                                ? null
+                                : 230,
+                            child: SvgPicture.asset(
+                              Assets.icons.noImageIcon,
+                              height: settings['displayType'] == "normal"
+                                  ? 300
+                                  : settings['displayType'] == "vertical"
+                                  ? 600
+                                  : settings['displayType'] == "auto"
+                                  ? null
+                                  : 230,
+                            ),
+                          );
+                        default:
+                          return null;
+                      }
+                    },
                   ),
                 ),
               ),
-
-              // progressIndicatorBuilder:
-              //     (context, url, downloadProgress) =>
-              //     productShimmer(),
-              // errorWidget: (context, url, error) =>
-              // const Icon(Icons.error),
-              placeholder: kTransparentImage,
             )
+
                 : Container(
               color: Colors.grey.shade200,
               child: Center(
@@ -400,72 +448,79 @@ class SingleImageWidget extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Container(
-                      width: double.maxFinite,
-                      height: settings['displayType'] == "normal"
-                          ? 300
-                          : settings['displayType'] == "vertical"
-                          ? 400
-                          : settings['displayType'] == "auto"
-                          ? null
-                          : 230,
-                      decoration: BoxDecoration(
-                        borderRadius: settings['margin'] == true
-                            ? BorderRadius.circular(5.r)
-                            : BorderRadius.circular(0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: settings['margin'] == true
-                            ? BorderRadius.circular(3.r)
-                            : BorderRadius.circular(0),
-                        child: Stack(
-                          children: [
-                            Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[100]!,
-                              child: Container(
-                                color: Colors.grey[300],
-                                height: settings['displayType'] == "normal"
-                                    ? 300
-                                    : settings['displayType'] == "vertical"
-                                    ? 600
-                                    : settings['displayType'] == "auto"
-                                    ? null
-                                    : 230,
-                                width: double.infinity,
-                              ),
-                            ),
-                            settings['image'] != null || (productInfo?.image.isNotEmpty ?? false)?  FadeInImage.memoryNetwork(
-                              image: settings['image'] ??
-                                  "${productInfo?.image.split("?v=")[0]}?width=300}",
-                              fit: BoxFit.cover,
-                              height: settings['displayType'] == "normal"
-                                  ? 300
-                                  : settings['displayType'] == "vertical"
-                                  ? 600
-                                  : settings['displayType'] == "auto"
-                                  ? null
-                                  : 230,
-                              width: double.infinity,
-                              imageErrorBuilder: (context, url, error) =>
-                                  Container(
-                                    color: Colors.grey.shade200,
-                                    // color: Colors.grey.shade200,
-                                    child: Center(
-                                      child: SvgPicture.asset(
-                                        Assets.icons.noImageIcon,
-                                        height: 25.h,
-                                      ),
+                    RepaintBoundary(
+                      child: Container(
+                        width: double.maxFinite,
+                        height: settings['displayType'] == "normal"
+                            ? 300
+                            : settings['displayType'] == "vertical"
+                            ? 400
+                            : settings['displayType'] == "auto"
+                            ? null
+                            : 230,
+                        decoration: BoxDecoration(
+                          borderRadius: settings['margin'] == true
+                              ? BorderRadius.circular(5.r)
+                              : BorderRadius.circular(0),
+                        ),
+                        child: ClipRRect(
+                          clipBehavior: Clip.hardEdge,
+                          borderRadius: settings['margin'] == true
+                              ? BorderRadius.circular(3.r)
+                              : BorderRadius.circular(0),
+                          child: ExtendedImage.network(
+                            settings['image'] ??
+                                "${productInfo?.image.split("?v=")[0]}?width=300}",
+                            fit: BoxFit.cover,  // ensures that the image scales down if necessary, but not up
+                            width: double.infinity,
+                            height: settings['displayType'] == "normal"
+                                ? 300
+                                : settings['displayType'] == "vertical"
+                                ? 600
+                                : settings['displayType'] == "auto"
+                                ? null
+                                : 230,
+                            cache: true,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      width: 400,
+                                      height: 400,
+                                      color: Colors.grey[300],
                                     ),
-                                  ),
-                              // progressIndicatorBuilder:
-                              //     (context, url, downloadProgress) =>
-                              //     productShimmer(),
-                              // errorWidget: (context, url, error) =>
-                              // const Icon(Icons.error),
-                              placeholder: kTransparentImage,
-                            ):SizedBox.shrink(),
-                          ],
+                                  );
+                                case LoadState.completed:
+                                  return null; //return null, so it continues to display the loaded image
+                                case LoadState.failed:
+                                  return Container(
+                                    width: double.maxFinite,
+                                    height: settings['displayType'] == "normal"
+                                        ? 300
+                                        : settings['displayType'] == "vertical"
+                                        ? 600
+                                        : settings['displayType'] == "auto"
+                                        ? null
+                                        : 230,
+                                    child: SvgPicture.asset(
+                                      Assets.icons.noImageIcon,
+                                      height: settings['displayType'] == "normal"
+                                          ? 300
+                                          : settings['displayType'] == "vertical"
+                                          ? 600
+                                          : settings['displayType'] == "auto"
+                                          ? null
+                                          : 230,
+                                    ),
+                                  );
+                                default:
+                                  return null;
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -563,7 +618,7 @@ class SingleImageWidget extends StatelessWidget {
           (settings["metadata"]['dataType'] == "collection" ||
               settings["metadata"]['dataType'] == "web-url")
               ? (pageMarginVertical).heightBox
-              : (pageMarginVertical / 2).heightBox,
+              : 0.heightBox,
           settings['titlePosition'] == "bottom"
               ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -574,7 +629,7 @@ class SingleImageWidget extends StatelessWidget {
                   ? const SizedBox.shrink()
                   : Column(
                 children: [
-                  12.heightBox,
+                  16.heightBox,
                   HomeProductsPrice(
                     price: productInfo!.price,
                   ),

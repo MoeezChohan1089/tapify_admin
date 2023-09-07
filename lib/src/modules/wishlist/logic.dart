@@ -19,6 +19,13 @@ class WishlistLogic extends GetxController {
   List<Product> get userWishlist => _wishlist.value;
 
 
+  //-------- Suggested Products
+  // Rx<List<Product>> suggestedProducts = Rx<List<Product>>([]);
+
+  Rx<List<Product>> suggestedProducts = Rx<List<Product>>([]);
+  // List<Product> get suggestedProducts => _suggestedProducts.value;
+
+
 
   @override
   void onInit() {
@@ -29,7 +36,7 @@ class WishlistLogic extends GetxController {
   getLocallySavedWishlist() {
     if(LocalDatabase.to.box.read("wishlist") != null) {
       List<dynamic> retrievedData = LocalDatabase.to.box.read("wishlist");
-        print("retrieved product list is => $retrievedData");
+      print("retrieved product list is => $retrievedData");
       List<Product> convertedData = retrievedData.map((data) => Product.fromJsonDirect(data)).toList();
       _wishlist.value = convertedData;
     }

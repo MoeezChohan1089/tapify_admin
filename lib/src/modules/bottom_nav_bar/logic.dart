@@ -10,7 +10,7 @@ import '../home/view_home.dart';
 import '../profile/view.dart';
 import '../profile/view_guest.dart';
 import '../wishlist/view.dart';
-import 'components/exit_ensuring_dialogue.dart';
+import 'components/exit_ensuring_dialog.dart';
 import 'state.dart';
 
 class BottomNavBarLogic extends GetxController {

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tapify_admin/src/utils/constants/assets.dart';
 
 class CustomLoader {
   static CustomLoader? _customLoader;

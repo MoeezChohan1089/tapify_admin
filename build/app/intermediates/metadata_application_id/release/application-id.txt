@@ -1,1 +1,1 @@
-com.example.tapify_admin
+com.tapday.admin

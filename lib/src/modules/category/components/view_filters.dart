@@ -102,6 +102,7 @@ class CollectionFiltersView extends StatelessWidget {
 
                   Get.to(() => FilterOptionsView(filter: categoryLogic.filtersAvailable[index]),
                       transition: Transition.rightToLeft,
+                      opaque: false,
                       duration: const Duration(milliseconds: 250)
                   );
 

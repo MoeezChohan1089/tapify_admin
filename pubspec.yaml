@@ -31,7 +31,7 @@ dependencies:
 
   #--- For Showing Animated Marquee Text ---
   marquee: ^2.2.3
-
+  in_app_review: ^2.0.6
   #--- For Showing Products Carousels ---
   carousel_slider: ^4.2.1
 
@@ -97,7 +97,7 @@ dependencies:
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4
   transparent_image: ^2.0.1
-
+  extended_image:
   graphql_flutter: ^5.1.2
   freezed_annotation: ^2.2.0
   json_serializable: ^6.6.1

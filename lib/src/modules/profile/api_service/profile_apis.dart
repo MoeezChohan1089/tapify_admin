@@ -1,10 +1,17 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+// import 'package:shopify_flutter/models/src/product/products/products.dart';
+// import 'package:shopify_flutter/shopify_flutter.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
+import 'dart:convert';
 
 import '../../../api_services/shopify_flutter/shopify/shopify.dart';
+import '../../home/view.dart';
 
-signOutApiService() async {
+signOutApiService() async{
   try {
     final shopifyStore = ShopifyAuth.instance;
     await shopifyStore.signOutCurrentUser();
@@ -26,7 +33,7 @@ signOutApiService() async {
   }
 }
 
-deleteAccountApiService({required String id}) async {
+deleteAccountApiService({required String id}) async{
   try {
     final shopifyStore = ShopifyAuth.instance;
     await shopifyStore.deleteCustomer(userId: id);

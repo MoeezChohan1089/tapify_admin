@@ -5,10 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
+import 'package:vibration/vibration.dart';
 
+import '../../../api_services/shopify_flutter/models/models.dart';
+import '../../../custom_widgets/customTextField.dart';
 import '../../../custom_widgets/custom_elevated_button.dart';
 import '../../../custom_widgets/custom_text_field.dart';
 import '../../../utils/constants/colors.dart';
+import '../../auth/components/custom_button.dart';
 import '../logic.dart';
 
 final logic = Get.find<OrderLogic>();
@@ -38,7 +42,10 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
           logic.reviewController.addListener(updateSubmitState);
           return Container(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
+              bottom: MediaQuery
+                  .of(context)
+                  .viewInsets
+                  .bottom,
             ),
             color: Colors.white,
             child: Wrap(
@@ -62,7 +69,8 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                                   style: context.text.titleMedium?.copyWith(
                                       color: AppColors.appTextColor,
                                       fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 ),
                               ),
                               Container(
@@ -73,9 +81,7 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                                   },
                                   icon: const Icon(
                                     Icons.keyboard_arrow_down_outlined,
-                                    color: AppColors.appTextColor,
-                                    size: 30,
-                                  ),
+                                    color: AppColors.appTextColor, size: 30,),
                                 ),
                               ),
                             ],
@@ -89,15 +95,17 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                             direction: Axis.horizontal,
                             allowHalfRating: false,
                             itemCount: 5,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 12,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 12,
+                                ),
                             onRatingUpdate: (rating) {
                               setState(() {
                                 finalRating = rating;
-                                print("rating star: ${finalRating}");
+                                print(
+                                    "rating star: ${finalRating}");
                               });
                             },
                           ),
@@ -109,8 +117,7 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                               color: Colors.white,
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: pageMarginHorizontal,
-                                ),
+                                  horizontal: pageMarginHorizontal,),
                                 child: Column(
                                   children: [
                                     20.heightBox,
@@ -119,8 +126,7 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                                       style: context.text.titleMedium?.copyWith(
                                           color: AppColors.appTextColor,
                                           fontSize: 16.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                          fontWeight: FontWeight.bold),),
                                     20.heightBox,
                                     CustomTextField(
                                       controller: logic.titleController,
@@ -171,29 +177,26 @@ void productRatingBottomSheet(context, double finalRating, String prodId,
                                       return SizedBox(
                                         width: double.maxFinite,
                                         child: GlobalElevatedButton(
-                                          text: "Submit Review",
-                                          onPressed: () {
-                                            HapticFeedback.lightImpact();
-                                            print(
-                                                "value Order: ${emailDefault}");
-                                            if (isSubmitEnabled) {
-                                              logic.createReview(
-                                                  context: context,
-                                                  id: prodId,
-                                                  name: logic
-                                                      .fullNameController.text,
-                                                  emailId: emailDefault,
-                                                  title:
-                                                      "${logic.titleController.text}/order$orderNo",
-                                                  comment: logic
-                                                      .reviewController.text,
-                                                  rating: finalRating);
-                                            } else {
-                                              null;
-                                            }
-                                          },
-                                          isLoading:
-                                              logic.loadingAnimation.value,
+                                          text: "Submit Review", onPressed: () {
+                                          HapticFeedback.lightImpact();
+                                          print("value Order: ${emailDefault}");
+                                          if (isSubmitEnabled) {
+                                            logic.createReview(context: context,
+                                                id: prodId,
+                                                name: logic.fullNameController
+                                                    .text,
+                                                emailId: emailDefault,
+                                                title: "${logic.titleController
+                                                    .text}/order$orderNo",
+                                                comment: logic.reviewController
+                                                    .text,
+                                                rating: finalRating);
+                                          } else {
+                                            null;
+                                          }
+                                        },
+                                          isLoading: logic
+                                              .loadingAnimation.value,
                                         ),
                                         // ElevatedButton(
                                         //     onPressed: () async {

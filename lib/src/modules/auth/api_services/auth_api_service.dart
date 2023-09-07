@@ -2,36 +2,33 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tapify_admin/src/global_controllers/database_controller.dart';
 import 'package:tapify_admin/src/utils/tapday_api_srvices/api_services.dart';
 
-import '../../../admin_modules/home/logic.dart';
 import '../../../custom_widgets/custom_snackbar.dart';
 import '../../../utils/global_instances.dart';
 // import 'package:shopify_flutter/shopify_flutter.dart';
+
+
 
 signInUserApiService({required String email, required String password}) async {
   log(" in the sign in user function ");
   try {
     // final shopifyStore = ShopifyAuth.instance;
-    final userInfoResponse = await shopifyAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    final userInfoResponse = await shopifyAuth.signInWithEmailAndPassword(email: email, password: password,);
     log("====== user response data is $userInfoResponse ======");
     LocalDatabase.to.box.write("sessionActive", true);
-    LocalDatabase.to.box.write(
-        "customerAccessToken", await shopifyAuth.currentCustomerAccessToken);
+    LocalDatabase.to.box.write("customerAccessToken", await shopifyAuth.currentCustomerAccessToken);
 
     log("=== Retrieved Customer Access Token ${LocalDatabase.to.box.read("customerAccessToken")}  ===");
 
-    List userInfo = [
-      {
-        "firstname": "${userInfoResponse.firstName}",
-        "lastname": "${userInfoResponse.lastName}",
-        "email": "${userInfoResponse.email}",
-        "id": "${userInfoResponse.id}"
-      }
+    List userInfo = [{
+      "firstname": "${userInfoResponse.firstName}",
+      "lastname": "${userInfoResponse.lastName}",
+      "email": "${userInfoResponse.email}",
+      "id": "${userInfoResponse.id}"
+    }
     ];
     LocalDatabase.to.box.write("userInfo", userInfo);
     // LocalDatabase.to.box.write("customerAccessToken", user.);
@@ -43,26 +40,20 @@ signInUserApiService({required String email, required String password}) async {
   }
 }
 
-createCustomerApiService(
-    {required String firstName, lastName, email, password}) async {
+createCustomerApiService({required  String firstName, lastName, email, password}) async {
+
   try {
     // final shopifyStore = ShopifyAuth.instance;
-    final userInstance = await shopifyAuth.createUserWithEmailAndPassword(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-    );
+    final userInstance = await shopifyAuth.createUserWithEmailAndPassword(firstName: firstName, lastName: lastName, email: email, password: password,);
 
     debugPrint("=== SUCCESS :: Account created $userInstance  ===");
 
-    List userInfo = [
-      {
-        "firstname": "${userInstance.firstName}",
-        "lastname": "${userInstance.lastName}",
-        "email": "${userInstance.email}",
-        "id": "${userInstance.id}"
-      }
+    List userInfo = [{
+      "firstname": "${userInstance.firstName}",
+      "lastname": "${userInstance.lastName}",
+      "email": "${userInstance.email}",
+      "id": "${userInstance.id}"
+    }
     ];
     LocalDatabase.to.box.write("userInfo", userInfo);
 
@@ -73,27 +64,22 @@ createCustomerApiService(
   }
 }
 
-createClientService(
-    {required String firstName,
-    required String lastName,
-    required String email}) async {
+createClientService({required String firstName, required String lastName, required String email}) async {
   try {
     Dio dio = Dio();
 
     final data = {
-      'shop': AdminHomeLogic.to.browsingShopDomain.value,
+      'shop': LocalDatabase.to.box.read('domainShop')?? '${TapDay.shopNameUrl}',
       'first_name': firstName,
       'last_name': lastName,
       'display_name': '$firstName $lastName',
       'email': email
     };
 
-    print(
-        "barrer Token is: ===== ${LocalDatabase.to.box.read('staticUserAuthToken')}");
+    print("barrer Token is: ===== ${LocalDatabase.to.box.read('staticUserAuthToken')}");
 
     var headers = {
-      'Authorization':
-          'Bearer ${LocalDatabase.to.box.read('staticUserAuthToken')}'
+      'Authorization': 'Bearer ${LocalDatabase.to.box.read('staticUserAuthToken')}'
     };
 
     final response = await dio.post(
@@ -102,7 +88,9 @@ createClientService(
       options: Options(headers: headers),
     );
 
+
     log("our server account creation $response");
+
 
     Map<String, dynamic> responseData = response.data;
 
@@ -115,12 +103,15 @@ createClientService(
       log("==>> Create client response data -> $responseData =====");
 
       LocalDatabase.to.box.write("sessionActive", true);
-      LocalDatabase.to.box
-          .write("customerDefaultAccessToken", responseData["access_token"]);
+      LocalDatabase.to.box.write("customerDefaultAccessToken", responseData["access_token"]);
       LocalDatabase.to.box.write("adminToken", responseData["token"]);
       // showToastMessage(message: "User Created Successfully.");
 
       return true;
+
+
+
+
     } else {
       // Request failed
       return false;
@@ -137,15 +128,16 @@ createClientService(
     //   ),
     // );
     return false;
+
   }
+
 }
 
-forgotPasswordApiService({required String email}) async {
+forgotPasswordApiService({required String email}) async{
   try {
     // final shopifyStore = ShopifyAuth.instance;
     await shopifyAuth.sendPasswordResetEmail(email: email);
-    debugPrint(
-        "====> SUCCESS :: Password reset link has been sent successfully  <====");
+    debugPrint("====> SUCCESS :: Password reset link has been sent successfully  <====");
     return true;
   } catch (e) {
     debugPrint("====> ERROR :: in sending reset link ${e.toString()} <=====");
@@ -160,17 +152,18 @@ staticUserAPI({required String email, required String password}) async {
       'email': email,
       'password': password,
     };
-    final response = await dio.post('${TapDay.loginURL}', data: data);
+    final response = await dio.post(
+        '${TapDay.loginURL}',
+        data: data
+    );
     Map<String, dynamic> responseData = response.data;
     log("new response is $responseData");
 
-    if (response.statusCode == 200 && responseData["success"] == true) {
+    if (response.statusCode == 200 && responseData["data"]["access_token"] != null) {
       log("==>> SIGN IN :: response data is here 2 -> $responseData =====${responseData['data']['access_token']}");
       LocalDatabase.to.box.write("sessionActive", true);
-      LocalDatabase.to.box
-          .write("storeAdminToken", responseData["data"]["access_token"]);
-      LocalDatabase.to.box
-          .write("staticUserAuthToken", responseData["data"]["token"]);
+      LocalDatabase.to.box.write("storeAdminToken", responseData["data"]["access_token"]);
+      LocalDatabase.to.box.write("staticUserAuthToken", responseData["data"]["token"]);
       return true;
     } else {
       debugPrint("==>> SIGN IN ERROR2 : Not 200 --> ${response.data} =====");
@@ -179,5 +172,6 @@ staticUserAPI({required String email, required String password}) async {
   } catch (error) {
     debugPrint("==>> SIGN IN ERROR : $error =====");
     return false;
+
   }
 }

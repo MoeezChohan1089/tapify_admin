@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 
 import '../../../utils/constants/margins_spacnings.dart';
+import '../../product_detail/view.dart';
 
 class TitleText extends StatelessWidget {
   final dynamic settings;
@@ -21,17 +23,17 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-          vertical: pageMarginVertical / 1.3,
-          horizontal: pageMarginHorizontal/1.3
+        vertical: pageMarginVertical / 1.3,
+        horizontal: pageMarginHorizontal/1.3
       ),
       width: context.deviceWidth,
       // color: Colors.black,
       child: Padding(
         padding: const EdgeInsets.only(top: 2),
         child: Text(
-            settings["title"] ?? "",
-            textAlign: settings["titleAlignment"] == "left" ? TextAlign.left : settings["titleAlignment"] == "right" ? TextAlign.right : TextAlign.center,
-            style: settings["titleSize"] == "small" ? context.text.titleSmall : settings["titleSize"] == "medium" ? context.text.titleMedium : context.text.titleLarge
+          settings["title"] ?? "",
+          textAlign: settings["titleAlignment"] == "left" ? TextAlign.left : settings["titleAlignment"] == "right" ? TextAlign.right : TextAlign.center,
+         style: settings["titleSize"] == "small" ? context.text.titleSmall : settings["titleSize"] == "medium" ? context.text.titleMedium : context.text.titleLarge
         ),
       ),
     );

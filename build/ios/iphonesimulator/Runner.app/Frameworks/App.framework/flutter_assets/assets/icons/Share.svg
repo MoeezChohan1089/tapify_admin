@@ -1,8 +1,0 @@
-<svg id="Share" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-  <circle id="Ellipse_281" data-name="Ellipse 281" cx="20" cy="20" r="20" fill="#fff"/>
-  <g id="share-outline" transform="translate(13 11)">
-    <path id="Path_23247" data-name="Path 23247" d="M19.533,18h1.756a1.756,1.756,0,0,1,1.756,1.756v8.427a1.756,1.756,0,0,1-1.756,1.756H10.756A1.756,1.756,0,0,1,9,28.182V19.756A1.756,1.756,0,0,1,10.756,18h1.756" transform="translate(-9 -11.68)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-    <path id="Path_23248" data-name="Path 23248" d="M23.522,8.011,20.011,4.5,16.5,8.011" transform="translate(-12.989 -4.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-    <path id="Path_23249" data-name="Path 23249" d="M24,16.482V4.5" transform="translate(-16.978 -4.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-  </g>
-</svg>

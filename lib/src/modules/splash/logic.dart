@@ -61,13 +61,13 @@ class SplashLogic extends GetxController {
     }
   }
 
-  ///------ Sign in the default user
-  // Future<bool> signInStaticUser() async {
-  //   if (LocalDatabase.to.box.read("staticUserAuthToken") == null) {
-  //     return await staticUserAPI(
-  //         email: TapDay.adminEmail, password: TapDay.adminPassword);
-  //   } else {
-  //     return true;
-  //   }
-  // }
+///------ Sign in the default user
+// Future<bool> signInStaticUser() async {
+//   if (LocalDatabase.to.box.read("staticUserAuthToken") == null) {
+//     return await staticUserAPI(
+//         email: TapDay.adminEmail, password: TapDay.adminPassword);
+//   } else {
+//     return true;
+//   }
+// }
 }

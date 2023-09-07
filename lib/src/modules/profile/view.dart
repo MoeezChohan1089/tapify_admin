@@ -1,8 +1,17 @@
+import 'dart:developer';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/custom_widgets/custom_snackbar.dart';
+
+// import 'package:shopify_flutter/models/src/product/products/products.dart';
+// import 'package:shopify_flutter/shopify_flutter.dart';
+import 'package:tapify_admin/src/modules/auth/components/custom_button.dart';
+import 'package:tapify_admin/src/modules/auth/logic.dart';
 import 'package:tapify_admin/src/utils/constants/assets.dart';
 import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/constants/margins_spacnings.dart';
@@ -11,11 +20,15 @@ import 'package:tapify_admin/src/utils/extensions.dart';
 import '../../custom_widgets/custom_app_bar.dart';
 import '../../custom_widgets/custom_elevated_button.dart';
 import '../../global_controllers/database_controller.dart';
+import '../../global_controllers/currency_controller.dart';
+import '../auth/view.dart';
 import '../order/view.dart';
 import '../recently_viewed/view.dart';
 import 'components/currency_selector_dropdown.dart';
+import 'components/delete_account_dialog.dart';
 import 'components/profile_page_tiles.dart';
 import 'edit_profile/view.dart';
+import 'filter_api_Testing.dart';
 import 'logic.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -29,7 +42,9 @@ class _ProfilePageState extends State<ProfilePage> {
   final logic = Get.put(ProfileLogic());
   // final logic1 = Get.put(AuthLogic());
 
-  final state = Get.find<ProfileLogic>().state;
+  final state = Get
+      .find<ProfileLogic>()
+      .state;
 
   @override
   void initState() {
@@ -59,19 +74,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 //------- Profile Picture & Name
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
+                  EdgeInsets.symmetric(horizontal: pageMarginHorizontal),
                   child: Row(
                     children: [
-                      Container(
-                          height: 70.h,
-                          width: 70.h,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.textFieldBGColor),
-                          child: SvgPicture.asset(
-                            Assets.icons.userProfileIcon,
-                            color: AppColors.appBordersColor,
-                          )),
+                     Container(
+                       height: 70.h,
+                       width: 70.h,
+                       decoration: const BoxDecoration(
+                         shape: BoxShape.circle,
+                         color: AppColors.textFieldBGColor
+                       ),
+                         child: SvgPicture.asset(Assets.icons.userProfileIcon,
+                          color: AppColors.appBordersColor,
+
+                         )
+                     ),
+
 
                       // CircleAvatar(
                       //   radius: 37.r,
@@ -84,7 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${logic.infor.value[0]['firstname']} ${logic.infor.value[0]['lastname']}",
+                            "${logic.infor.value[0]['firstname']} ${logic.infor
+                                .value[0]['lastname']}",
                             style: context.text.labelMedium?.copyWith(
                                 fontSize: 20.sp,
                                 color: Colors.black,
@@ -108,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: "My Profile",
                   iconPath: Assets.icons.userProfileIcon,
                   onPress: () {
-                    Get.to(() => Edit_profilePage());
+                    Get.to(() => Edit_profilePage(), opaque: false, transition: Transition.native);
                   },
                 ),
 
@@ -116,15 +135,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: "My Orders",
                   iconPath: Assets.icons.shopOrders,
                   onPress: () {
-                    Get.to(() => OrderPage());
+                    Get.to(() => OrderPage(), opaque: false, transition: Transition.native);
                   },
                 ),
+
 
                 ProfilePageTiles(
                   title: "Recently Viewed",
                   iconPath: Assets.icons.shopBox,
                   onPress: () {
-                    Get.to(() => RecentlyViewedPage());
+                    Get.to(() => RecentlyViewedPage(), opaque: false, transition: Transition.native);
                   },
                 ),
 

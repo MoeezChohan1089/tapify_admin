@@ -86,10 +86,9 @@ sureLoggingOffDialog() {
                   height: 34.h,
                   child: ElevatedButton(
                       onPressed: () {
-                        LocalDatabase.to.box.remove("adminSignedInToken");
-                        Get.off(() => AdminSignInPage(
-                              isRedirectToWeb: false,
-                            ));
+                        LocalDatabase.to.box.remove('adminSignedInToken');
+                        Get.offAll(AdminSignInPage(isRedirectToWeb: false), transition: Transition.native, opaque: false
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

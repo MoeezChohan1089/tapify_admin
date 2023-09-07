@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,20 +22,21 @@ class _ContinueWithSocialState extends State<ContinueWithSocial> {
         SocialButton(
           text: "Google",
           imagePath: Assets.icons.coloredGoogleIcon,
-          onPress: () {},
+          onPress: (){},
         ),
         15.heightBox,
         SocialButton(
           text: "Apple",
           imagePath: Assets.icons.appleIcon,
-          onPress: () {},
+          onPress: (){},
         ),
         15.heightBox,
         SocialButton(
           text: "Facebook",
           imagePath: Assets.icons.coloredFbIcon,
-          onPress: () {},
+          onPress: (){},
         ),
+
       ],
     );
   }
@@ -44,6 +46,7 @@ class SocialButton extends StatelessWidget {
   final Function onPress;
   final String text;
   final String imagePath;
+
 
   const SocialButton({
     super.key,
@@ -63,18 +66,24 @@ class SocialButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.appBordersColor, width: .5),
           borderRadius: BorderRadius.circular(5.r),
+
         ),
         child: Row(
           children: [
-            Expanded(
-                child: SvgPicture.asset(imagePath
+             Expanded(
+                child: SvgPicture.asset(
+                    imagePath
                     // Assets.icons.coloredGoogleIcon
-                    )),
+                )),
+
             25.widthBox,
+
             Expanded(
               flex: 3,
-              child:
-                  Text('Continue with $text', style: context.text.bodyMedium),
+              child: Text(
+                'Continue with $text',
+                style: context.text.bodyMedium
+              ),
             ),
           ],
         ),

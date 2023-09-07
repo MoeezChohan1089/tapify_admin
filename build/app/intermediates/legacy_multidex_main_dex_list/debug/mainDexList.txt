@@ -567,6 +567,7 @@ com/google/android/material/transition/platform/MaterialContainerTransform$FitMo
 com/google/android/material/transition/platform/MaterialContainerTransform$TransitionDirection.class
 com/google/android/material/transition/platform/MaterialSharedAxis$Axis.class
 com/google/android/material/transition/platform/SlideDistanceProvider$GravityFlag.class
+com/google/android/play/core/review/model/ReviewErrorCode.class
 com/google/common/annotations/Beta.class
 com/google/common/annotations/GwtCompatible.class
 com/google/common/annotations/GwtIncompatible.class

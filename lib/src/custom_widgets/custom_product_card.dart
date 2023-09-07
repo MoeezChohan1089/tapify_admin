@@ -1,10 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tapify_admin/src/modules/product_detail/view.dart';
+import 'package:tapify_admin/src/utils/constants/assets.dart';
+import 'package:tapify_admin/src/utils/constants/colors.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
+import 'package:tapify_admin/src/utils/skeleton_loaders/shimmerLoader.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../api_services/shopify_flutter/models/models.dart';
@@ -12,8 +18,6 @@ import '../global_controllers/app_config/config_controller.dart';
 import '../global_controllers/currency_controller.dart';
 import '../modules/product_detail/view_product_detail.dart';
 import '../modules/wishlist/logic.dart';
-import '../utils/constants/assets.dart';
-import '../utils/constants/colors.dart';
 import '../utils/quickViewBottomSheet.dart';
 import 'custom_product_bottom_sheet.dart';
 
@@ -188,26 +192,73 @@ class CustomProductCard extends StatelessWidget {
                       : Radius.circular(5.r),
                 ),
 
-                child: product.images.isNotEmpty ? FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    imageErrorBuilder: (context, url,
-                        error) => Container(
-                      color: Colors.grey.shade200,
-                      // color: Colors.grey.shade200,
-                      child: Center(
-                        child: SvgPicture.asset(Assets.icons.noImageIcon,
-                          height: 25.h,
-                        ),
-                      ),
-                    ),
-                    fit: BoxFit.cover,
-                    image:
-                    // product.images.isNotEmpty
-                    //     ?
-                    "${product.image.split("?v=")[0]}?width=300 "
-                  //     :
-                  // "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
-                ) : Container(
+                child: product.images.isNotEmpty ?
+
+
+                ExtendedImage.network(
+                  "${product.image.split("?v=")[0]}?width=300",
+                  fit: BoxFit.cover,
+                  cache: true,
+                  height: 85.h,
+                  width: 85.h,
+                  loadStateChanged: (ExtendedImageState state) {
+                    switch (state.extendedImageLoadState) {
+                      case LoadState.loading:
+                        return Container(
+                       height: double.maxFinite,
+                       width: double.maxFinite,
+                       color: Colors.white,
+                    );
+                        //   Shimmer.fromColors(
+                        //   baseColor: Colors.grey[300]!,
+                        //   highlightColor: Colors.grey[100]!,
+                        //   child: Container(
+                        //     width: 300,
+                        //     height: 200,
+                        //     color: Colors.grey[300],
+                        //   ),
+                        // );
+                      case LoadState.completed:
+                        return null; //return null, so it continues to display the loaded image
+                      case LoadState.failed:
+                        return Container(
+                            color: Colors.grey.shade200,
+                            child: Center(
+                              child: SvgPicture.asset(
+                                Assets.icons.noImageIcon,
+                                height: 25.h,
+                              ),
+                            ));
+                      default:
+                        return null;
+                    }
+                  },
+                )
+
+                // FadeInImage.memoryNetwork(
+                //     placeholder: kTransparentImage,
+                //     imageErrorBuilder: (context, url,
+                //         error) => Container(
+                //       color: Colors.grey.shade200,
+                //       // color: Colors.grey.shade200,
+                //       child: Center(
+                //         child: SvgPicture.asset(Assets.icons.noImageIcon,
+                //           height: 25.h,
+                //         ),
+                //       ),
+                //     ),
+                //     fit: BoxFit.cover,
+                //     image:
+                //     // product.images.isNotEmpty
+                //     //     ?
+                //     "${product.image.split("?v=")[0]}?width=300 "
+                //   //     :
+                //   // "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png",
+                // )
+
+
+
+                    : Container(
                   color: Colors.grey.shade200,
                   child: Center(
                     child: SvgPicture.asset(Assets.icons.noImageIcon,
@@ -269,27 +320,33 @@ class CustomProductCard extends StatelessWidget {
               ),
             );
           })
-              : Container(
+              : GestureDetector(
+            onTap: (){
+              HapticFeedback.lightImpact();
+              ProductSheet.to.productDetailBottomSheet(context: context, product: product);
+            },
+                child: Container(
             height: 26.5.h,
             decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(5.r),
-                bottomRight: Radius.circular(5.r),
-              ),
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(5.r),
+                  bottomRight: Radius.circular(5.r),
+                ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "SOLD OUT",
-                  style: context.text.bodySmall?.copyWith(
-                    color: Colors.white,
-                  ),
-                )
-              ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "SOLD OUT",
+                    style: context.text.bodySmall?.copyWith(
+                      color: Colors.white,
+                    ),
+                  )
+                ],
             ),
-          )
+          ),
+              )
               : const SizedBox.shrink(),
 
 

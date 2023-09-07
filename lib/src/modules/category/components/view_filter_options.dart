@@ -7,18 +7,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+import 'package:tapify_admin/src/modules/category/logic.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../custom_widgets/custom_app_bar.dart';
 import '../../../custom_widgets/custom_elevated_button.dart';
 import '../../../custom_widgets/custom_text_field.dart';
-import '../../../global_controllers/app_config/config_controller.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/margins_spacnings.dart';
 import '../../auth/components/custom_button.dart';
 import '../api_service/model_filters.dart';
-import '../logic.dart';
 
 class FilterOptionsView extends StatefulWidget {
   final Filter filter;

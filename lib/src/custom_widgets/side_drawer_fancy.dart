@@ -6,10 +6,12 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tapify_admin/src/global_controllers/app_config/config_controller.dart';
+import 'package:tapify_admin/src/global_controllers/database_controller.dart';
+import 'package:tapify_admin/src/utils/constants/assets.dart';
 import 'package:tapify_admin/src/utils/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../global_controllers/app_config/config_controller.dart';
 import '../modules/auth/logic.dart';
 import '../modules/auth/view.dart';
 import '../modules/bottom_nav_bar/logic.dart';
@@ -21,9 +23,9 @@ import '../modules/profile/view.dart';
 import '../modules/recently_viewed/view.dart';
 import '../modules/search/view.dart';
 import '../modules/wishlist/view.dart';
-import '../utils/constants/assets.dart';
 import '../utils/constants/colors.dart';
 import '../utils/constants/margins_spacnings.dart';
+import 'product_viewer_web.dart';
 
 class FancyDrawerContent extends StatelessWidget {
   FancyDrawerContent({
@@ -142,7 +144,8 @@ class FancyDrawerContent extends StatelessWidget {
 
                             // Handle sub-menu item tap event
                             if (menuItem["type"] == "search") {
-                              Get.to(() => SearchPage());
+                              Get.to(() => SearchPage(), opaque: false,
+                                  transition: Transition.native);
                             }
                             else if (RegExp(r'\d').hasMatch(
                                 menuItem["type"].toString())) {
@@ -150,7 +153,8 @@ class FancyDrawerContent extends StatelessWidget {
                                   CategoryProducts(
                                     collectionID: "gid://shopify/Collection/${menuItem["type"]}",
                                     categoryName: menuItem["title"] ?? "",
-                                  ));
+                                  ), opaque: false,
+                                  transition: Transition.native);
                             } else if (menuItem["type"] == "my account") {
                               BottomNavBarLogic.to.currentPageIndex.value = 3;
                               await Future.delayed(
@@ -158,8 +162,17 @@ class FancyDrawerContent extends StatelessWidget {
                               BottomNavBarLogic.to.advancedDrawerController
                                   .hideDrawer();
                             } else if (menuItem["type"] == "recently viewed") {
-                              Get.to(() => RecentlyViewedPage());
-                            } else {
+                              Get.to(() => RecentlyViewedPage(), opaque: false,
+                                  transition: Transition.native);
+                            } else if (menuItem["type"] == "web url") {
+                              // Get.to(() => RecentlyViewedPage(), opaque: false, transition: Transition.native);
+                              Get.to(() =>
+                                  WebViewProduct(
+                                    productUrl: settings['weburl'],
+                                  ), opaque: false,
+                                  transition: Transition.native);
+                            }
+                            else {
                               print("else running tapping on it");
                             }
                           },
@@ -180,134 +193,142 @@ class FancyDrawerContent extends StatelessWidget {
             //     logic.signOutUser(context: context);
             //   },
             //   title:
-            Column(
-              children: [
-                // Container(
-                //   decoration: BoxDecoration(
-                //
-                //   ),
-                // )
-                Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: pageMarginHorizontal * 3.5),
-                    child: Divider(color: AppColors.appTextColor,)),
-                Align(
-                  alignment: Alignment.center,
-                  child: Obx(() {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                          appConfig.quickActionWidgetList.value.length, (
-                          index) {
-                        var currentItem = appConfig.quickActionWidgetList
-                            .value[index];
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: pageMarginVertical),
+              child: Column(
+                children: [
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //
+                  //   ),
+                  // )
+                 Obx(() {
+                   return (appConfig.quickActionWidgetList.value[0]['display'] || appConfig.quickActionWidgetList.value[1]['display'])? Container(
+                   padding: EdgeInsets.symmetric(
+                            horizontal: pageMarginHorizontal * 3.5),
+                        child: const Divider(color: AppColors.appTextColor,)): SizedBox.shrink();
+                  }),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Obx(() {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                            appConfig.quickActionWidgetList.value.length, (
+                            index) {
+                          var currentItem = appConfig.quickActionWidgetList
+                              .value[index];
 
-                        if (currentItem['display']) {
-                          if (currentItem['type'] != null) {
-                            return GestureDetector(
-                              onTap: () async {
-                                if (currentItem['type'] == 'email' &&
-                                    currentItem['value'] != null) {
-                                  final Uri params = Uri(
-                                    scheme: 'mailto',
-                                    path: currentItem['value'],
-                                    query: 'subject=Tapday Support Team',
-                                  );
-                                  launchUrl(params);
-                                } else if (currentItem['type'] == 'phone' &&
-                                    currentItem['value'] != null) {
-                                  final url = 'tel:${currentItem['value']}';
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
+                          if (currentItem['display']) {
+                            if (currentItem['type'] != null) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  if (currentItem['type'] == 'email' &&
+                                      currentItem['value'] != null) {
+                                    final Uri params = Uri(
+                                      scheme: 'mailto',
+                                      path: currentItem['value'],
+                                      query: 'subject=Tapday Support Team',
+                                    );
+                                    launchUrl(params);
+                                  } else if (currentItem['type'] == 'phone' &&
+                                      currentItem['value'] != null) {
+                                    final url = 'tel:${currentItem['value']}';
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
                                   }
-                                }
-                              },
-                              child: (index + 1 < appConfig.quickActionWidgetList.value.length &&
-                                  appConfig.quickActionWidgetList.value[index + 1]['display'] != false) ? Text(
-                                "${currentItem['type']}  -  ".capitalize!,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: AppColors.appTextColor),
-                              ): Text(
-                                "${currentItem['type']}".capitalize!,
-                                style: context.text.bodyMedium!.copyWith(
-                                    color: AppColors.appTextColor),
-                              ),
-                            );
-
-                          }
-                          else {
+                                },
+                                child: (index + 1 <
+                                    appConfig.quickActionWidgetList.value
+                                        .length &&
+                                    appConfig.quickActionWidgetList
+                                        .value[index + 1]['display'] != false)
+                                    ? Text(
+                                  "${currentItem['type']}  -  ".capitalize!,
+                                  style: context.text.bodyMedium!.copyWith(
+                                      color: AppColors.appTextColor),
+                                )
+                                    : Text(
+                                  "${currentItem['type']}".capitalize!,
+                                  style: context.text.bodyMedium!.copyWith(
+                                      color: AppColors.appTextColor),
+                                ),
+                              );
+                            }
+                            else {
+                              return const SizedBox.shrink();
+                            }
+                          } else {
                             return const SizedBox.shrink();
                           }
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-
-                      }),
-                      // children: [
-                      // appConfig.quickActionWidgetList.value[0]['email'].isNotEmpty?
-                      //  appConfig.quickActionWidgetList.value[0]['display'] != false? appConfig.quickActionWidgetList.value[0]['type'] != null? GestureDetector(
-                      //    onTap: () async{
-                      //      if(appConfig.quickActionWidgetList.value[0]['type'] == 'email'){
-                      //        final Uri params = Uri(
-                      //          scheme: 'mailto',
-                      //          path: appConfig.quickActionWidgetList.value[0]['value'] ?? "",
-                      //          query:
-                      //          'subject=Tapday Support Team', //add subject and body here
-                      //        );
-                      //        launchUrl(params);
-                      //      }else{
-                      //        final url = 'tel:${appConfig.quickActionWidgetList.value[0]['value']}';
-                      //        if (await canLaunch(url)) {
-                      //      await launch(url);
-                      //      } else {
-                      //      throw 'Could not launch $url';
-                      //      }
-                      //      }
-                      //    },
-                      //    child: Text(
-                      //      "${appConfig.quickActionWidgetList.value[0]['type']}",
-                      //      style: context.text.bodyMedium!.copyWith(color: Colors.black),
-                      //    ),
-                      //  ):const SizedBox.shrink():const SizedBox.shrink(),
-                      //  // :SizedBox(),
-                      //  10.widthBox,
-                      //  Text(
-                      //    "-",
-                      //    style: context.text.bodyMedium!.copyWith(color: Colors.black),
-                      //  ),
-                      //  10.widthBox,
-                      //  appConfig.quickActionWidgetList.value[1]['display'] != false? appConfig.quickActionWidgetList.value[1]['type'] != null? GestureDetector(
-                      //    onTap: () async{
-                      //      if(appConfig.quickActionWidgetList.value[1]['type'] == 'email'){
-                      //        final Uri params = Uri(
-                      //          scheme: 'mailto',
-                      //          path: appConfig.quickActionWidgetList.value[1]['value'] ?? "",
-                      //          query:
-                      //          'subject=Tapday Support Team', //add subject and body here
-                      //        );
-                      //        launchUrl(params);
-                      //      }else{
-                      //        final url = 'tel:${appConfig.quickActionWidgetList.value[1]['value']}';
-                      //        if (await canLaunch(url)) {
-                      //          await launch(url);
-                      //        } else {
-                      //          throw 'Could not launch $url';
-                      //        }
-                      //      }
-                      //    },
-                      //    child: Text(
-                      //      "${appConfig.quickActionWidgetList.value[1]['type']}",
-                      //      style: context.text.bodyMedium!.copyWith(color: Colors.black),
-                      //    ),
-                      //  ):const SizedBox.shrink(): const SizedBox.shrink(),
-                      // ],
-                    );
-                  }),
-                ),
-              ],
+                        }),
+                        // children: [
+                        // appConfig.quickActionWidgetList.value[0]['email'].isNotEmpty?
+                        //  appConfig.quickActionWidgetList.value[0]['display'] != false? appConfig.quickActionWidgetList.value[0]['type'] != null? GestureDetector(
+                        //    onTap: () async{
+                        //      if(appConfig.quickActionWidgetList.value[0]['type'] == 'email'){
+                        //        final Uri params = Uri(
+                        //          scheme: 'mailto',
+                        //          path: appConfig.quickActionWidgetList.value[0]['value'] ?? "",
+                        //          query:
+                        //          'subject=Tapday Support Team', //add subject and body here
+                        //        );
+                        //        launchUrl(params);
+                        //      }else{
+                        //        final url = 'tel:${appConfig.quickActionWidgetList.value[0]['value']}';
+                        //        if (await canLaunch(url)) {
+                        //      await launch(url);
+                        //      } else {
+                        //      throw 'Could not launch $url';
+                        //      }
+                        //      }
+                        //    },
+                        //    child: Text(
+                        //      "${appConfig.quickActionWidgetList.value[0]['type']}",
+                        //      style: context.text.bodyMedium!.copyWith(color: Colors.black),
+                        //    ),
+                        //  ):const SizedBox.shrink():const SizedBox.shrink(),
+                        //  // :SizedBox(),
+                        //  10.widthBox,
+                        //  Text(
+                        //    "-",
+                        //    style: context.text.bodyMedium!.copyWith(color: Colors.black),
+                        //  ),
+                        //  10.widthBox,
+                        //  appConfig.quickActionWidgetList.value[1]['display'] != false? appConfig.quickActionWidgetList.value[1]['type'] != null? GestureDetector(
+                        //    onTap: () async{
+                        //      if(appConfig.quickActionWidgetList.value[1]['type'] == 'email'){
+                        //        final Uri params = Uri(
+                        //          scheme: 'mailto',
+                        //          path: appConfig.quickActionWidgetList.value[1]['value'] ?? "",
+                        //          query:
+                        //          'subject=Tapday Support Team', //add subject and body here
+                        //        );
+                        //        launchUrl(params);
+                        //      }else{
+                        //        final url = 'tel:${appConfig.quickActionWidgetList.value[1]['value']}';
+                        //        if (await canLaunch(url)) {
+                        //          await launch(url);
+                        //        } else {
+                        //          throw 'Could not launch $url';
+                        //        }
+                        //      }
+                        //    },
+                        //    child: Text(
+                        //      "${appConfig.quickActionWidgetList.value[1]['type']}",
+                        //      style: context.text.bodyMedium!.copyWith(color: Colors.black),
+                        //    ),
+                        //  ):const SizedBox.shrink(): const SizedBox.shrink(),
+                        // ],
+                      );
+                    }),
+                  ),
+                ],
+              ),
             ),
             //   horizontalTitleGap: 12.w,
             //   leading: SvgPicture.asset(
